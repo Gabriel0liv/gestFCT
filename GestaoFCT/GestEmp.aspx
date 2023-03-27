@@ -752,7 +752,7 @@
                     <ul>
                       <li class="mt-4">
 
-                        <button type="button" onclick="<% Criar(); %>">
+                        <button type="button" id="btnCriar" onserverclick="Criar" runat="server">
                           <i class="mdi mdi-checkbox-blank-circle-outline text-success mr-3"></i>
                             Adicionar
                         </button>
@@ -963,15 +963,15 @@
           var cat_tabledata = [
               <asp:Repeater ID="rptItems" runat="server">
                   <ItemTemplate>
-                      {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_emp") %>',
+                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_empresa") %>',
                     nome: '<%#DataBinder.Eval(Container.DataItem, "nome_empresa") %>',
                     nif: '<%#DataBinder.Eval(Container.DataItem, "nif_empresa") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "ende_empresa") %>', 
+                    email: '<%#DataBinder.Eval(Container.DataItem, "morada_empresa") %>', 
                     localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_empresa") %>', 
                     codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_empresa") %>',
                     natJuri: '<%#DataBinder.Eval(Container.DataItem, "natjuridica") %>',
-                    responsavel: '<%#DataBinder.Eval(Container.DataItem, "responsavel") %>',
-                    atvPrincipal: '<%#DataBinder.Eval(Container.DataItem, "ativ_principal") %>'},
+                    responsavel: '<%#DataBinder.Eval(Container.DataItem, "resp_empresa") %>',
+                    atvPrincipal: '<%#DataBinder.Eval(Container.DataItem, "atv_principal") %>'},
 
             </ItemTemplate>
         </asp:Repeater >];

@@ -12,7 +12,7 @@ namespace GestaoFCT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+          
             //if (Session["Utilizador"] == null)
             //{
             //    //Redirect to login page.
@@ -62,7 +62,7 @@ namespace GestaoFCT
         protected void btn_enviar_Click(object sender, EventArgs e)
         {
 
-            String linhasql = "insert into Empresas (nome_empresa, nif_empresa, ende_empresa, loc_empresa, cpostal_empresa, natJuridica, responsavel, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
+            String linhasql = "insert into Empresas (nome_empresa, nif_empresa, ende_empresa, loc_empresa, cpostal_empresa, natJuridica, resp_empresa, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
 
             //Response.Write("<script>alert('" + linhasql + "')</script>");
             //Response.Write("<script>alert('aaaaa')</script>");
@@ -74,7 +74,7 @@ namespace GestaoFCT
 
         }
 
-        protected void Criar()
+        protected void Criar(object sender, EventArgs e)
         {
             Response.Write("<script>alert('aaaaa')</script>");
 

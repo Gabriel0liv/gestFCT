@@ -20,10 +20,10 @@ namespace GestaoFCT
         {
             char[] rem = { '\'', ' ' };
 
-            string Sql_Aluno = "select Nome_Aluno, id_cargo from Alunos where Email_Aluno='" + txt_email.Value.Trim(rem) +
-                    "' and SenhaAluno='" + txt_pass.Value.Trim(rem) + "';";
+            string Sql_Aluno = "select Nome_Aluno, id_cargo from Alunos where email_Aluno='" + txt_email.Value.Trim(rem) +
+                    "' and pass_aluno='" + txt_pass.Value.Trim(rem) + "';";
 
-            string Sql_Professor = "select * from Professores where Email_prof='" + txt_email.Value.Trim(rem) +
+            string Sql_Professor = "select * from Professores where email_prof='" + txt_email.Value.Trim(rem) +
                     "' and SenhaProf='" + txt_pass.Value.Trim(rem) + "';";
 
             string Sql_Tutor = "select * from Tutores where Email_tutor='" + txt_email.Value.Trim(rem) +
