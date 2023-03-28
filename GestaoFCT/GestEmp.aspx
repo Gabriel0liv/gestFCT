@@ -61,8 +61,17 @@
     ——— WRAPPER
     ===================================== -->
     <div class="wrapper">
-      
-      
+
+
+        <!-- LABELS DE CONTROLE -->
+        <asp:Label ID="labelStats" runat="server" Text=""></asp:Label>
+        <asp:Label ID="LabelCod" runat="server" Text=""></asp:Label>
+        <asp:HiddenField ID="HiddenField1" runat="server" />
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:SqlDataSource ID="EntSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
+
+
+
         <!-- ====================================
           ——— LEFT SIDEBAR WITH OUT FOOTER
         ===================================== -->
@@ -652,7 +661,7 @@
                 <span class="sr-only">Toggle navigation</span>
               </button>
 
-              <span class="page-title">Gestão de empresas</span>
+              <span class="page-title">Gestão de entidades</span>
 
               <div class="navbar-right ">
 
@@ -758,7 +767,7 @@
                         </button>
                       </li>
                       <li class="mt-4">
-                        <button type="button" onserverclick="Editar" runat="server" data-toggle="modal" data-target="#exampleModalForm">
+                        <button type="button" id="btnEditar" onserverclick="Editar" runat="server">
                           <i class="mdi mdi-checkbox-blank-circle-outline text-warning mr-3"></i>
                             Editar
                         </button>
@@ -775,10 +784,7 @@
                     <!-- Email Right Header -->
                     <div class="email-right-header mb-5">
 
-                        <!-- LABELS DE CONTROLE -->
-                        <asp:Label ID="labelStats" runat="server" Text=""></asp:Label>
-                        <asp:Label ID="LabelCod" runat="server" Text=""></asp:Label>
-                        <asp:HiddenField ID="HiddenField1" runat="server" />
+
 
                       <!-- head left option -->
                  <!--<div class="head-left-options">
@@ -813,14 +819,15 @@
                         </div>
                       </div> -->
 
-                      <!-- FORM MODAL -->
-                      <div class="modal fade" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
-                        aria-hidden="true">
+                 <!-- FORM MODAL -->
+                       
+                      <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
+                        aria-hidden="true" runat="server" visible="false">
                         <div class="modal-dialog" role="document">
                           <iv class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalFormTitle" style="font-weight: bold;">Criar Empresa</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <h5 class="modal-title" id="exampleModalFormTitle" style="font-weight: bold;">Criar entidade</h5>
+                              <button type="button" id="spanFechar" class="close" runat="server" onserverclick="spanFechar_Click">
                                 <span aria-hidden="true">&times;</span>
                               </button>
                             </div>
@@ -828,25 +835,25 @@
                                 
                                 <div class="form-group">
                                   <label for="txt_nome">Nome</label>
-                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da empresa" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da entidade" runat="server"/>
                                 </div>
 
                                 <div class="form-group">
                                   <label for="txt_nif">NIF</label>
-                                  <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF da empresa" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF da entidade" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_email">Email address</label>
-                                  <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email da empresa" runat="server"/>
+                                  <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email da entidade" runat="server"/>
                                   <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_local">Localidade</label>
-                                  <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade da empresa" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade da entidade" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_CodPost">Código Postal</label>
-                                  <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal da empresa" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal da entidade" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_NatJuri">Natureza Jurídica</label>
@@ -854,11 +861,11 @@
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_resp">Responsável</label>
-                                  <input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela empresa" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_atvPrinc">Atividade Principal</label>
-                                  <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da empresa" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da entidade" runat="server"/>
                                 </div>
                                 <!-- <div class="form-check pl-0">
                                   <label class="control control-checkbox">Check me out
@@ -870,12 +877,15 @@
                               
                             </div>
                             <div class="modal-footer">
-                              <button type="button" onclick="fun()" class="btn btn-danger btn-pill" data-dismiss="modal" >Cancelar</button>
-                              <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar empresa</button>--%>
-                                <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar empresa" OnClick="btn_enviar_Click" />
+                              <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar"> Cancelar</button>
+
+                              <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
+                                <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar entidade" OnClick="btn_enviar_Click" />
                             </div>
                           </div>
                         </div>
+
+
                       </div>
                     </div>
                     <div class="border border-top-0 rounded table-responsive email-list">
@@ -927,10 +937,13 @@
             {title:"Nome", field:"nome", width:230, resizable:false},
             {title:"NIF", field:"nif", width:80, resizable:false},
             {title:"E-mail", field:"email", width:230, resizable:false},
+            {title:"Morada", field:"morada", width:230, resizable:false},
             {title:"localidade", field:"localidade", width:156, resizable:false},
             {title:"C.Postal", field:"codPost", width:80, resizable:false},
             {title:"Nat. Jurídica", field:"natJuri", width:125, resizable:false},
             {title:"Responsável", field:"responsavel", width:125, resizable:false},
+            {title:"Contacto", field:"contacto", width:125, resizable:false},
+            {title:"Cargo", field:"cargo", width:125, resizable:false},
             {title:"Ativ_Principal", field:"atvPrincipal", width:125, resizable:false},
 
 
@@ -952,7 +965,7 @@
                 controle.value = ab;
 
                 //pra conferir os dados
-                //    alert("LINHAS: 1, AB =" + ab + "!");
+                 //   alert("LINHAS: 1, AB =" + ab + "!");
             }
             if (data.length != 1) {
                 controle.value = 0;
@@ -963,14 +976,17 @@
           var cat_tabledata = [
               <asp:Repeater ID="rptItems" runat="server">
                   <ItemTemplate>
-                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_empresa") %>',
-                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_empresa") %>',
-                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_empresa") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "morada_empresa") %>', 
-                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_empresa") %>', 
-                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_empresa") %>',
+                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_entidade") %>',
+                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_entidade") %>',
+                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_entidade") %>', 
+                    email: '<%#DataBinder.Eval(Container.DataItem, "email_entidade") %>', 
+                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_entidade") %>',
+                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_entidade") %>', 
+                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_entidade") %>',
                     natJuri: '<%#DataBinder.Eval(Container.DataItem, "natjuridica") %>',
-                    responsavel: '<%#DataBinder.Eval(Container.DataItem, "resp_empresa") %>',
+                    responsavel: '<%#DataBinder.Eval(Container.DataItem, "resp_entidade") %>',
+                    contacto: '<%#DataBinder.Eval(Container.DataItem, "tlmResp_entidade") %>',
+                    cargo: '<%#DataBinder.Eval(Container.DataItem, "cargo_resp") %>',
                     atvPrincipal: '<%#DataBinder.Eval(Container.DataItem, "atv_principal") %>'},
 
             </ItemTemplate>
@@ -980,15 +996,6 @@
               table.setData(cat_tabledata);
           });
 
-        function fun() {
-            document.getElementById('txt_nome').value='';
-            document.getElementById('txt_email').value='';
-            document.getElementById('txt_nif').value='';
-            document.getElementById('txt_local').value='';
-            document.getElementById('txt_CodPost').value='';
-            document.getElementById('txt_nif').value='';
-            document.getElementById('txt_NatJuri').value='';
-          }
 
       </script>
 

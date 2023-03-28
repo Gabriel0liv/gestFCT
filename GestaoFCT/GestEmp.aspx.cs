@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -33,7 +34,7 @@ namespace GestaoFCT
 
         protected void refresh()
         {
-            String linhasql = "select * from Empresas;";
+            String linhasql = "select * from entidades;";
             DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
             rptItems.DataSource = dt;
@@ -56,15 +57,16 @@ namespace GestaoFCT
             txt_NatJuri.Value = "";
             txt_nif.Value = "";
             txt_resp.Value = "";
+            txt_nome.Value = "";
 
         }
 
         protected void btn_enviar_Click(object sender, EventArgs e)
         {
 
-            String linhasql = "insert into Empresas (nome_empresa, nif_empresa, ende_empresa, loc_empresa, cpostal_empresa, natJuridica, resp_empresa, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
+            String linhasql = "insert into Entidades (nome_entidade, nif_entidade, ende_entidade, loc_entidade, cpostal_entidade, natJuridica, resp_entidade, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
 
-            //Response.Write("<script>alert('" + linhasql + "')</script>");
+            //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
             //Response.Write("<script>alert('aaaaa')</script>");
 
             //Database.NonQuerySqlSrv(linhasql);
@@ -76,13 +78,49 @@ namespace GestaoFCT
 
         protected void Criar(object sender, EventArgs e)
         {
-            Response.Write("<script>alert('aaaaa')</script>");
+            //Response.Write("<script>alert('aaaaa')</script>");
+            
+            exampleModalForm.Visible = true;
 
+
+        }
+
+        protected void Atualizar()
+        {
+
+            string linhadesql = "select * from Entidades where id_entidade = " + LabelCod.Text + ";";
+            var sqlConn = new SqlConnection(EntSQLData.ConnectionString);
+            var com = new SqlCommand(linhadesql, sqlConn);
+            sqlConn.Open();
+            SqlDataReader r = com.ExecuteReader();
+            while (r.Read())
+            {
+                txt_nome.Value = "" + r["nome_entidade"];
+                txt_nif.Value = "" + r["nif_entidade"];
+                txt_email.Value = "" + r["email_entidade"];
+
+            }
+            r.Close();
+            sqlConn.Close();
+        }
+
+            protected void spanFechar_Click(object sender, EventArgs e)
+        {
+            exampleModalForm.Visible = false;
+        }
+
+        protected void Fechar(object sender, EventArgs e)
+        {
+            exampleModalForm.Visible = false;
+            reset();
         }
 
         protected void Editar(object sender, EventArgs e)
         {
-            txt_nome.Value = "ESTOU EDITANDO";
+            LabelCod.Text = HiddenField1.Value;
+            Atualizar();
+            exampleModalForm.Visible = true;
+            //txt_nome.Value = "ESTOU EDITANDO";
         }
     }
 }

@@ -5709,15 +5709,17 @@ a.close.disabled {
 }
 
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1050;bsolute;
-  top: 0;
-  left: 0;
-  z-index: 1060;
-  display: block;
-  madx-wi}
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    top: 0;
+    left: 0;
+    z-index: 1060;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
 .modal-dialog {
   position: relative;
