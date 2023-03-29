@@ -848,6 +848,10 @@
                                   <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                 </div>
                                 <div class="form-group">
+                                  <label for="txt_local">Morada</label>
+                                  <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada da entidade" runat="server"/>
+                                </div>
+                                <div class="form-group">
                                   <label for="txt_local">Localidade</label>
                                   <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade da entidade" runat="server"/>
                                 </div>

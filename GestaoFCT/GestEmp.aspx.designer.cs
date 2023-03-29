@@ -150,6 +150,15 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_email;
 
         /// <summary>
+        /// Controle txt_morada.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_morada;
+
+        /// <summary>
         /// Controle txt_local.
         /// </summary>
         /// <remarks>

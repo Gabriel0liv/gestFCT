@@ -98,6 +98,11 @@ namespace GestaoFCT
                 txt_nome.Value = "" + r["nome_entidade"];
                 txt_nif.Value = "" + r["nif_entidade"];
                 txt_email.Value = "" + r["email_entidade"];
+                txt_morada.Value = "" + r["morada_entidade"];
+                txt_local.Value = "" + r["loc_entidade"];
+                txt_CodPost.Value = "" + r["cpostal_entidade"];
+
+
 
             }
             r.Close();
