@@ -13,7 +13,7 @@ namespace GestaoFCT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-          
+
             //if (Session["Utilizador"] == null)
             //{
             //    //Redirect to login page.
@@ -50,45 +50,25 @@ namespace GestaoFCT
 
         protected void reset()
         {
-            txt_atvPrinc.Value = "";
-            txt_CodPost.Value = "";
-            txt_email.Value = "";
-            txt_local.Value = "";
-            txt_NatJuri.Value = "";
-            txt_nif.Value = "";
-            txt_resp.Value = "";
             txt_nome.Value = "";
-
-        }
-
-        protected void btn_enviar_Click(object sender, EventArgs e)
-        {
-
-            String linhasql = "insert into Entidades (nome_entidade, nif_entidade, ende_entidade, loc_entidade, cpostal_entidade, natJuridica, resp_entidade, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
-
-            //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-            //Response.Write("<script>alert('aaaaa')</script>");
-
-            //Database.NonQuerySqlSrv(linhasql);
-            //reset();
-            //refresh();
-
-
-        }
-
-        protected void Criar(object sender, EventArgs e)
-        {
-            //Response.Write("<script>alert('aaaaa')</script>");
-            
-            exampleModalForm.Visible = true;
-
+            txt_nif.Value = "";
+            txt_email.Value = "";
+            txt_telefone.Value = "";
+            txt_morada.Value = "";
+            txt_local.Value = "";
+            txt_CodPost.Value = "";
+            txt_NatJuri.Value = "";
+            txt_resp.Value = "";
+            txt_tlmResp.Value = "";
+            txt_cargo.Value = "";
+            txt_atvPrinc.Value = "";
 
         }
 
         protected void Atualizar()
         {
 
-            string linhadesql = "select * from Entidades where id_entidade = " + LabelCod.Text + ";";
+            string linhadesql = "select * from Entidades where id_entidade = " + labelCod.Text + ";";
             var sqlConn = new SqlConnection(EntSQLData.ConnectionString);
             var com = new SqlCommand(linhadesql, sqlConn);
             sqlConn.Open();
@@ -98,18 +78,22 @@ namespace GestaoFCT
                 txt_nome.Value = "" + r["nome_entidade"];
                 txt_nif.Value = "" + r["nif_entidade"];
                 txt_email.Value = "" + r["email_entidade"];
+                txt_telefone.Value = "" + r["telefone_entidade"];
                 txt_morada.Value = "" + r["morada_entidade"];
                 txt_local.Value = "" + r["loc_entidade"];
                 txt_CodPost.Value = "" + r["cpostal_entidade"];
-
-
+                txt_NatJuri.Value = "" + r["natjuridica"];
+                txt_resp.Value = "" + r["resp_entidade"];
+                txt_tlmResp.Value = "" + r["tlmResp_entidade"];
+                txt_cargo.Value = "" + r["cargo_resp"];
+                txt_atvPrinc.Value = "" + r["atv_principal"];
 
             }
             r.Close();
             sqlConn.Close();
         }
 
-            protected void spanFechar_Click(object sender, EventArgs e)
+        protected void spanFechar_Click(object sender, EventArgs e)
         {
             exampleModalForm.Visible = false;
         }
@@ -120,12 +104,74 @@ namespace GestaoFCT
             reset();
         }
 
+        protected void Criar(object sender, EventArgs e)
+        {
+            //Response.Write("<script>alert('aaaaa')</script>");
+            operacao.Text = "1";
+
+            exampleModalFormTitle.InnerText = "Criar Entidade";
+            btn_enviar.Text = "Criar Entidade";
+            exampleModalForm.Visible = true;
+
+
+        }
+
         protected void Editar(object sender, EventArgs e)
         {
-            LabelCod.Text = HiddenField1.Value;
+            operacao.Text = "2";
+            labelCod.Text = HiddenField1.Value;
             Atualizar();
+            exampleModalFormTitle.InnerText = "Editar Entidade";
+            btn_enviar.Text = "Editar Entidade";
             exampleModalForm.Visible = true;
-            //txt_nome.Value = "ESTOU EDITANDO";
+
         }
+
+        protected void Eliminar(object sender, EventArgs e)
+        {
+            operacao.Text = "3";
+
+        }
+
+        protected void Comandos(object sender, EventArgs e)
+        {
+
+
+            if (operacao.Text == "1")
+            {
+                //Response.Write("<script>alert('11111')</script>");
+
+                String linhasql = "insert into Entidades (nome_entidade, nif_entidade, ende_entidade, loc_entidade, cpostal_entidade, natJuridica, resp_entidade, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
+
+                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+
+                //Database.NonQuerySqlSrv(linhasql);
+                //reset();
+                //refresh();
+
+            }
+
+            if (operacao.Text == "2")
+            {
+                Response.Write("<script>alert('22222')</script>");
+
+                String linhasql = "update Entidades  set nome_entidade = '" + txt_nome.Value + "', nif_entidade = '" + txt_nif.Value + "', email_entidade = '" + txt_email.Value + "', loc_entidade = '" + txt_local.Value + "', morada_entidade = '" + txt_morada.Value +  "', telefone_entidade = '" + txt_telefone.Value +  "', cpostal_entidade = '" + txt_CodPost.Value + "', natjuridica = '" + txt_NatJuri.Value + "', resp_entidade = '" + txt_resp.Value + "', tlmResp_entidade = '" + txt_tlmResp.Value + "', cargo_resp = '" + txt_cargo.Value + "', atv_principal = '" + txt_atvPrinc.Value + "' where id_entidade = " + labelCod.Text + ";";
+
+                Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                //Response.Write("<script>alert('aaaaa')</script>");
+
+                //Database.NonQuerySqlSrv(linhasql);
+                //reset();
+                //refresh();
+
+            }
+
+            if (operacao.Text == "3")
+            {
+                Response.Write("<script>alert('33333')</script>");
+
+            }
+        }
+
     }
 }

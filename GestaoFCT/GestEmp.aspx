@@ -64,8 +64,9 @@
 
 
         <!-- LABELS DE CONTROLE -->
-        <asp:Label ID="labelStats" runat="server" Text=""></asp:Label>
-        <asp:Label ID="LabelCod" runat="server" Text=""></asp:Label>
+        <asp:Label ID="labelStats" runat="server" Text="" Visible="false"></asp:Label>
+        <asp:Label ID="labelCod" runat="server" Text="" Visible="false"></asp:Label>
+        <asp:Label ID="operacao" runat="server" Text="" Visible="false"></asp:Label>
         <asp:HiddenField ID="HiddenField1" runat="server" />
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <asp:SqlDataSource ID="EntSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
@@ -146,8 +147,8 @@
                       <div class="sub-menu">
                         
                             <li  class="active" >
-                              <a class="sidenav-item-link" href="email-inbox.html">
-                                <span class="nav-text">Email Inbox</span>
+                              <a class="sidenav-item-link" href="GestEmp.aspx">
+                                <span class="nav-text">Gestão de Entidades</span>
                               </a>
                             </li>
                           
@@ -773,8 +774,10 @@
                         </button>
                       </li>
                       <li class="mt-4">
-                        <a href="#">
-                          <i class="mdi mdi-checkbox-blank-circle-outline text-danger mr-3"></i>Eliminar</a>
+                        <button type="button" id="btnEliminar" onserverclick="Eliminar" runat="server">
+                          <i class="mdi mdi-checkbox-blank-circle-outline text-danger mr-3"></i>
+                            Eliminar
+                        </button>
                       </li>
                     </ul>
                   </div>
@@ -826,7 +829,7 @@
                         <div class="modal-dialog" role="document">
                           <iv class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalFormTitle" style="font-weight: bold;">Criar entidade</h5>
+                              <h5 class="modal-title" id="exampleModalFormTitle" runat="server" style="font-weight: bold;"></h5>
                               <button type="button" id="spanFechar" class="close" runat="server" onserverclick="spanFechar_Click">
                                 <span aria-hidden="true">&times;</span>
                               </button>
@@ -846,6 +849,10 @@
                                   <label for="txt_email">Email address</label>
                                   <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email da entidade" runat="server"/>
                                   <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                </div>
+                                <div class="form-group">
+                                  <label for="txt_local">Telefone</label>
+                                  <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_local">Morada</label>
@@ -868,7 +875,15 @@
                                   <input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_atvPrinc">Atividade Principal</label>
+                                  <label for="txt_resp">Contacto do responsável</label>
+                                  <input type="text" class="form-control" id="txt_tlmResp" placeholder="Insira o telefone de contacto do responsável pela entidade" runat="server"/>
+                                </div>
+                                <div class="form-group">
+                                  <label for="txt_resp">Cargo do responsável na entidade</label>
+                                  <input type="text" class="form-control" id="txt_cargo" placeholder="Insira o cargo do responsável pela entidade" runat="server"/>
+                                </div>
+                                <div class="form-group">
+                                  <label for="txt_atvPrinc">Atividade principal da empresa</label>
                                   <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da entidade" runat="server"/>
                                 </div>
                                 <!-- <div class="form-check pl-0">
@@ -884,7 +899,7 @@
                               <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar"> Cancelar</button>
 
                               <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
-                                <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar entidade" OnClick="btn_enviar_Click" />
+                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar entidade" OnClick="Comandos" />
                             </div>
                           </div>
                         </div>
@@ -929,7 +944,7 @@
       <script>
 
           var stat = document.getElementById('<%= labelStats.ClientID %>');
-          var cod = document.getElementById('<%= LabelCod.ClientID %>');
+          var cod = document.getElementById('<%= labelCod.ClientID %>');
 
         var table = new Tabulator("#example-table", {
           selectable: 1,
