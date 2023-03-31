@@ -129,7 +129,26 @@ namespace GestaoFCT
 
         protected void Eliminar(object sender, EventArgs e)
         {
+
             operacao.Text = "3";
+            labelCod.Text = HiddenField1.Value;
+
+            if(labelCod.Text != "0")
+            {
+                string linhadesql = "select nome_entidade from Entidades where id_entidade = " + labelCod.Text + ";";
+                var sqlConn = new SqlConnection(EntSQLData.ConnectionString);
+                var com = new SqlCommand(linhadesql, sqlConn);
+                sqlConn.Open();
+                SqlDataReader r = com.ExecuteReader();
+                r.Read();
+                textoCancelar.InnerText = "Deseja eliminar o registo \"" + r["nome_entidade"] + "\"?";
+                r.Close();
+                sqlConn.Close();
+            }
+
+
+            exampleModal.Visible = true;
+
 
         }
 
@@ -141,14 +160,14 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into Entidades (nome_entidade, nif_entidade, ende_entidade, loc_entidade, cpostal_entidade, natJuridica, resp_entidade, ativ_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_email.Value + "', '" + txt_local.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_atvPrinc.Value + "');";
+                String linhasql = "insert into Entidades (nome_entidade, nif_entidade, morada_entidade, loc_entidade, email_entidade, cpostal_entidade, telefone_entidade, natJuridica, resp_entidade, tlmResp_entidade, cargo_resp, atv_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_tlmResp.Value + "', '" + txt_cargo.Value + "', '" + txt_atvPrinc.Value + "');";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
-                //Database.NonQuerySqlSrv(linhasql);
-                //reset();
-                //refresh();
-
+                Database.NonQuerySqlSrv(linhasql);
+                reset();
+                refresh();
+                exampleModalForm.Visible=false;
             }
 
             if (operacao.Text == "2")
@@ -160,9 +179,9 @@ namespace GestaoFCT
                 Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");
 
-                //Database.NonQuerySqlSrv(linhasql);
-                //reset();
-                //refresh();
+                Database.NonQuerySqlSrv(linhasql);
+                reset();
+                refresh();
 
             }
 
@@ -173,5 +192,9 @@ namespace GestaoFCT
             }
         }
 
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            exampleModal.Visible = false;
+        }
     }
 }

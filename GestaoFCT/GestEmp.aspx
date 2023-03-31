@@ -789,42 +789,42 @@
 
 
 
-                      <!-- head left option -->
-                 <!--<div class="head-left-options">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="defaultCheck1">
-                          <label class="form-check-label" for="defaultCheck1">Select All</label>
-                        </div>
-                        <button type="button" class="btn btn-icon btn-outline btn-rounded-circle">
-                          <i class="mdi mdi-refresh"></i>
+                    <!-- head left option -->
+                    <!--<div class="head-left-options">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">Select All</label>
+                    </div>
+                    <button type="button" class="btn btn-icon btn-outline btn-rounded-circle">
+                        <i class="mdi mdi-refresh"></i>
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle border rounded-pill" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More
                         </button>
-                        <div class="dropdown">
-                          <button class="btn dropdown-toggle border rounded-pill" type="button" id="dropdownMenuButton"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More
-                          </button>
-                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start"
-                            style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                          </div>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start"
+                        style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
                         </div>
-                      </div> -->
-                      <!-- head right option -->
-                      <!-- <div class="head-right-options">
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                          <button type="button" class="btn border btn-pill">
-                            <i class="mdi mdi-chevron-left"></i>
-                          </button>
-                          <button type="button" class="btn border btn-pill">
-                            <i class="mdi mdi-chevron-right"></i>
-                          </button>
-                        </div>
-                      </div> -->
+                    </div>
+                    </div> -->
+                    <!-- head right option -->
+                    <!-- <div class="head-right-options">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn border btn-pill">
+                        <i class="mdi mdi-chevron-left"></i>
+                        </button>
+                        <button type="button" class="btn border btn-pill">
+                        <i class="mdi mdi-chevron-right"></i>
+                        </button>
+                    </div>
+                    </div> -->
 
-                 <!-- FORM MODAL -->
+                    <!-- FORM MODAL -->
                        
-                      <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
+                    <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
                         aria-hidden="true" runat="server" visible="false">
                         <div class="modal-dialog" role="document">
                           <iv class="modal-content">
@@ -838,7 +838,7 @@
                                 
                                 <div class="form-group">
                                   <label for="txt_nome">Nome</label>
-                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da entidade" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da entidade" autocomplete="on" runat="server"/>
                                 </div>
 
                                 <div class="form-group">
@@ -904,7 +904,31 @@
                           </div>
                         </div>
 
+                    <!-- DELETE MODAL -->
+                    <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                      aria-hidden="true" runat="server" visible="false">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo da Entidade</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <span id="textoCancelar" runat="server"></span>
+                          </div>
+                          <div class="modal-footer">
+                            <%--<button type="button" class="btn btn-danger btn-pill" onclick="" >Close</button>--%>
+                              <asp:Button ID="btnCancelar" class="btn btn-danger btn-pill" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
+                            <%--<button type="button" class="btn btn-primary btn-pill">Save Changes</button>--%>
+                            <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
+                        <%--TABULATOR--%>
                       </div>
                     </div>
                     <div class="border border-top-0 rounded table-responsive email-list">
@@ -984,7 +1008,7 @@
                 controle.value = ab;
 
                 //pra conferir os dados
-                 //   alert("LINHAS: 1, AB =" + ab + "!");
+                   //alert("LINHAS: 1, AB =" + ab + "!");
             }
             if (data.length != 1) {
                 controle.value = 0;
