@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="css\style-login.css" />
     <Content Include="css\style.css" />
+    <Content Include="GestTutor.aspx" />
     <Content Include="GestEmp.aspx" />
     <Content Include="js\calendar.js" />
     <Content Include="js\chart.js" />
@@ -81,6 +82,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="GestTutor.aspx.cs">
+      <DependentUpon>GestTutor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestTutor.aspx.designer.cs">
+      <DependentUpon>GestTutor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestEmp.aspx.cs">
       <DependentUpon>GestEmp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

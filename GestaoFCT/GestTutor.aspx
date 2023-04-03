@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestEmp.aspx.cs" Inherits="GestaoFCT.GestEmp" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestTutor.aspx.cs" Inherits="GestaoFCT.GestTutor" %>
 
 
 <!DOCTYPE html>
@@ -69,7 +69,7 @@
         <asp:Label ID="operacao" runat="server" Text="" Visible="false"></asp:Label>
         <asp:HiddenField ID="HiddenField1" runat="server" />
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:SqlDataSource ID="EntSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="TutSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
 
 
 
@@ -148,12 +148,12 @@
                       data-parent="#sidebar-menu">
                       <div class="sub-menu">
                         
-                            <li  class="active" >
+                            <li>
                               <a class="sidenav-item-link" href="GestEmp.aspx">
                                 <span class="nav-text">Gestão de Entidades</span>
                               </a>
                             </li>
-                            <li>
+                            <li class="active">
                               <a class="sidenav-item-link" href="GestTutor.aspx">
                                 <span class="nav-text">Gestão de tutores</span>
                               </a>
@@ -668,7 +668,7 @@
                 <span class="sr-only">Toggle navigation</span>
               </button>
 
-              <span class="page-title">Gestão de entidades</span>
+              <span class="page-title">Gestão de Tutores</span>
 
               <div class="navbar-right ">
 
@@ -844,53 +844,47 @@
                                 
                                 <div class="form-group">
                                   <label for="txt_nome">Nome</label>
-                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da entidade" autocomplete="on" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do tutor" enableviewstate="true" runat="server"/>
                                 </div>
 
                                 <div class="form-group">
                                   <label for="txt_nif">NIF</label>
-                                  <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF da entidade" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do tutor" runat="server"/>
                                 </div>
+
                                 <div class="form-group">
                                   <label for="txt_email">Email address</label>
-                                  <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email da entidade" runat="server"/>
+                                  <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do tutor" runat="server"/>
                                   <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_local">Telefone</label>
-                                  <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_local">Morada</label>
-                                  <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada da entidade" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_local">Localidade</label>
-                                  <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade da entidade" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_CodPost">Código Postal</label>
-                                  <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal da entidade" runat="server"/>
+                                  <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_NatJuri">Natureza Jurídica</label>
-                                  <input type="text" class="form-control" id="txt_NatJuri" placeholder="Insira a Natureza Jurídica" runat="server"/>
+                                  <label for="txt_NatJuri"> Data de nascimento</label>
+                                  <input type="text" class="form-control" id="txt_dataNasc" placeholder="Insira a data de nascimento do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_resp">Responsável</label>
-                                  <input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>
+                                  <label for="txt_resp">Entidade</label>
+                                  <%--<input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>--%>
+                                    <asp:DropDownList ID="ddl_entidade" runat="server"></asp:DropDownList>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_resp">Contacto do responsável</label>
-                                  <input type="text" class="form-control" id="txt_tlmResp" placeholder="Insira o telefone de contacto do responsável pela entidade" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_resp">Cargo do responsável na entidade</label>
-                                  <input type="text" class="form-control" id="txt_cargo" placeholder="Insira o cargo do responsável pela entidade" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_atvPrinc">Atividade principal da empresa</label>
-                                  <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da entidade" runat="server"/>
+                                  <label for="txt_NatJuri"> Palavra passe</label>
+                                  <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o tutor" runat="server"/>
                                 </div>
                                 <!-- <div class="form-check pl-0">
                                   <label class="control control-checkbox">Check me out
@@ -905,7 +899,7 @@
                               <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar"> Cancelar</button>
 
                               <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
-                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar entidade" OnClick="Comandos" />
+                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar tutor" />
                             </div>
                           </div>
                         </div>
@@ -916,7 +910,7 @@
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo da Entidade</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo da tutor</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -928,7 +922,7 @@
                             <%--<button type="button" class="btn btn-danger btn-pill" onclick="" >Close</button>--%>
                               <asp:Button ID="btnCancelar" class="btn btn-danger btn-pill" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
                             <%--<button type="button" class="btn btn-primary btn-pill">Save Changes</button>--%>
-                            <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar" OnClick="Comandos" />
+                            <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar"  />
                           </div>
                         </div>
                       </div>
@@ -989,11 +983,9 @@
             {title:"Morada", field:"morada", width:230, resizable:false},
             {title:"localidade", field:"localidade", width:156, resizable:false},
             {title:"C.Postal", field:"codPost", width:80, resizable:false},
-            {title:"Nat. Jurídica", field:"natJuri", width:125, resizable:false},
-            {title:"Responsável", field:"responsavel", width:125, resizable:false},
-            {title:"Contacto", field:"contacto", width:125, resizable:false},
-            {title:"Cargo", field:"cargo", width:125, resizable:false},
-            {title:"Ativ_Principal", field:"atvPrincipal", width:125, resizable:false},
+            {title:"Nascimento", field:"dataNasc", width:125, resizable:false},
+            {title:"Password", field:"passTutor", width:125, resizable:false},
+            {title:"Entidade", field:"codEnt", width:50, resizable:false},
 
 
           ],
@@ -1025,18 +1017,16 @@
           var cat_tabledata = [
               <asp:Repeater ID="rptItems" runat="server">
                   <ItemTemplate>
-                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_entidade") %>',
-                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_entidade") %>',
-                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_entidade") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "email_entidade") %>', 
-                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_entidade") %>',
-                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_entidade") %>', 
-                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_entidade") %>',
-                    natJuri: '<%#DataBinder.Eval(Container.DataItem, "natjuridica") %>',
-                    responsavel: '<%#DataBinder.Eval(Container.DataItem, "resp_entidade") %>',
-                    contacto: '<%#DataBinder.Eval(Container.DataItem, "tlmResp_entidade") %>',
-                    cargo: '<%#DataBinder.Eval(Container.DataItem, "cargo_resp") %>',
-                    atvPrincipal: '<%#DataBinder.Eval(Container.DataItem, "atv_principal") %>'},
+                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_tutor") %>',
+                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_tutor") %>',
+                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_tutor") %>', 
+                    email: '<%#DataBinder.Eval(Container.DataItem, "email_tutor") %>', 
+                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_tutor") %>',
+                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_tutor") %>', 
+                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_tutor") %>',
+                    codEnt: '<%#DataBinder.Eval(Container.DataItem, "id_entidade") %>',
+                    dataNasc: '<%#DataBinder.Eval(Container.DataItem, "dataNasc_tutor") %>',
+                    passTutor: '<%#DataBinder.Eval(Container.DataItem, "pass_tutor") %>'},
 
             </ItemTemplate>
         </asp:Repeater >];

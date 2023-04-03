@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 namespace GestaoFCT
 {
-    public partial class GestEmp : System.Web.UI.Page
+    public partial class GestTutor : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,7 +34,7 @@ namespace GestaoFCT
 
         protected void refresh()
         {
-            String linhasql = "select * from entidades;";
+            String linhasql = "select * from tutores;";
             DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
             rptItems.DataSource = dt;
@@ -57,36 +57,33 @@ namespace GestaoFCT
             txt_morada.Value = "";
             txt_local.Value = "";
             txt_CodPost.Value = "";
-            txt_NatJuri.Value = "";
-            txt_resp.Value = "";
-            txt_tlmResp.Value = "";
-            txt_cargo.Value = "";
-            txt_atvPrinc.Value = "";
+            txt_dataNasc.Value = "";
+            //txt_resp.Value = "";
+            txt_pass.Value = "";
+
 
         }
 
         protected void Atualizar()
         {
 
-            string linhadesql = "select * from Entidades where id_entidade = " + labelCod.Text + ";";
-            var sqlConn = new SqlConnection(EntSQLData.ConnectionString);
+            string linhadesql = "select * from tutores where id_tutor = " + labelCod.Text + ";";
+            var sqlConn = new SqlConnection(TutSQLData.ConnectionString);
             var com = new SqlCommand(linhadesql, sqlConn);
             sqlConn.Open();
             SqlDataReader r = com.ExecuteReader();
             while (r.Read())
             {
-                txt_nome.Value = "" + r["nome_entidade"];
-                txt_nif.Value = "" + r["nif_entidade"];
-                txt_email.Value = "" + r["email_entidade"];
-                txt_telefone.Value = "" + r["telefone_entidade"];
-                txt_morada.Value = "" + r["morada_entidade"];
-                txt_local.Value = "" + r["loc_entidade"];
-                txt_CodPost.Value = "" + r["cpostal_entidade"];
-                txt_NatJuri.Value = "" + r["natjuridica"];
-                txt_resp.Value = "" + r["resp_entidade"];
-                txt_tlmResp.Value = "" + r["tlmResp_entidade"];
-                txt_cargo.Value = "" + r["cargo_resp"];
-                txt_atvPrinc.Value = "" + r["atv_principal"];
+                txt_nome.Value = "" + r["nome_tutor"];
+                txt_nif.Value = "" + r["nif_tutor"];
+                txt_email.Value = "" + r["email_tutor"];
+                txt_telefone.Value = "" + r["telefone_tutor"];
+                txt_morada.Value = "" + r["morada_tutor"];
+                txt_local.Value = "" + r["loc_tutor"];
+                txt_CodPost.Value = "" + r["cpostal_tutor"];
+                txt_dataNasc.Value = "" + r["dataNasc_tutor"];
+                //txt_resp.Value = "" + r["resp_tutor"];
+                txt_pass.Value = "" + r["tlmResp_tutor"];
 
             }
             r.Close();
@@ -109,8 +106,8 @@ namespace GestaoFCT
             //Response.Write("<script>alert('aaaaa')</script>");
             operacao.Text = "1";
 
-            exampleModalFormTitle.InnerText = "Criar Entidade";
-            btn_enviar.Text = "Criar Entidade";
+            exampleModalFormTitle.InnerText = "Criar Tutor";
+            btn_enviar.Text = "Criar Tutor";
             exampleModalForm.Visible = true;
 
 
@@ -121,8 +118,8 @@ namespace GestaoFCT
             operacao.Text = "2";
             labelCod.Text = HiddenField1.Value;
             Atualizar();
-            exampleModalFormTitle.InnerText = "Editar Entidade";
-            btn_enviar.Text = "Editar Entidade";
+            exampleModalFormTitle.InnerText = "Editar Tutor";
+            btn_enviar.Text = "Editar Tutor";
             exampleModalForm.Visible = true;
 
         }
@@ -135,13 +132,13 @@ namespace GestaoFCT
 
             if(labelCod.Text != "0")
             {
-                string linhadesql = "select nome_entidade from Entidades where id_entidade = " + labelCod.Text + ";";
-                var sqlConn = new SqlConnection(EntSQLData.ConnectionString);
+                string linhadesql = "select nome_tutor from tutores where id_tutor = " + labelCod.Text + ";";
+                var sqlConn = new SqlConnection(TutSQLData.ConnectionString);
                 var com = new SqlCommand(linhadesql, sqlConn);
                 sqlConn.Open();
                 SqlDataReader r = com.ExecuteReader();
                 r.Read();
-                textoCancelar.InnerText = "Deseja eliminar o registo \"" + r["nome_entidade"] + "\"?";
+                textoCancelar.InnerText = "Deseja eliminar o registo \"" + r["nome_tutor"] + "\"?";
                 r.Close();
                 sqlConn.Close();
             }
@@ -158,6 +155,7 @@ namespace GestaoFCT
 
         }
 
+        /*
         protected void Comandos(object sender, EventArgs e)
         {
 
@@ -166,28 +164,28 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into Entidades (nome_entidade, nif_entidade, morada_entidade, loc_entidade, email_entidade, cpostal_entidade, telefone_entidade, natJuridica, resp_entidade, tlmResp_entidade, cargo_resp, atv_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_tlmResp.Value + "', '" + txt_cargo.Value + "', '" + txt_atvPrinc.Value + "');";
+                String linhasql = "insert into tutores (nome_tutor, nif_tutor, morada_tutor, loc_tutor, email_tutor, cpostal_tutor, telefone_tutor, natJuridica, resp_tutor, tlmResp_tutor, cargo_resp, atv_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_tlmResp.Value + "', '" + txt_cargo.Value + "', '" + txt_atvPrinc.Value + "');";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                exampleModalForm.Visible=false;
+                //Database.NonQuerySqlSrv(linhasql);
+                //reset();
+                //refresh();
+                //exampleModalForm.Visible=false;
             }
 
             if (operacao.Text == "2")
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update Entidades  set nome_entidade = '" + txt_nome.Value + "', nif_entidade = '" + txt_nif.Value + "', email_entidade = '" + txt_email.Value + "', loc_entidade = '" + txt_local.Value + "', morada_entidade = '" + txt_morada.Value +  "', telefone_entidade = '" + txt_telefone.Value +  "', cpostal_entidade = '" + txt_CodPost.Value + "', natjuridica = '" + txt_NatJuri.Value + "', resp_entidade = '" + txt_resp.Value + "', tlmResp_entidade = '" + txt_tlmResp.Value + "', cargo_resp = '" + txt_cargo.Value + "', atv_principal = '" + txt_atvPrinc.Value + "' where id_entidade = " + labelCod.Text + ";";
+                String linhasql = "update tutores  set nome_tutor = '" + txt_nome.Value + "', nif_tutor = '" + txt_nif.Value + "', email_tutor = '" + txt_email.Value + "', loc_tutor = '" + txt_local.Value + "', morada_tutor = '" + txt_morada.Value +  "', telefone_tutor = '" + txt_telefone.Value +  "', cpostal_tutor = '" + txt_CodPost.Value + "', natjuridica = '" + txt_NatJuri.Value + "', resp_tutor = '" + txt_resp.Value + "', tlmResp_tutor = '" + txt_tlmResp.Value + "', cargo_resp = '" + txt_cargo.Value + "', atv_principal = '" + txt_atvPrinc.Value + "' where id_tutor = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
+                //Database.NonQuerySqlSrv(linhasql);
+                //reset();
+                //refresh();
 
             }
 
@@ -195,18 +193,18 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('33333')</script>");
 
-                String linhasql = "delete from Entidades where id_entidade = " + labelCod.Text + ";";
+                String linhasql = "delete from Tutores where id_tutor = " + labelCod.Text + ";";
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
+                //Database.NonQuerySqlSrv(linhasql);
+                //reset();
+                //refresh();
             }
             
             exampleModalForm.Visible = false;
             exampleModal.Visible = false;
         }
-
+        */
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
