@@ -183,7 +183,7 @@ namespace GestaoFCT
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_telefone;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_telefone;
 
         /// <summary>
         /// Controle txt_morada.

@@ -36,6 +36,10 @@
   <!-- FAVICON -->
   <link href="images/favicon.png" rel="shortcut icon" />
 
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
   <!--
     HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
   -->
@@ -858,8 +862,8 @@
                                   <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_local">Telefone</label>
-                                  <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone do tutor" runat="server"/>
+                                  <label for="txt_telefone">Telefone</label>
+                                  <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do tutor"  runat="server"/>
                                 </div>
                                 <div class="form-group">
                                   <label for="txt_local">Morada</label>
@@ -874,16 +878,17 @@
                                   <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_NatJuri"> Data de nascimento</label>
+                                  <label for="txt_dataNasc"> Data de nascimento</label>
                                   <input type="text" class="form-control" id="txt_dataNasc" placeholder="Insira a data de nascimento do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_resp">Entidade</label>
+                                  <label for="ddl_entidade">Entidade</label>
                                   <%--<input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>--%>
-                                    <asp:DropDownList ID="ddl_entidade" runat="server"></asp:DropDownList>
+                                    <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_NatJuri"> Palavra passe</label>
+                                  <label for="txt_pass"> Palavra passe</label>
                                   <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o tutor" runat="server"/>
                                 </div>
                                 <!-- <div class="form-check pl-0">
@@ -899,7 +904,7 @@
                               <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar"> Cancelar</button>
 
                               <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
-                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar tutor" />
+                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar tutor" OnClick="Comandos" />
                             </div>
                           </div>
                         </div>
@@ -922,7 +927,7 @@
                             <%--<button type="button" class="btn btn-danger btn-pill" onclick="" >Close</button>--%>
                               <asp:Button ID="btnCancelar" class="btn btn-danger btn-pill" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
                             <%--<button type="button" class="btn btn-primary btn-pill">Save Changes</button>--%>
-                            <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar"  />
+                            <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar" OnClick="Comandos"  />
                           </div>
                         </div>
                       </div>
@@ -1034,6 +1039,8 @@
           table.on("tableBuilt", function () {
               table.setData(cat_tabledata);
           });
+
+
 
 
       </script>
