@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace GestaoFCT
 {
-    public partial class GestProf : System.Web.UI.Page
+    public partial class GestAluno : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -35,7 +35,7 @@ namespace GestaoFCT
 
         protected void refresh()
         {
-            String linhasql = "select * from professores;";
+            String linhasql = "select * from Alunos;";
             DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
             rptItems.DataSource = dt;
@@ -56,7 +56,8 @@ namespace GestaoFCT
             txt_nif.Value = "";
             txt_email.Value = "";
             txt_telefone.Value = "";
-            txt_telemovel.Value = "";
+            txt_bi.Value = "";
+            txt_val.Value = "";
             txt_morada.Value = "";
             txt_local.Value = "";
             txt_CodPost.Value = "";
@@ -68,22 +69,23 @@ namespace GestaoFCT
         protected void Atualizar()
         {
 
-            string linhadesql = "select * from professores where id_prof = " + labelCod.Text + ";";
-            var sqlConn = new SqlConnection(ProfSQLData.ConnectionString);
+            string linhadesql = "select * from Alunos where id_aluno = " + labelCod.Text + ";";
+            var sqlConn = new SqlConnection(AlnSQLData.ConnectionString);
             var com = new SqlCommand(linhadesql, sqlConn);
             sqlConn.Open();
             SqlDataReader r = com.ExecuteReader();
             while (r.Read())
             {
-                txt_nome.Value = r["nome_prof"].ToString();
-                txt_nif.Value = r["nif_prof"].ToString();
-                txt_email.Value = r["email_prof"].ToString();
-                txt_telefone.Value = r["telefone_prof"].ToString();
-                txt_telemovel.Value = r["telemovel_prof"].ToString();
-                txt_morada.Value = r["morada_prof"].ToString();
-                txt_local.Value = r["loc_prof"].ToString();
-                txt_CodPost.Value = r["cpostal_prof"].ToString();
-                txt_pass.Value = r["pass_prof"].ToString();
+                txt_nome.Value = r["nome_aluno"].ToString();
+                txt_nif.Value = r["nif_aluno"].ToString();
+                txt_email.Value = r["email_aluno"].ToString();
+                txt_telefone.Value = r["telefone_aluno"].ToString();
+                txt_bi.Value = r["bi_aluno"].ToString();
+                txt_val.Value = r["valBi_aluno"].ToString();
+                txt_morada.Value = r["morada_aluno"].ToString();
+                txt_local.Value = r["loc_aluno"].ToString();
+                txt_CodPost.Value = r["cpostal_aluno"].ToString();
+                txt_pass.Value = r["pass_aluno"].ToString();
 
             }
             r.Close();
@@ -106,8 +108,8 @@ namespace GestaoFCT
             //Response.Write("<script>alert('aaaaa')</script>");
             operacao.Text = "1";
             reset();
-            exampleModalFormTitle.InnerText = "Criar Professor";
-            btn_enviar.Text = "Criar Professor";
+            exampleModalFormTitle.InnerText = "Criar Aluno";
+            btn_enviar.Text = "Criar Aluno";
             exampleModalForm.Visible = true;
 
         }
@@ -121,8 +123,8 @@ namespace GestaoFCT
             {
 
                 Atualizar();
-                exampleModalFormTitle.InnerText = "Editar Professor";
-                btn_enviar.Text = "Editar Professor";
+                exampleModalFormTitle.InnerText = "Editar Aluno";
+                btn_enviar.Text = "Editar Aluno";
                 exampleModalForm.Visible = true;
             }
             else
@@ -145,13 +147,13 @@ namespace GestaoFCT
             if(labelCod.Text != "0")
             {
                 btnDeletar.Visible = true;
-                string linhadesql = "select nome_prof from professores where id_prof = " + labelCod.Text + ";";
-                var sqlConn = new SqlConnection(ProfSQLData.ConnectionString);
+                string linhadesql = "select nome_aluno from alunos where id_aluno = " + labelCod.Text + ";";
+                var sqlConn = new SqlConnection(AlnSQLData.ConnectionString);
                 var com = new SqlCommand(linhadesql, sqlConn);
                 sqlConn.Open();
                 SqlDataReader r = com.ExecuteReader();
                 r.Read();
-                textoCancelar.InnerText = "Deseja eliminar o registo \"" + r["nome_prof"] + "\"?";
+                textoCancelar.InnerText = "Deseja eliminar o registo \"" + r["nome_aluno"] + "\"?";
                 r.Close();
                 sqlConn.Close();
             }
@@ -177,7 +179,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_pass.Value + "');";
+                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + txt_pass.Value + "');";
 
                 Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
@@ -191,7 +193,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update professores set nome_prof = '" + txt_nome.Value + "', nif_prof = '" + txt_nif.Value + "', email_prof = '" + txt_email.Value + "', loc_prof = '" + txt_local.Value + "', morada_prof = '" + txt_morada.Value +  "', telefone_prof = '" + txt_telefone.Value +  "', cpostal_prof = '" + txt_CodPost.Value + "', telemovel_prof = '" + txt_telemovel.Value + "', pass_prof = '" + txt_pass.Value + "' where id_prof = " + labelCod.Text + ";";
+                String linhasql = "update alunos set nome_aluno = '" + txt_nome.Value + "', nif_aluno = '" + txt_nif.Value + "', email_aluno = '" + txt_email.Value + "', loc_aluno = '" + txt_local.Value + "', morada_aluno = '" + txt_morada.Value +  "', telefone_aluno = '" + txt_telefone.Value +  "', cpostal_aluno = '" + txt_CodPost.Value + "', bi_aluno = '" + txt_bi.Value + "', valBi_aluno = '" + txt_val.Value + "', pass_aluno = '" + txt_pass.Value + "' where id_aluno = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");
@@ -206,7 +208,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('33333')</script>");
 
-                String linhasql = "delete from professores where id_prof = " + labelCod.Text + ";";
+                String linhasql = "delete from alunos where id_aluno = " + labelCod.Text + ";";
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);

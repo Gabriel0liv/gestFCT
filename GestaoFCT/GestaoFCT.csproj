@@ -69,6 +69,8 @@
   <ItemGroup>
     <Content Include="css\style-login.css" />
     <Content Include="css\style.css" />
+    <Content Include="GestEnc.aspx" />
+    <Content Include="GestAluno.aspx" />
     <Content Include="GestProf.aspx" />
     <Content Include="GestTutor.aspx" />
     <Content Include="GestEmp.aspx" />
@@ -82,6 +84,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="GestEnc.aspx.cs">
+      <DependentUpon>GestEnc.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestEnc.aspx.designer.cs">
+      <DependentUpon>GestEnc.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestAluno.aspx.cs">
+      <DependentUpon>GestAluno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestAluno.aspx.designer.cs">
+      <DependentUpon>GestAluno.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GestProf.aspx.cs">
       <DependentUpon>GestProf.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

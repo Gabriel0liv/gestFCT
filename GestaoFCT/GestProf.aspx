@@ -173,7 +173,11 @@
                                 <span class="nav-text">Gestão de alunos</span>
                               </a>
                             </li>
-                             
+                            <li>
+                              <a class="sidenav-item-link" href="GestEnc.aspx">
+                                <span class="nav-text">Gestão de Encarregados</span>
+                              </a>
+                            </li>
                       </div>
                     </ul>
                   </li>

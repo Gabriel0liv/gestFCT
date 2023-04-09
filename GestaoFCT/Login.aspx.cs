@@ -20,28 +20,27 @@ namespace GestaoFCT
         {
             char[] rem = { '\'', ' ' };
 
-            string Sql_Aluno = "select Nome_Aluno, id_cargo from Alunos where email_Aluno='" + txt_email.Value.Trim(rem) +
-                    "' and pass_aluno='" + txt_pass.Value.Trim(rem) + "';";
+            //string Sql_login = "select Nome_Aluno, id_cargo from Alunos where email_Aluno='" + txt_email.Value.Trim(rem) +
+            //        "' and pass_aluno='" + txt_pass.Value.Trim(rem) + "';";
 
-            string Sql_Professor = "select * from Professores where email_prof='" + txt_email.Value.Trim(rem) +
-                    "' and SenhaProf='" + txt_pass.Value.Trim(rem) + "';";
+            string Sql_login = "select Nome, cargo from tbl_login where email='" + txt_email.Value.Trim(rem) +
+        "' and pass ='" + txt_pass.Value.Trim(rem) + "';";
 
-            string Sql_Tutor = "select * from Tutores where Email_tutor='" + txt_email.Value.Trim(rem) +
-                    "' and SenhaTutor='" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value.Trim(rem))) + "';";
+            // SenhaTutor='" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value.Trim(rem))) + "';";
 
-            DataTable dt = Database.GetFromDBSqlSrv(Sql_Aluno);
+            DataTable dt = Database.GetFromDBSqlSrv(Sql_login);
 
             if (dt.Rows.Count == 1)
             {
                 //Response.Write("<script>alert('ele foi')</script>");
-                string alo = dt.Rows[0]["Nome_Aluno"].ToString();
-                Session["Utilizador"] = dt.Rows[0]["Nome_Aluno"];
-                string alo2 = dt.Rows[0]["id_cargo"].ToString();
+                //string alo = dt.Rows[0]["Nome"].ToString();
+                Session["Utilizador"] = dt.Rows[0]["Nome"];
+                //string alo2 = dt.Rows[0]["cargo"].ToString();
 
-                Session["cargo"] = dt.Rows[0]["id_cargo"];
+                Session["cargo"] = dt.Rows[0]["cargo"];
 
                 Response.Redirect("~/GestEmp.aspx");
-            }
+           /* }
             else {
 
                 dt = Database.GetFromDBSqlSrv(Sql_Professor);
@@ -65,7 +64,7 @@ namespace GestaoFCT
                         Response.Write("<script>alert(' erro ')</script>");
                     }
                 }
-            
+            */
        
             }
 
