@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestEnc.aspx.cs" Inherits="GestaoFCT.GestEnc" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestCursos.aspx.cs" Inherits="GestaoFCT.GestCursos" %>
 
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Mono - Responsive Admin & Dashboard Template</title>
+  <title>GestFCT</title>
 
   <!-- GOOGLE FONTS -->
   <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -73,7 +73,7 @@
         <asp:Label ID="operacao" runat="server" Text="" Visible="false"></asp:Label>
         <asp:HiddenField ID="HiddenField1" runat="server" />
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-        <asp:SqlDataSource ID="EncSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="CursoSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
 
 
 
@@ -167,17 +167,18 @@
                                 <span class="nav-text">Gestão de professores</span>
                               </a>
                             </li>
-                            <li>
+                                 
+                            <li >
                               <a class="sidenav-item-link" href="GestAluno.aspx">
                                 <span class="nav-text">Gestão de alunos</span>
                               </a>
                             </li>
-                            <li class="active">
+                            <li>
                               <a class="sidenav-item-link" href="GestEnc.aspx">
                                 <span class="nav-text">Gestão de Encarregados</span>
                               </a>
                             </li>
-                            <li>
+                            <li class="active">
                               <a class="sidenav-item-link" href="GestCursos.aspx">
                                 <span class="nav-text">Gestão de Cursos</span>
                               </a>
@@ -680,7 +681,7 @@
                 <span class="sr-only">Toggle navigation</span>
               </button>
 
-              <span class="page-title">Gestão de Encarregados de Educação</span>
+              <span class="page-title">Gestão de Cursos</span>
 
               <div class="navbar-right ">
 
@@ -775,7 +776,7 @@
             <div class="email-wrapper rounded border bg-white">
               <div class="row no-gutters justify-content-center">
                 <div class="col-lg-4 col-xl-3 col-xxl-2">
-                  <div class="email-left-column email-options p-4 p-xl-5">
+                  <div class="email-left-column email-options p-4 ">
                     <p class="text-dark font-weight-medium">Opções</p>
                     <ul>
                       <li class="mt-4">
@@ -855,61 +856,25 @@
                             <div class="modal-body" style="height: 400px;overflow-y: auto;">
                                 
                                 <div class="form-group">
-                                  <label for="txt_nome">Nome</label>
-                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Encarregado" enableviewstate="true" runat="server"/>
+                                  <label for="txt_nome">Nome do curso</label>
+                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do curso" enableviewstate="true" runat="server"/>
                                 </div>
 
                                 <div class="form-group">
-                                  <label for="txt_nif">NIF</label>
-                                  <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Encarregado" runat="server"/>
+                                  <label for="txt_CodPost">Data de Início</label>
+                                  <input type="text" class="form-control" id="txt_dataIni" placeholder="Insira o ano de inicio do curso. Ex: 2022" runat="server"/>
                                 </div>
                                 <div class="form-group">
-                                  <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                  <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do Encarregado" runat="server"/>
+                                  <label for="txt_CodPost">Data de Finalização</label>
+                                  <input type="text" class="form-control" id="txt_dataFim" placeholder="Insira o ano de finalização do curso. Ex: 2023" runat="server"/>
                                 </div>
-                                <div class="form-group">
-                                  <label for="txt_val">Validade</label>
-                                  <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_email">Email address</label>
-                                  <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do Encarregado" runat="server"/>
-                                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_telefone">Telefone</label>
-                                  <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do Encarregado"  runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_telemovel">Telemovel</label>
-                                  <input type="number" class="form-control" id="txt_telemovel" placeholder="Insira o telefone do Encarregado"  runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_morada">Morada</label>
-                                  <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do encarregado" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_local">Localidade</label>
-                                  <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do encarregado" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_CodPost">Código Postal</label>
-                                  <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do encarregado" runat="server"/>
-                                </div>
-                                <!-- <div class="form-check pl-0">
-                                  <label class="control control-checkbox">Check me out
-                                    <input type="checkbox" checked="checked" />
-                                    <div class="control-indicator"></div>
-                                  </label>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button> -->
                               
                             </div>
                             <div class="modal-footer">
                               <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar"> Cancelar</button>
 
                               <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
-                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar encarregado" OnClick="Comandos" />
+                              <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar professor" OnClick="Comandos" />
                             </div>
                           </div>
                         </div>
@@ -920,7 +885,7 @@
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo do encarregado</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo da professor</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -986,17 +951,10 @@
           height:"310px",
           layout:"fitDataStretch",
           columns:[
-                {title:"Cód.", field:"codigo", width:50, resizable:false},
-                {title:"Nome", field:"nome", width:230, resizable:false},
-                {title:"NIF", field:"nif", width:80, resizable:false},
-                {title:"E-mail", field:"email", width:230, resizable:false},
-                {title:"Morada", field:"morada", width:230, resizable:false},
-                {title:"localidade", field:"localidade", width:156, resizable:false},
-                {title:"C.Postal", field: "codPost", width: 80, resizable: false},
-                { title: "Telefone", field: "telefone", width: 156, resizable: false },
-                { title: "Telemovel", field: "telemovel", width: 156, resizable: false },
-                { title: "Bi", field: "bi", width: 156, resizable: false },
-                { title: "Validade", field: "valbi", width: 100, resizable: false },
+            {title:"Cód.", field:"codigo", width:100, resizable:false},
+            {title:"Nome", field:"nome", width:230, resizable:false},
+            {title:"Data de início", field:"dataini", width:207, resizable:false},
+            {title:"Data de finalização", field:"datafim", width:207, resizable:false},
 
           ],
 
@@ -1027,17 +985,10 @@
           var cat_tabledata = [
               <asp:Repeater ID="rptItems" runat="server">
                   <ItemTemplate>
-                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_ee") %>',
-                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_ee") %>',
-                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_ee") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "email_ee") %>', 
-                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_ee") %>',
-                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_ee") %>', 
-                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_ee") %>',
-                    telefone: '<%#DataBinder.Eval(Container.DataItem, "telefone_ee") %>',
-                    telemovel: '<%#DataBinder.Eval(Container.DataItem, "telemovel_ee") %>',
-                    bi: '<%#DataBinder.Eval(Container.DataItem, "bi_ee") %>',
-                    valbi: '<%#DataBinder.Eval(Container.DataItem, "valBi_ee") %>'},
+                    {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_curso") %>',
+                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>',
+                    dataini: '<%#DataBinder.Eval(Container.DataItem, "dataI_curso") %>', 
+                    datafim: '<%#DataBinder.Eval(Container.DataItem, "dataF_curso") %>'},
 
             </ItemTemplate>
         </asp:Repeater >];

@@ -178,6 +178,11 @@
                                 <span class="nav-text">Gestão de Encarregados</span>
                               </a>
                             </li>
+                            <li>
+                              <a class="sidenav-item-link" href="GestCursos.aspx">
+                                <span class="nav-text">Gestão de Cursos</span>
+                              </a>
+                            </li>
                       </div>
                     </ul>
                   </li>
@@ -676,7 +681,7 @@
                 <span class="sr-only">Toggle navigation</span>
               </button>
 
-              <span class="page-title">Gestão de professores</span>
+              <span class="page-title">Gestão de Professores</span>
 
               <div class="navbar-right ">
 

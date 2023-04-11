@@ -37,7 +37,9 @@
   <link href="images/favicon.png" rel="shortcut icon" />
 
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
   <!--
@@ -838,8 +840,7 @@
 
                     <!-- FORM MODAL -->
                        
-                    <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
-                        aria-hidden="true" runat="server" visible="false">
+                    <div class="modal" id="exampleModalForm" runat="server" visible="false">
                         <div class="modal-dialog" role="document">
                           <iv class="modal-content">
                             <div class="modal-header">
@@ -886,6 +887,7 @@
                                   <input type="text" class="form-control" id="txt_dataNasc" placeholder="Insira a data de nascimento do tutor" runat="server"/>
                                 </div>
                                 <div class="form-group">
+
                                   <label for="ddl_entidade">Entidade</label>
                                   <%--<input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>--%>
                                     <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
@@ -1044,17 +1046,16 @@
               table.setData(cat_tabledata);
           });
 
-
+          $(document).ready(function () {
+              $('#ddl_entidade').select2();
+          });
 
 
       </script>
 
-
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="plugins/simplebar/simplebar.min.js"></script>
-    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
-
+         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+          <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+         <script src="plugins/simplebar/simplebar.min.js"></script>
     
     <script src="js/mono.js"></script>
     <script src="js/chart.js"></script>
@@ -1067,6 +1068,11 @@
       .tabulator .tabulator-header{width: auto;}
       /* .tabulator .tabulator-tableholder{overflow-x: hidden;} */
       /* .tabulator .tabulator-row-even {} */
+
+ 
+      .select2-container {
+            z-index: 99999;
+        }
     </style>
 
     </form>
