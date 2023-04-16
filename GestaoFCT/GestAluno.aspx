@@ -37,8 +37,9 @@
   <link href="images/favicon.png" rel="shortcut icon" />
 
 <!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <!--
     HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -798,6 +799,12 @@
                             Eliminar
                         </button>
                       </li>
+                      <li class="mt-4">
+                        <button type="button" id="btnFCT" onserverclick="FCT" runat="server">
+                            <i class="mdi mdi-checkbox-blank-circle-outline text-primary mr-3"></i>
+                            Gerar FCT
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -854,57 +861,85 @@
                               </button>
                             </div>
                             <div class="modal-body" style="height: 400px;overflow-y: auto;">
-                                
-                                <div class="form-group">
-                                  <label for="txt_nome">Nome</label>
-                                  <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Aluno" enableviewstate="true" runat="server"/>
-                                </div>
+                                <div id="formAluno" runat="server">
+                                    <div class="form-group">
+                                      <label for="txt_nome">Nome</label>
+                                      <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Aluno" enableviewstate="true" runat="server"/>
+                                    </div>
 
-                                <div class="form-group">
-                                  <label for="txt_nif">NIF</label>
-                                  <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" runat="server"/>
+                                    <div class="form-group">
+                                      <label for="txt_nif">NIF</label>
+                                      <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
+                                      <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_val">Validade</label>
+                                      <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_email">Email address</label>
+                                      <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do aluno" runat="server"/>
+                                      <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_telefone">Telefone</label>
+                                      <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do aluno"  runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_morada">Morada</label>
+                                      <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do aluno" runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_local">Localidade</label>
+                                      <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do aluno" runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_CodPost">Código Postal</label>
+                                      <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server"/>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="txt_pass"> Palavra passe</label>
+                                      <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" runat="server"/>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                  <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                  <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" runat="server"/>
+                                <div id="formFCT" runat="server" visible="false">
+
+                                    <div class="form-group">
+                                        <label for="ddl_entidade">Aluno</label>
+                                        <asp:TextBox id="txt_aluno" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ddl_entidade">Curso</label>
+                                        <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ddl_entidade">Professor Orientador</label>
+                                        <asp:DropDownList ID="ddl_professor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ddl_entidade">Entidade</label>
+                                        <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" AutoPostBack="true"  ClientIDMode="Static" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged"></asp:DropDownList>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ddl_entidade">Tutor</label>
+                                        <asp:DropDownList ID="ddl_tutor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                    </div>
+                                    <div class="form-group">
+                                        <div style="display: inline-block">
+                                      <label for="txt_nome">número de horas</label>
+                                      <input type="text" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server"/>
+                                        </div>
+
+                                        <div style="display: inline-block">
+                                      <label for="txt_nome">Ano</label>
+                                      <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server"/>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                  <label for="txt_val">Validade</label>
-                                  <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_email">Email address</label>
-                                  <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do aluno" runat="server"/>
-                                  <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_telefone">Telefone</label>
-                                  <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do aluno"  runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_morada">Morada</label>
-                                  <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do aluno" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_local">Localidade</label>
-                                  <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do aluno" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_CodPost">Código Postal</label>
-                                  <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server"/>
-                                </div>
-                                <div class="form-group">
-                                  <label for="txt_pass"> Palavra passe</label>
-                                  <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" runat="server"/>
-                                </div>
-                                <!-- <div class="form-check pl-0">
-                                  <label class="control control-checkbox">Check me out
-                                    <input type="checkbox" checked="checked" />
-                                    <div class="control-indicator"></div>
-                                  </label>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button> -->
-                              
                             </div>
                             <div class="modal-footer">
                               <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar"> Cancelar</button>
@@ -942,7 +977,7 @@
                         <%--TABULATOR--%>
                       </div>
                     </div>
-                    <div class="border border-top-0 rounded table-responsive email-list">
+                    <div class="border border-top-0 rounded table-responsive email-list" style="padding: 0 10px 40px">
                       <!-- <table class="table mb-0 table-email"> </table> -->
 
                       <div id="example-table" ></div>
@@ -1050,15 +1085,19 @@
           });
 
 
-
+          $(document).ready(function () {
+              $('#ddl_entidade').select2();
+              $('#ddl_curso').select2();
+              $('#ddl_professor').select2();
+              $('#ddl_tutor').select2();
+          });
 
       </script>
 
 
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="plugins/simplebar/simplebar.min.js"></script>
-    <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+          <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+         <script src="plugins/simplebar/simplebar.min.js"></script>
 
     
     <script src="js/mono.js"></script>
@@ -1072,6 +1111,28 @@
       .tabulator .tabulator-header{width: auto;}
       /* .tabulator .tabulator-tableholder{overflow-x: hidden;} */
       /* .tabulator .tabulator-row-even {} */
+      .select2-container {z-index: 99999;}
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        display: block;
+        width: 100%;
+        height: calc(1.5em + 1.12rem + 2px);
+        padding: 0.56rem 1rem;
+        font-size: 0.9375rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #ffffff;
+        background-clip: padding-box;
+        border: 1px solid #e5e9f2;
+        border-radius: 0.25rem;
+    }
+    .select2-container--default .select2-selection--single{border:none}
+    .select2-dropdown{border: 1px solid #e5e9f2}
+    .select2-search--dropdown{padding: 8px 4px 4px 4px;}
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid #e5e9f2;
+}
+
     </style>
 
     </form>

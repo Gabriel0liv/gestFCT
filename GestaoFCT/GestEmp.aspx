@@ -946,7 +946,7 @@
                         <%--TABULATOR--%>
                       </div>
                     </div>
-                    <div class="border border-top-0 rounded table-responsive email-list">
+                    <div class="border border-top-0 rounded table-responsive email-list" style="padding: 0 10px 40px">
                       <!-- <table class="table mb-0 table-email"> </table> -->
 
                       <div id="example-table" ></div>

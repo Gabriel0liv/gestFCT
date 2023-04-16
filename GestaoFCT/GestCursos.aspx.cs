@@ -28,7 +28,7 @@ namespace GestaoFCT
 
             if (rptItems.Items.Count == 0)
             {
-                refresh();
+                refresh ();
             }
 
         }
@@ -55,7 +55,8 @@ namespace GestaoFCT
             txt_nome.Value = "";
             txt_dataIni.Value = "";
             txt_dataFim.Value = "";
-
+            txt_ano.Value = "";
+            txt_turma.Value = "";
 
         }
 
@@ -72,6 +73,8 @@ namespace GestaoFCT
                 txt_nome.Value = r["nome_curso"].ToString();
                 txt_dataIni.Value = r["dataI_curso"].ToString();
                 txt_dataFim.Value = r["dataF_curso"].ToString();
+                txt_ano.Value = r["ano_curso"].ToString();
+                txt_turma.Value = r["turma_curso"].ToString();
             }
             r.Close();
             sqlConn.Close();

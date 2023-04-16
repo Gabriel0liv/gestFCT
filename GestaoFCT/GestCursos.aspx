@@ -807,7 +807,6 @@
                     <div class="email-right-header mb-5">
 
 
-
                     <!-- head left option -->
                     <!--<div class="head-left-options">
                     <div class="form-check">
@@ -859,7 +858,14 @@
                                   <label for="txt_nome">Nome do curso</label>
                                   <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do curso" enableviewstate="true" runat="server"/>
                                 </div>
-
+                                <div class="form-group">
+                                  <label for="txt_CodPost"> Ano </label>
+                                  <input type="text" class="form-control" id="txt_ano" placeholder="Insira o ano da turma. Ex: 11º" runat="server"/>
+                                </div>
+                                <div class="form-group">
+                                  <label for="txt_CodPost">Turma</label>
+                                  <input type="text" class="form-control" id="txt_turma" placeholder="Insira a letra da turma. Ex: S" runat="server"/>
+                                </div>
                                 <div class="form-group">
                                   <label for="txt_CodPost">Data de Início</label>
                                   <input type="text" class="form-control" id="txt_dataIni" placeholder="Insira o ano de inicio do curso. Ex: 2022" runat="server"/>
@@ -906,7 +912,7 @@
                         <%--TABULATOR--%>
                       </div>
                     </div>
-                    <div class="border border-top-0 rounded table-responsive email-list">
+                    <div class="border border-top-0 rounded table-responsive email-list" style="padding: 0 10px 40px">
                       <!-- <table class="table mb-0 table-email"> </table> -->
 
                       <div id="example-table" ></div>
@@ -922,11 +928,7 @@
         
           <!-- Footer -->
           <footer class="footer mt-auto">
-            <div class="copyright bg-white">
-              <p>
-                &copy; <span id="copy-year"></span> Copyright Mono Dashboard Bootstrap Template by <a class="text-primary" href="http://www.iamabdus.com/" target="_blank" >Abdus</a>.
-              </p>
-            </div>
+
             <script>
                 var d = new Date();
                 var year = d.getFullYear();
@@ -952,12 +954,13 @@
           layout:"fitDataStretch",
           columns:[
             {title:"Cód.", field:"codigo", width:100, resizable:false},
-            {title:"Nome", field:"nome", width:230, resizable:false},
-            {title:"Data de início", field:"dataini", width:207, resizable:false},
-            {title:"Data de finalização", field:"datafim", width:207, resizable:false},
-
+            {title: "Nome", field: "nome", width: 300, resizable: false },
+            {title: "Ano", field: "ano", width: 100, resizable: false },
+            {title: "Turma", field: "turma", width: 100, resizable: false },
+            {title:"Data de início", field:"dataini", width:150, resizable:false},
+            {title:"Data de finalização", field:"datafim", width:150, resizable:false},
           ],
-
+              
         });
 
           table.on("rowSelectionChanged", function (data, rows) {
@@ -987,9 +990,10 @@
                   <ItemTemplate>
                     {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_curso") %>',
                     nome: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>',
+                    ano: '<%#DataBinder.Eval(Container.DataItem, "ano_curso") %>',
+                    turma: '<%#DataBinder.Eval(Container.DataItem, "turma_curso") %>',
                     dataini: '<%#DataBinder.Eval(Container.DataItem, "dataI_curso") %>', 
                     datafim: '<%#DataBinder.Eval(Container.DataItem, "dataF_curso") %>'},
-
             </ItemTemplate>
         </asp:Repeater >];
 

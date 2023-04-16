@@ -110,6 +110,8 @@ namespace GestaoFCT
             reset();
             exampleModalFormTitle.InnerText = "Criar Aluno";
             btn_enviar.Text = "Criar Aluno";
+            formAluno.Visible = true;
+            formFCT.Visible = false;
             exampleModalForm.Visible = true;
 
         }
@@ -125,6 +127,8 @@ namespace GestaoFCT
                 Atualizar();
                 exampleModalFormTitle.InnerText = "Editar Aluno";
                 btn_enviar.Text = "Editar Aluno";
+                formAluno.Visible = true;
+                formFCT.Visible = false;
                 exampleModalForm.Visible = true;
             }
             else
@@ -170,6 +174,73 @@ namespace GestaoFCT
 
         }
 
+        protected void FCT(object sender, EventArgs e)
+        {
+            operacao.Text = "4";
+            labelCod.Text = HiddenField1.Value;
+
+            if (labelCod.Text != "0")
+            {
+                exampleModalFormTitle.InnerText = "Gerar registo da FCT";
+                btn_enviar.Text = "Gerar FCT";
+
+                using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
+                {
+                    string query = "SELECT nome_aluno FROM Alunos WHERE id_aluno = " + labelCod.Text;
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, sqlConn);
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        txt_aluno.Text = dt.Rows[0]["nome_aluno"].ToString();
+                    }
+
+                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso from cursos;", sqlConn);
+                    sqlConn.Open();
+                    ddl_curso.DataTextField = "nome_curso";
+                    ddl_curso.DataValueField = "id_curso";
+                    ddl_curso.DataSource = cmd.ExecuteReader();
+                    ddl_curso.DataBind();
+                    sqlConn.Close();
+
+                    SqlCommand cmd2 = new SqlCommand("select id_prof, nome_prof from professores;", sqlConn);
+                    sqlConn.Open();
+                    ddl_professor.DataTextField = "nome_prof";
+                    ddl_professor.DataValueField = "id_prof";
+                    ddl_professor.DataSource = cmd2.ExecuteReader();
+                    ddl_professor.DataBind();
+                    sqlConn.Close();
+
+                    SqlCommand cmd3 = new SqlCommand("select id_entidade, nome_entidade from Entidades;", sqlConn);
+                    sqlConn.Open();
+                    ddl_entidade.DataTextField = "nome_entidade";
+                    ddl_entidade.DataValueField = "id_entidade";
+                    ddl_entidade.DataSource = cmd3.ExecuteReader();
+                    ddl_entidade.DataBind();
+                    sqlConn.Close();
+
+                    SqlCommand cmd4 = new SqlCommand("select id_tutor, nome_tutor from tutores;", sqlConn);
+                    sqlConn.Open();
+                    ddl_tutor.DataTextField = "nome_tutor";
+                    ddl_tutor.DataValueField = "id_tutor";
+                    ddl_tutor.DataSource = cmd4.ExecuteReader();
+                    ddl_tutor.DataBind();
+                    sqlConn.Close();
+
+                }
+                txt_anoFCT.Value = (DateTime.Now.Year - 1).ToString() + "/" + DateTime.Now.Year.ToString();
+                formAluno.Visible = false;
+                formFCT.Visible = true;
+                exampleModalForm.Visible = true;
+            }
+            else
+            {
+                textoCancelar.InnerText = "Nenhum registo foi selecionado!";
+                btnDeletar.Visible = false;
+                exampleModal.Visible = true;
+            }
+
+        }
         
         protected void Comandos(object sender, EventArgs e)
         {
@@ -216,6 +287,11 @@ namespace GestaoFCT
                 refresh();
             }
 
+            if(operacao.Text == "4")
+            {
+
+            }
+
             exampleModalForm.Visible = false;
             exampleModal.Visible = false;
         }
@@ -223,6 +299,22 @@ namespace GestaoFCT
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
+        }
+
+        protected void ddl_entidade_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("select id_tutor, nome_tutor from tutores where id_entidade = " + ddl_entidade.SelectedValue + ";", sqlConn);
+                sqlConn.Open();
+                ddl_tutor.DataTextField = "nome_tutor";
+                ddl_tutor.DataValueField = "id_tutor";
+                ddl_tutor.DataSource = cmd.ExecuteReader();
+                ddl_tutor.DataBind();
+                sqlConn.Close();
+            }
+
         }
     }
 }
