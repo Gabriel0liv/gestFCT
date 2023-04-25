@@ -15,16 +15,16 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //if (Session["Utilizador"] == null)
-            //{
-            //    //Redirect to login page.
-            //    Response.Redirect("~/Login.aspx");
-            //}
-            //else
-            //{
-            //    //Redirect to home page
-            //    NomeUser.InnerText = Session["Utilizador"].ToString();
-            //}
+            if (Session["Utilizador"] == null)
+            {
+                //Redirect to login page.
+                Response.Redirect("~/Login.aspx");
+            }
+            else
+            {
+                //Redirect to home page
+                NomeUser.InnerText = Session["Utilizador"].ToString();
+            }
 
             if (rptItems.Items.Count == 0)
             {
@@ -177,7 +177,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_pass.Value + "');";
+                String linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_pass.Value + "', 2);";
 
                 Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 

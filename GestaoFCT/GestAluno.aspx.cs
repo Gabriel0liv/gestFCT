@@ -15,16 +15,16 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //if (Session["Utilizador"] == null)
-            //{
-            //    //Redirect to login page.
-            //    Response.Redirect("~/Login.aspx");
-            //}
-            //else
-            //{
-            //    //Redirect to home page
-            //    NomeUser.InnerText = Session["Utilizador"].ToString();
-            //}
+            if (Session["Utilizador"] == null)
+            {
+                //Redirect to login page.
+                Response.Redirect("~/Login.aspx");
+            }
+            else
+            {
+                //Redirect to home page
+                NomeUser.InnerText = Session["Utilizador"].ToString();
+            }
 
             if (rptItems.Items.Count == 0)
             {
@@ -164,7 +164,6 @@ namespace GestaoFCT
             else
             {
                 textoCancelar.InnerText = "Nenhum registo foi selecionado!";
-                //textoCancelar.Style[""]
                 btnDeletar.Visible = false;
             }
 
@@ -178,6 +177,7 @@ namespace GestaoFCT
         {
             operacao.Text = "4";
             labelCod.Text = HiddenField1.Value;
+            int mes;
 
             if (labelCod.Text != "0")
             {
@@ -228,7 +228,12 @@ namespace GestaoFCT
                     sqlConn.Close();
 
                 }
-                txt_anoFCT.Value = (DateTime.Now.Year - 1).ToString() + "/" + DateTime.Now.Year.ToString();
+
+                // ano da FCT
+                mes = DateTime.Now.Month;
+                if (mes >= 9) { txt_anoFCT.Value = (DateTime.Now.Year).ToString() + "/" + (DateTime.Now.Year + 1).ToString(); }
+                else if (mes < 9) { txt_anoFCT.Value = (DateTime.Now.Year -1).ToString() + "/" + DateTime.Now.Year.ToString(); }
+
                 formAluno.Visible = false;
                 formFCT.Visible = true;
                 exampleModalForm.Visible = true;
@@ -250,7 +255,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + txt_pass.Value + "');";
+                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + txt_pass.Value + "', 4);";
 
                 Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
@@ -289,6 +294,12 @@ namespace GestaoFCT
 
             if(operacao.Text == "4")
             {
+                String linhasql = "insert into FichasFCT (id_aluno, id_curso, id_entidade, id_tutor, id_professor, num_horas, ano_fct) values('" + labelCod.Text + "', '" + ddl_curso.SelectedValue + "','" + ddl_entidade.SelectedValue + "', '" + ddl_tutor.SelectedValue + "', '" + ddl_professor.SelectedValue + "' ,'" + txt_numHora.Value + "', '" + txt_anoFCT.Value + "');";
+
+                Database.NonQuerySqlSrv(linhasql);
+                reset();
+                refresh();
+                exampleModalForm.Visible = false;
 
             }
 

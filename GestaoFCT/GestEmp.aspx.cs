@@ -14,16 +14,16 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //if (Session["Utilizador"] == null)
-            //{
-            //    //Redirect to login page.
-            //    Response.Redirect("~/Login.aspx");
-            //}
-            //else
-            //{
-            //    //Redirect to home page
-            //    NomeUser.InnerText = Session["Utilizador"].ToString();
-            //}
+            if (Session["Utilizador"] == null)
+            {
+                //Redirect to login page.
+                Response.Redirect("~/Login.aspx");
+            }
+            else
+            {
+                //Redirect to home page
+                NomeUser.InnerText = Session["Utilizador"].ToString();
+            }
 
             if (rptItems.Items.Count == 0)
             {

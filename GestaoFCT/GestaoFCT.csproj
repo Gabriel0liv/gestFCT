@@ -75,6 +75,7 @@
     <Content Include="GestAluno.aspx" />
     <Content Include="GestCursos.aspx" />
     <Content Include="GestProf.aspx" />
+    <Content Include="GestFCT.aspx" />
     <Content Include="GestTutor.aspx" />
     <Content Include="GestEmp.aspx" />
     <Content Include="js\calendar.js" />
@@ -114,6 +115,13 @@
     </Compile>
     <Compile Include="GestProf.aspx.designer.cs">
       <DependentUpon>GestProf.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GestFCT.aspx.cs">
+      <DependentUpon>GestFCT.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestFCT.aspx.designer.cs">
+      <DependentUpon>GestFCT.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestTutor.aspx.cs">
       <DependentUpon>GestTutor.aspx</DependentUpon>

@@ -20,9 +20,6 @@ namespace GestaoFCT
         {
             char[] rem = { '\'', ' ' };
 
-            //string Sql_login = "select Nome_Aluno, id_cargo from Alunos where email_Aluno='" + txt_email.Value.Trim(rem) +
-            //        "' and pass_aluno='" + txt_pass.Value.Trim(rem) + "';";
-
             string Sql_login = "select Nome, cargo from tbl_login where email='" + txt_email.Value.Trim(rem) +
         "' and pass ='" + txt_pass.Value.Trim(rem) + "';";
 
@@ -32,39 +29,19 @@ namespace GestaoFCT
 
             if (dt.Rows.Count == 1)
             {
-                //Response.Write("<script>alert('ele foi')</script>");
-                //string alo = dt.Rows[0]["Nome"].ToString();
-                Session["Utilizador"] = dt.Rows[0]["Nome"];
-                //string alo2 = dt.Rows[0]["cargo"].ToString();
+                //Obter o primeiro e ultimo nome
+                string nomeCompleto = dt.Rows[0]["Nome"].ToString();
+                string[] abreviado = nomeCompleto.Split(' '); // divide a string em palavras utilizando o espaço como separador
+                string nome = abreviado[0]; // obtem a primeira palavra do array
+                string apelido = abreviado[abreviado.Length - 1]; // obtem a última palavra do array
+
+                Session["Utilizador"] = nome + " " + apelido;
+
 
                 Session["cargo"] = dt.Rows[0]["cargo"];
 
-                Response.Redirect("~/GestEmp.aspx");
-           /* }
-            else {
+                Response.Redirect("~/GestAluno.aspx");
 
-                dt = Database.GetFromDBSqlSrv(Sql_Professor);
-
-                if(dt.Rows.Count == 1)
-                {
-                    Session["Utilizador"] = dt.Rows[0]["Nome_prof"];
-                    Response.Redirect("~/GestEmp.aspx");
-                }
-                else
-                {
-                    dt = Database.GetFromDBSqlSrv(Sql_Tutor);
-
-                    if (dt.Rows.Count == 1)
-                    {
-                        Session["Utilizador"] = dt.Rows[0]["Nome_tutor"];
-                        Response.Redirect("~/GestEmp.aspx");
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert(' erro ')</script>");
-                    }
-                }
-            */
        
             }
 
