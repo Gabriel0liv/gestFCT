@@ -67,13 +67,13 @@
         };
         var particles = Particles.init({
             selector: ".background",
-            color: ["#03dac6", "#4e02ff", "#000000"],
+            color: ["#700494", "#9e6de0", "#000000"],
             connectParticles: true,
             responsive: [
                 {
                     breakpoint: 768,
                     options: {
-                        color: ["#faebd7", "#03dac6", "#ff0266"],
+                        color: ["#700494", "#9e6de0", "#e602ff"],
                         maxParticles: 70,
                         connectParticles: false
                     }

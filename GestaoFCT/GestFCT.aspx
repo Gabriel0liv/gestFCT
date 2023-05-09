@@ -91,7 +91,7 @@
                         <ul class="nav sidebar-inner" id="sidebar-menu">
 
                             <li>
-                                <a class="sidenav-item-link" href="calendar.html">
+                                <a class="sidenav-item-link" href="Tarefas.aspx">
                                     <i class="mdi mdi-calendar-check"></i>
                                     <span class="nav-text">Tarefas</span>
                                 </a>

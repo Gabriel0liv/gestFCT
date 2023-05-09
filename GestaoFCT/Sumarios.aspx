@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestAluno.aspx.cs" Inherits="GestaoFCT.GestAluno" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Sumarios.aspx.cs" Inherits="GestaoFCT.Sumarios" %>
 
 
 <!DOCTYPE html>
@@ -75,7 +75,7 @@
             <asp:Label ID="operacao" runat="server" Text="" Visible="false"></asp:Label>
             <asp:HiddenField ID="HiddenField1" runat="server" />
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <asp:SqlDataSource ID="AlnSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="SumSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
 
 
 
@@ -97,7 +97,7 @@
                         <!-- sidebar menu -->
                         <ul class="nav sidebar-inner" id="sidebar-menu">
 
-                            <li>
+                            <li class="active">
                                 <a class="sidenav-item-link" href="Tarefas.aspx">
                                     <i class="mdi mdi-calendar-check"></i>
                                     <span class="nav-text">Tarefas</span>
@@ -122,7 +122,7 @@
                                 </a>
                             </li>
 
-                            <li class="active">
+                            <li>
                                 <a class="sidenav-item-link" href="GestAluno.aspx">
                                     <i class="fa-solid fa-users" style="font-size: 18px"></i>
                                     <span class="nav-text">Alunos</span>
@@ -196,7 +196,7 @@
                             <span class="sr-only">Toggle navigation</span>
                         </button>
 
-                        <span class="page-title">Gestão de Alunos</span>
+                        <span class="page-title">Tarefas</span>
 
                         <div class="navbar-right ">
 
@@ -267,8 +267,8 @@
                                         <li class="dropdown-footer">
                                             <%--<a class="dropdown-link-item" href="sign-in.html"> <i class="mdi mdi-logout"></i> Log Out </a>--%>
                                             <asp:LinkButton ID="btn_logout" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                              <i class="mdi mdi-logout"></i> 
-                              Log Out 
+                                              <i class="mdi mdi-logout"></i> 
+                                              Log Out 
                                             </asp:LinkButton>
                                         </li>
                                     </ul>
@@ -293,43 +293,63 @@
                                 <div class="col-lg-4 col-xl-3 col-xxl-2">
                                     <div class="email-left-column email-options p-4 p-xl-5">
                                         <p class="text-dark font-weight-medium">Opções</p>
-                                        <ul>
-                                            <li class="mt-4">
+                                        <div id="optSum">
+                                            <ul>
+                                                <li class="mt-4">
+                                                    <button type="button" id="btnCriarSum" onserverclick="CriarSum" runat="server">
+                                                        <i class="mdi mdi-checkbox-blank-circle-outline text-success mr-3"></i>
+                                                        Adicionar
+                                                    </button>
+                                                </li>
+                                                <li class="mt-4">
+                                                    <button type="button" id="btnEditarSum" onserverclick="EditarSum" runat="server">
+                                                        <i class="mdi mdi-checkbox-blank-circle-outline text-warning mr-3"></i>
+                                                        Editar
+                                                    </button>
+                                                </li>
+                                                <li class="mt-4">
+                                                    <button type="button" id="btnEliminarSum" onserverclick="EliminarSum" runat="server">
+                                                        <i class="mdi mdi-checkbox-blank-circle-outline text-danger mr-3"></i>
+                                                        Eliminar
+                                                    </button>
+                                                </li>
 
-                                                <button type="button" id="btnCriar" onserverclick="Criar" runat="server">
-                                                    <i class="mdi mdi-checkbox-blank-circle-outline text-success mr-3"></i>
-                                                    Adicionar
-                                                </button>
-                                            </li>
-                                            <li class="mt-4">
-                                                <button type="button" id="btnEditar" onserverclick="Editar" runat="server">
-                                                    <i class="mdi mdi-checkbox-blank-circle-outline text-warning mr-3"></i>
-                                                    Editar
-                                                </button>
-                                            </li>
-                                            <li class="mt-4">
-                                                <button type="button" id="btnEliminar" onserverclick="Eliminar" runat="server">
-                                                    <i class="mdi mdi-checkbox-blank-circle-outline text-danger mr-3"></i>
-                                                    Eliminar
-                                                </button>
-                                            </li>
-                                            <li class="mt-4">
-                                                <button type="button" id="btnFCT" onserverclick="FCT" runat="server">
-                                                    <i class="mdi mdi-checkbox-blank-circle-outline text-primary mr-3"></i>
-                                                    Gerar FCT
-                                                </button>
-                                            </li>
-                                        </ul>
+                                            </ul>
+                                        </div>
+
+                                        <div id="optTar" style="display: none">
+                                            <ul>
+                                                <li class="mt-4">
+                                                    <button type="button" id="btnCriarTar" onserverclick="CriarTar" runat="server">
+                                                        <i class="mdi mdi-checkbox-blank-circle-outline text-success mr-3"></i>
+                                                        Adicionar
+                                                    </button>
+                                                </li>
+                                                <li class="mt-4">
+                                                    <button type="button" id="btnEditarTar" onserverclick="EditarTar" runat="server">
+                                                        <i class="mdi mdi-checkbox-blank-circle-outline text-warning mr-3"></i>
+                                                        Editar
+                                                    </button>
+                                                </li>
+                                                <li class="mt-4">
+                                                    <button type="button" id="btnEliminarTar" onserverclick="EliminarTar" runat="server">
+                                                        <i class="mdi mdi-checkbox-blank-circle-outline text-danger mr-3"></i>
+                                                        Eliminar
+                                                    </button>
+                                                </li>
+                                            </ul>
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
                                             <!-- FORM MODAL -->
 
-                                            <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
+                                            <div class="modal" id="formSum" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
                                                 aria-hidden="true" runat="server" visible="false">
                                                 <div class="modal-dialog" role="document">
                                                     <iv class="modal-content">
@@ -340,92 +360,51 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-                                                            <div id="formAluno" runat="server">
-                                                                <div class="form-group">
-                                                                    <label for="txt_nome">Nome</label>
-                                                                    <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Aluno" enableviewstate="true" runat="server" />
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="txt_nif">NIF</label>
-                                                                    <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_val">Validade</label>
-                                                                    <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_email">Email address</label>
-                                                                    <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do aluno" runat="server" />
-                                                                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_telefone">Telefone</label>
-                                                                    <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do aluno" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_morada">Morada</label>
-                                                                    <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do aluno" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_local">Localidade</label>
-                                                                    <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do aluno" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_CodPost">Código Postal</label>
-                                                                    <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_pass">Palavra passe</label>
-                                                                    <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" runat="server" />
-                                                                </div>
+                                                            <div class="form-group">
+                                                                <label for="ddl_Tarefas">Tarefas Associadas</label>
+                                                                <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
                                                             </div>
-                                                            <div id="formFCT" runat="server" visible="false">
-
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Aluno</label>
-                                                                    <asp:TextBox ID="txt_aluno" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
+                                                            <div class="form-group">
+                                                                <label for="txt_sumario">Descrição do sumário</label>
+                                                                <asp:TextBox ID="txt_sumario" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div style="display: inline-block">
+                                                                    <label for="txt_numhora">Horas feitas</label>
+                                                                    <input type="text" class="form-control" id="txt_numHora" placeholder="Número de horas feitas" enableviewstate="true" runat="server" />
                                                                 </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Curso</label>
-                                                                    <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Professor Orientador</label>
-                                                                    <asp:DropDownList ID="ddl_professor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Entidade</label>
-                                                                    <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" AutoPostBack="true" ClientIDMode="Static" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Tutor</label>
-                                                                    <asp:DropDownList ID="ddl_tutor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">número de horas</label>
-                                                                        <input type="text" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
-                                                                    </div>
-
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">Ano</label>
-                                                                        <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" />
-                                                                    </div>
-
+                                                                <div style="display: inline-block">
+                                                                    <label for="txt_status">Estado do sumário</label>
+                                                                    <input type="text" class="form-control" id="txt_status" enableviewstate="true" value="Pendente" readonly="readonly" runat="server" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-
-                                                            <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
                                                             <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar Aluno" OnClick="Comandos" />
                                                         </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal" id="formTar" role="dialog" aria-labelledby="exampleModalLabel"
+                                                aria-hidden="true" runat="server" visible="false">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="TarTitle">Criar Tarefa</h5>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <span id="Span1" runat="server"></span>
+                                                            <div class="form-group">
+                                                                <label for="txt_tarefa">Descrição da tarefa</label>
+                                                                <input type="text" class="form-control" id="txt_tarefa" enableviewstate="true" runat="server" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <asp:Button ID="Button1" class="btn btn-danger btn-pill" runat="server" Text="Cancelar" OnClick="Fechar" />
+                                                            <asp:Button ID="Button2" class="btn btn-primary btn-pill" runat="server" Text="Eliminar" OnClick="Comandos" />
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -444,21 +423,33 @@
                                                             <span id="textoCancelar" runat="server"></span>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <%--<button type="button" class="btn btn-danger btn-pill" onclick="" >Close</button>--%>
                                                             <asp:Button ID="btnCancelar" class="btn btn-danger btn-pill" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
-                                                            <%--<button type="button" class="btn btn-primary btn-pill">Save Changes</button>--%>
                                                             <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar" OnClick="Comandos" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <div class="head-left-options">
+                                                <button type="button" class="btn btn-outline" onclick="tblSumarios()">
+                                                    Sumários
+                                                </button>
+                                                <button type="button" class="btn btn-outline" onclick="tblTarefas()">
+                                                    Tarefas
+                                                </button>
+                                            </div>
 
+                                            <div class="head-right-options">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <asp:DropDownList ID="ddl_entidade" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged1"></asp:DropDownList>
+                                                </div>
+                                            </div>
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
                                             <!-- <table class="table mb-0 table-email"> </table> -->
-                                            <div id="example-table"></div>
+                                            <div id="tableTarefas" style="display: none"></div>
+                                            <div id="tableSumarios"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -483,31 +474,62 @@
             var stat = document.getElementById('<%= labelStats.ClientID %>');
             var cod = document.getElementById('<%= labelCod.ClientID %>');
 
-            var table = new Tabulator("#example-table", {
+            var table1 = new Tabulator("#tableTarefas", {
                 selectable: 1,
                 placeholder: "Sem dados",
                 height: "100%",
                 layout: "fitDataStretch",
                 columns: [
                     { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
-                    { title: "Nome", field: "nome", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "NIF", field: "nif", width: 80, resizable: false, headerFilter: "number" },
-                    { title: "E-mail", field: "email", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "Morada", field: "morada", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "localidade", field: "localidade", width: 156, resizable: false, headerFilter: "input" },
-                    { title: "C.Postal", field: "codPost", width: 80, resizable: false, headerFilter: "input" },
-                    { title: "Telefone", field: "telefone", width: 156, resizable: false, headerFilter: "number" },
-                    { title: "Bi", field: "bi", width: 156, resizable: false, headerFilter: "input" },
-                    { title: "Validade", field: "valbi", width: 100, resizable: false, headerFilter: "input" },
-                    { title: "Password", field: "pass_aluno", width: 125, resizable: false, headerFilter: "input" },
-
-
+                    { title: "Descrição", field: "descricao_tarefa", width: 230, resizable: false, headerFilter: "input" },
+                    { title: "idE", field: "id_entidade", width: 50, resizable: false, headerFilter: "number" },
+                    { title: "Entidade", field: "nome_entidade", width: 230, resizable: false, headerFilter: "input" },
+                    { title: "idT", field: "id_tutor", width: 50, resizable: false, headerFilter: "number" },
+                    { title: "Tutor", field: "nome_tutor", width: 230, resizable: false, headerFilter: "input" },
 
                 ],
 
             });
 
-            table.on("rowSelectionChanged", function (data, rows) {
+            var table2 = new Tabulator("#tableSumarios", {
+                selectable: 1,
+                placeholder: "Sem dados",
+                height: "100%",
+                layout: "fitDataStretch",
+                columns: [
+                    { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
+                    { title: "Tarefas", field: "tarefas_sumario", width: 325, resizable: false, headerFilter: "input" },
+                    { title: "Descrição", field: "descricao_sumario", width: 325, resizable: false, headerFilter: "input" },
+                    { title: "Horas", field: "horas_sumario", width: 50, resizable: false, headerFilter: "number" },
+                    { title: "Status", field: "status_sumario", width: 150, resizable: false, headerFilter: "input" },
+                    { title: "FCT", field: "id_fct", width: 50, resizable: false, headerFilter: "number" },
+
+                ],
+
+            });
+
+            table2.on("rowSelectionChanged", function (data, rows) {
+                //rows - array of row components for the selected rows in order of selection
+                //data - array of data objects for the selected rows in order of selection
+
+
+                var controle = document.getElementById("HiddenField1");
+
+
+                if (data.length == 1) {
+                    //obtem os dados do primeiro e único elemento (linha) selecionado
+                    var ab = rows[0].getData().codigo;
+                    controle.value = ab;
+
+                    //pra conferir os dados
+                    //alert("LINHAS: 1, AB =" + ab + "!");
+                }
+                if (data.length != 1) {
+                    controle.value = 0;
+                }
+            });
+
+            table1.on("rowSelectionChanged", function (data, rows) {
                 //rows - array of row components for the selected rows in order of selection
                 //data - array of data objects for the selected rows in order of selection
 
@@ -529,26 +551,37 @@
             });
 
 
-            var cat_tabledata = [
+            var cat_tabledata1 = [
                 <asp:Repeater ID="rptItems" runat="server">
                     <ItemTemplate>
-                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_aluno") %>',
-                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
-                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_aluno") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "email_aluno") %>', 
-                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_aluno") %>',
-                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_aluno") %>', 
-                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_aluno") %>',
-                    telefone: '<%#DataBinder.Eval(Container.DataItem, "telefone_aluno") %>',
-                    bi: '<%#DataBinder.Eval(Container.DataItem, "bi_aluno") %>',
-                    valbi: '<%#DataBinder.Eval(Container.DataItem, "valBi_aluno") %>',
-                    pass_aluno: '<%#DataBinder.Eval(Container.DataItem, "pass_aluno") %>'},
+                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_tarefa") %>',
+                    descricao_tarefa: '<%#DataBinder.Eval(Container.DataItem, "descricao_tarefa") %>',
+                    id_entidade: '<%#DataBinder.Eval(Container.DataItem, "id_entidade") %>', 
+                    nome_entidade: '<%#DataBinder.Eval(Container.DataItem, "nome_entidade") %>', 
+                    id_tutor: '<%#DataBinder.Eval(Container.DataItem, "id_tutor") %>',
+                    nome_tutor: '<%#DataBinder.Eval(Container.DataItem, "nome_tutor") %>'},
 
                     </ItemTemplate>
                 </asp:Repeater >];
 
-            table.on("tableBuilt", function () {
-                table.setData(cat_tabledata);
+            var cat_tabledata2 = [
+                <asp:Repeater ID="rptItems2" runat="server">
+                    <ItemTemplate>
+                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_sumario") %>',
+                    descricao_sumario: '<%#DataBinder.Eval(Container.DataItem, "tarefas_sumario") %>',
+                    descricao_sumario: '<%#DataBinder.Eval(Container.DataItem, "descricao_sumario") %>', 
+                    horas_sumario: '<%#DataBinder.Eval(Container.DataItem, "horas_sumario") %>', 
+                    status_sumario: '<%#DataBinder.Eval(Container.DataItem, "status_sumario") %>',
+                    id_fct: '<%#DataBinder.Eval(Container.DataItem, "id_fct") %>'},
+                    </ItemTemplate>
+                </asp:Repeater >];
+
+            table1.on("tableBuilt", function () {
+                table1.setData(cat_tabledata1);
+            });
+
+            table2.on("tableBuilt", function () {
+                table2.setData(cat_tabledata2);
             });
 
 
@@ -558,6 +591,19 @@
                 $('#ddl_professor').select2();
                 $('#ddl_tutor').select2();
             });
+
+            function tblSumarios() {
+                document.querySelector('#tableTarefas').style.display = 'none';
+                document.querySelector('#optTar').style.display = 'none';
+                document.querySelector('#tableSumarios').style.display = 'block';
+                document.querySelector('#optSum').style.display = 'block';
+            }
+            function tblTarefas() {
+                document.querySelector('#tableSumarios').style.display = 'none';
+                document.querySelector('#optSum').style.display = 'none';
+                document.querySelector('#tableTarefas').style.display = 'block';
+                document.querySelector('#optTar').style.display = 'block';
+            }
 
         </script>
 
@@ -619,6 +665,10 @@
 
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

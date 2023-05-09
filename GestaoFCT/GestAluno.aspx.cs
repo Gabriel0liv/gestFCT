@@ -63,7 +63,6 @@ namespace GestaoFCT
             txt_CodPost.Value = "";
             txt_pass.Value = "";
 
-
         }
 
         protected void Atualizar()
