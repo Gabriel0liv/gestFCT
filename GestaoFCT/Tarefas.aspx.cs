@@ -31,7 +31,6 @@ namespace GestaoFCT
 
                 NavAln.Visible = false;
                 NavCurso.Visible = false;
-                NavDoc.Visible = false;
                 NavEE.Visible = false;
                 NavEnt.Visible = false;
                 NavFCT.Visible = false;
@@ -43,9 +42,11 @@ namespace GestaoFCT
 
 
             if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
-                ddl_entidade.Visible = true;
+                ddl_entidade.Visible = true; 
             else
                 ddl_entidade.Visible = false;
+
+
 
 
             if (!IsPostBack)
@@ -154,6 +155,37 @@ namespace GestaoFCT
             operacao.Text = "1";
             reset();
             TarTitle.InnerText = "Criar Tarefa";
+
+            if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
+            {
+                ChooseDiv.Visible = true;
+
+                using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+                {
+
+                    SqlCommand cmd = new SqlCommand("select id_entidade, nome_entidade from Entidades;", sqlConn);
+                    sqlConn.Open();
+                    ddl_TarEntidade.DataTextField = "nome_entidade";
+                    ddl_TarEntidade.DataValueField = "id_entidade";
+                    ddl_TarEntidade.DataSource = cmd.ExecuteReader();
+                    ddl_TarEntidade.DataBind();
+                    sqlConn.Close();
+
+                    SqlCommand cmd2 = new SqlCommand("select id_tutor, nome_tutor from tutores;", sqlConn);
+                    sqlConn.Open();
+                    ddl_TarTutor.DataTextField = "nome_tutor";
+                    ddl_TarTutor.DataValueField = "id_tutor";
+                    ddl_TarTutor.DataSource = cmd2.ExecuteReader();
+                    ddl_TarTutor.DataBind();
+                    sqlConn.Close();
+
+                }
+
+            }
+            else
+                ChooseDiv.Visible = false;
+
+
             formTar.Visible = true;
 
         }
@@ -166,6 +198,36 @@ namespace GestaoFCT
 
             if (labelCod.Text != "0")
             {
+
+                if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
+                {
+                    ChooseDiv.Visible = true;
+
+                    using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+                    {
+
+                        SqlCommand cmd = new SqlCommand("select id_entidade, nome_entidade from Entidades;", sqlConn);
+                        sqlConn.Open();
+                        ddl_TarEntidade.DataTextField = "nome_entidade";
+                        ddl_TarEntidade.DataValueField = "id_entidade";
+                        ddl_TarEntidade.DataSource = cmd.ExecuteReader();
+                        ddl_TarEntidade.DataBind();
+                        sqlConn.Close();
+
+                        SqlCommand cmd2 = new SqlCommand("select id_tutor, nome_tutor from tutores;", sqlConn);
+                        sqlConn.Open();
+                        ddl_TarTutor.DataTextField = "nome_tutor";
+                        ddl_TarTutor.DataValueField = "id_tutor";
+                        ddl_TarTutor.DataSource = cmd2.ExecuteReader();
+                        ddl_TarTutor.DataBind();
+                        sqlConn.Close();
+
+                    }
+
+                }
+                else
+                    ChooseDiv.Visible = false;
+
                 Atualizar();
                 TarTitle.InnerText = "Editar Tarefa";
                 formTar.Visible = true;
@@ -190,6 +252,7 @@ namespace GestaoFCT
 
             if (labelCod.Text != "0")
             {
+
                 btnDeletar.Visible = true;
                 textoCancelar.InnerText = "Tem certeza que deseja eliminar a Tarefa?";
             }
@@ -213,50 +276,61 @@ namespace GestaoFCT
             if (operacao.Text == "1")
             {
                 //Response.Write("<script>alert('11111')</script>");
+                string linhasql = "";
 
                 if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
                 {
-                    String linhasql = "insert into Tarefas (descricao_tarefa, id_entidade, id_tutor) values('" + txt_tarefa.Value + "', " + ddl_TarEntidade.SelectedValue + "," + ddl_TarTutor.SelectedValue + ");";
-
+                    linhasql = "insert into Tarefas (descricao_tarefa, id_entidade, id_tutor) values('" + txt_tarefa.Value + "', " + ddl_TarEntidade.SelectedValue + ", " + ddl_TarTutor.SelectedValue + ");";
+                
                 }
                 else if (Session["cargo"].ToString() == "3")
                 {
-                    String linhasql = "insert into Tarefas (descricao_tarefa, id_entidade, id_tutor) values('" + txt_tarefa.Value + "', " + Session["Entidade"].ToString() + "," + Session["codigo"] + ");";
-
+                    linhasql = "insert into Tarefas (descricao_tarefa, id_entidade, id_tutor) values('" + txt_tarefa.Value + "', " + Session["Entidade"].ToString() + ", " + Session["codigo"].ToString() + ");";
                 }
-
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
-                //Database.NonQuerySqlSrv(linhasql);
+                Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
-                formTar.Visible = true;
+
+                formTar.Visible = false;
             }
 
             if (operacao.Text == "2")
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                //String linhasql = "update alunos set nome_aluno = '" + txt_nome.Value + "', nif_aluno = '" + txt_nif.Value + "', email_aluno = '" + txt_email.Value + "', loc_aluno = '" + txt_local.Value + "', morada_aluno = '" + txt_morada.Value +  "', telefone_aluno = '" + txt_telefone.Value +  "', cpostal_aluno = '" + txt_CodPost.Value + "', bi_aluno = '" + txt_bi.Value + "', valBi_aluno = '" + txt_val.Value + "', pass_aluno = '" + txt_pass.Value + "' where id_aluno = " + labelCod.Text + ";";
+                String linhasql = "";
+
+                if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
+                {
+                    linhasql = "UPDATE Tarefas set descricao_tarefa ='" + txt_tarefa.Value + "', id_entidade = " + ddl_TarEntidade.SelectedValue + ", id_tutor = " + ddl_TarTutor.SelectedValue + " where id_tarefa = " + labelCod.Text + ";";
+
+                }
+                else if (Session["cargo"].ToString() == "3")
+                {
+                    linhasql = "UPDATE Tarefas set descricao_tarefa = '" + txt_tarefa.Value + "', id_entidade = " + Session["Entidade"].ToString() + ", id_tutor = " + Session["codigo"].ToString() + " where id_tarefa = " + labelCod.Text + ";";
+                }
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");
 
-                //Database.NonQuerySqlSrv(linhasql);
+                Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
 
+                formTar.Visible = false;
             }
 
             if (operacao.Text == "3")
             {
                 //Response.Write("<script>alert('33333')</script>");
 
-                //String linhasql = "delete from alunos where id_aluno = " + labelCod.Text + ";";
+                String linhasql = "delete from tarefas where id_tarefa = " + labelCod.Text + ";";
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
-                //Database.NonQuerySqlSrv(linhasql);
+                Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
             }
@@ -269,7 +343,22 @@ namespace GestaoFCT
             exampleModal.Visible = false;
         }
 
+        protected void ddl_TarEntidade_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+            {
 
+                SqlCommand cmd2 = new SqlCommand("select id_tutor, nome_tutor from tutores where id_entidade =" + ddl_TarEntidade.SelectedValue + ";", sqlConn);
+                sqlConn.Open();
+                ddl_TarTutor.DataTextField = "nome_tutor";
+                ddl_TarTutor.DataValueField = "id_tutor";
+                ddl_TarTutor.DataSource = cmd2.ExecuteReader();
+                ddl_TarTutor.DataBind();
+                sqlConn.Close();
+
+            }
+
+        }
 
         protected void ddl_entidade_SelectedIndexChanged1(object sender, EventArgs e)
         {

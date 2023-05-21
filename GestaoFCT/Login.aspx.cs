@@ -20,7 +20,7 @@ namespace GestaoFCT
         {
             char[] rem = { '\'', ' ' };
 
-            string Sql_login = "select Nome, cargo from tbl_login where email='" + txt_email.Value.Trim(rem) +
+            string Sql_login = "select id, Nome, cargo from tbl_login where email='" + txt_email.Value.Trim(rem) +
         "' and pass ='" + txt_pass.Value.Trim(rem) + "';";
 
             // SenhaTutor='" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value.Trim(rem))) + "';";
@@ -36,7 +36,7 @@ namespace GestaoFCT
                 string apelido = abreviado[abreviado.Length - 1]; // obtem a última palavra do array
 
                 Session["Utilizador"] = nome + " " + apelido;
-
+                Session["codigo"] = dt.Rows[0]["id"];
 
                 Session["cargo"] = dt.Rows[0]["cargo"];
 

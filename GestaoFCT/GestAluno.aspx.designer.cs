@@ -249,6 +249,24 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_CodPost;
 
         /// <summary>
+        /// Controle ddl_curso.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_curso;
+
+        /// <summary>
+        /// Controle ddl_Encarregado.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Encarregado;
+
+        /// <summary>
         /// Controle txt_pass.
         /// </summary>
         /// <remarks>
@@ -274,15 +292,6 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_aluno;
-
-        /// <summary>
-        /// Controle ddl_curso.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_curso;
 
         /// <summary>
         /// Controle ddl_professor.
@@ -318,7 +327,16 @@ namespace GestaoFCT
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_numHora;
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_numHora;
+
+        /// <summary>
+        /// Controle txt_numMaxHoras.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_numMaxHoras;
 
         /// <summary>
         /// Controle txt_anoFCT.
@@ -328,6 +346,24 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_anoFCT;
+
+        /// <summary>
+        /// Controle txt_dataInicio.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_dataInicio;
+
+        /// <summary>
+        /// Controle txt_dataFim.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_dataFim;
 
         /// <summary>
         /// Controle btn_fechar.

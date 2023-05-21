@@ -258,6 +258,15 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_tarefa;
 
         /// <summary>
+        /// Controle ChooseDiv.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ChooseDiv;
+
+        /// <summary>
         /// Controle ddl_TarEntidade.
         /// </summary>
         /// <remarks>
@@ -265,15 +274,6 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddl_TarEntidade;
-
-        /// <summary>
-        /// Controle Text2.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
 
         /// <summary>
         /// Controle ddl_TarTutor.

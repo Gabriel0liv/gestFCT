@@ -260,8 +260,8 @@
                                         <li class="dropdown-footer">
                                             <%--<a class="dropdown-link-item" href="sign-in.html"> <i class="mdi mdi-logout"></i> Log Out </a>--%>
                                             <asp:LinkButton ID="btn_logout" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                              <i class="mdi mdi-logout"></i> 
-                              Log Out 
+                                                <i class="mdi mdi-logout"></i> 
+                                                Log Out 
                                             </asp:LinkButton>
                                         </li>
                                     </ul>
@@ -325,10 +325,6 @@
                                                                 <asp:TextBox ID="txt_aluno" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="ddl_entidade">Curso</label>
-                                                                <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                            </div>
-                                                            <div class="form-group">
                                                                 <label for="ddl_entidade">Professor Orientador</label>
                                                                 <asp:DropDownList ID="ddl_professor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
                                                             </div>
@@ -343,12 +339,32 @@
                                                             <div class="form-group">
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">número de horas</label>
-                                                                    <input type="text" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
+                                                                    <input type="number" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
+                                                                </div>
+
+                                                                <div style="display: inline-block">
+                                                                    <label for="txt_nome">número de horas diárias</label>
+                                                                    <%--<input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" enableviewstate="true" runat="server" />--%>
+                                                                    <asp:TextBox ID="txt_numMaxHoras" class="form-control" placeholder="Número máximo de horas diárias" TextMode="Number" runat="server"></asp:TextBox>
                                                                 </div>
 
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">Ano</label>
                                                                     <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" />
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div style="display: inline-block">
+                                                                    <label for="txt_nome">Data de inicio da formação</label>
+                                                                    <asp:TextBox ID="txt_dataInicio" class="form-control" placeholder="Ex: 16/05/2023" runat="server" AutoPostBack="true" OnTextChanged="txt_dataInicio_TextChanged"></asp:TextBox>
+                                                                    <%--<input type="text" class="form-control" id="txt_dataInicio" placeholder="Ex: 16/05/2023" enableviewstate="true" runat="server" />--%>
+                                                                </div>
+                                                                <div style="display: inline-block">
+                                                                    <label for="txt_nome">Estimativa de término</label>
+                                                                    <%--<input type="text" class="form-control" id="" placeholder="Ex: 16/08/2023" enableviewstate="true" runat="server" />--%>
+                                                                    <asp:TextBox ID="txt_dataFim" class="form-control" placeholder="Ex: 18/07/2023" AutoPostBack="true" runat="server"></asp:TextBox>
                                                                 </div>
                                                             </div>
 
@@ -423,17 +439,17 @@
                     { title: "idA", field: "id_aluno", width: 50, resizable: false, visible: false },
                     { title: "Aluno", field: "nome_aluno", width: 230, resizable: false, headerFilter: "input" },
                     { title: "idC", field: "id_curso", width: 50, resizable: false, visible: false },
-                    { title: "Curso", field: "nome_curso", width: 200, resizable: false, headerFilter: "input" },
                     { title: "idP", field: "id_professor", width: 50, resizable: false, visible: false },
                     { title: "Professor", field: "nome_prof", width: 230, resizable: false, headerFilter: "input" },
                     { title: "idE", field: "id_entidade", width: 50, resizable: false, visible: false },
                     { title: "Entidade", field: "nome_entidade", width: 200, resizable: false, headerFilter: "input" },
                     { title: "idT", field: "id_tutor", width: 50, resizable: false, visible: false },
                     { title: "Tutor", field: "nome_tutor", width: 200, resizable: false, headerFilter: "input" },
+                    { title: "Ano", field: "ano_fct", width: 150, resizable: false, headerFilter: "input" },
                     { title: "Horas", field: "num_horas", width: 50, resizable: false, headerFilter: "input" },
-                    { title: "Ano", field: "ano_fct", width: 100, resizable: false, headerFilter: "input" },
-
-
+                    { title: "Hr Diárias", field: "hrdiaria", width: 50, resizable: false, headerFilter: "input" },
+                    { title: "Inicio", field: "inicio_fct", width: 100, resizable: false, headerFilter: "input" },
+                    { title: "Fim", field: "fim_fct", width: 100, resizable: false, headerFilter: "input" },
                 ],
 
             });
@@ -463,19 +479,22 @@
             var cat_tabledata = [
                 <asp:Repeater ID="rptItems" runat="server">
                     <ItemTemplate>
-                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_fct") %>',
-                    id_aluno: '<%#DataBinder.Eval(Container.DataItem, "id_aluno") %>',
-                    nome_aluno: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
-                    id_curso: '<%#DataBinder.Eval(Container.DataItem, "id_curso") %>', 
-                    nome_curso: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>', 
-                    id_professor: '<%#DataBinder.Eval(Container.DataItem, "id_professor") %>',
-                    nome_prof: '<%#DataBinder.Eval(Container.DataItem, "nome_prof") %>', 
-                    id_entidade: '<%#DataBinder.Eval(Container.DataItem, "id_entidade") %>',
-                    nome_entidade: '<%#DataBinder.Eval(Container.DataItem, "nome_entidade") %>',
-                    id_tutor: '<%#DataBinder.Eval(Container.DataItem, "id_tutor") %>',
-                    nome_tutor: '<%#DataBinder.Eval(Container.DataItem, "nome_tutor") %>',
-                    num_horas: '<%#DataBinder.Eval(Container.DataItem, "num_horas") %>',
-                    ano_fct: '<%#DataBinder.Eval(Container.DataItem, "ano_fct") %>'},
+                        {
+                            codigo: '<%# DataBinder.Eval(Container.DataItem, "id_fct") %>',
+			                id_aluno: '<%# DataBinder.Eval(Container.DataItem, "id_aluno") %>',
+			                nome_aluno: '<%# DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
+			                id_professor: '<%# DataBinder.Eval(Container.DataItem, "id_professor") %>',
+			                nome_prof: '<%# DataBinder.Eval(Container.DataItem, "nome_prof") %>',
+			                id_entidade: '<%# DataBinder.Eval(Container.DataItem, "id_entidade") %>',
+			                nome_entidade: '<%# DataBinder.Eval(Container.DataItem, "nome_entidade") %>',
+			                id_tutor: '<%# DataBinder.Eval(Container.DataItem, "id_tutor") %>',
+			                nome_tutor: '<%# DataBinder.Eval(Container.DataItem, "nome_tutor") %>',
+			                num_horas: '<%# DataBinder.Eval(Container.DataItem, "num_horas") %>',
+                            ano_fct: '<%# DataBinder.Eval(Container.DataItem, "ano_fct") %>',
+                            hrdiaria: '<%# DataBinder.Eval(Container.DataItem, "horasDiarias") %>',
+                            inicio_fct: '<%# DataBinder.Eval(Container.DataItem, "inicio_fct") %>',
+                            fim_fct: '<%# DataBinder.Eval(Container.DataItem, "fim_fct") %>'
+		                },
 
                     </ItemTemplate>
                 </asp:Repeater >];

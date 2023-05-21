@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
+
 
 namespace GestaoFCT
 {
@@ -65,10 +67,12 @@ namespace GestaoFCT
                 ddl_professor.SelectedValue = r["id_professor"].ToString();
                 ddl_entidade.SelectedValue = r["id_entidade"].ToString();
                 ddl_entidade.SelectedValue = r["id_entidade"].ToString();
-                ddl_curso.SelectedValue = r["id_curso"].ToString();
                 ddl_tutor.SelectedValue = r["id_tutor"].ToString();
                 txt_anoFCT.Value = r["ano_fct"].ToString();
                 txt_numHora.Value = r["num_horas"].ToString();
+                txt_dataInicio.Text = r["inicio_fct"].ToString();
+                txt_numMaxHoras.Text = r["horasDiarias"].ToString();
+                txt_dataFim.Text = r["fim_fct"].ToString();
             }
             r.Close();
             sqlConn.Close();
@@ -105,14 +109,6 @@ namespace GestaoFCT
                     {
                         txt_aluno.Text = dt.Rows[0]["nome_aluno"].ToString();
                     }
-
-                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso from cursos;", con);
-                    con.Open();
-                    ddl_curso.DataTextField = "nome_curso";
-                    ddl_curso.DataValueField = "id_curso";
-                    ddl_curso.DataSource = cmd.ExecuteReader();
-                    ddl_curso.DataBind();
-                    con.Close();
 
                     SqlCommand cmd2 = new SqlCommand("select id_prof, nome_prof from professores;", con);
                     con.Open();
@@ -197,7 +193,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update tabelas_FCT set id_tutor = '" + ddl_tutor.SelectedValue + "', id_professor = '" + ddl_professor.SelectedValue + "', id_curso = '" + ddl_curso.SelectedValue + "', id_entidade = '" + ddl_entidade.SelectedValue + "', ano_fct = '" + txt_anoFCT.Value + "', num_horas = '" + txt_numHora.Value + "' where id_fct = " + labelCod.Text + ";";
+                String linhasql = "update tabelas_FCT set id_tutor = '" + ddl_tutor.SelectedValue + "', id_professor = '" + ddl_professor.SelectedValue + "', id_entidade = '" + ddl_entidade.SelectedValue + "', ano_fct = '" + txt_anoFCT.Value + "', num_horas = '" + txt_numHora.Value + "', fim_fct = '" + txt_dataFim.Text + "', horasDiarias = '" + txt_numMaxHoras.Text + "', inicio_fct = '" + txt_dataInicio.Text + "' where id_fct = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");
@@ -241,5 +237,134 @@ namespace GestaoFCT
             }
 
         }
+
+        protected void txt_dataInicio_TextChanged(object sender, EventArgs e)
+        {
+
+            DateTime dataInicio = DateTime.Parse(txt_dataInicio.Text);
+            int horasFormacao = int.Parse(txt_numHora.Value);
+            int maxHorasDia = int.Parse(txt_numMaxHoras.Text);
+
+
+            DateTime dataTermino = CalcularDataTermino(dataInicio, horasFormacao, maxHorasDia);
+
+            // Calcular a diferença em dias entre a data de término e a data atual
+            //int diasRestantes = (dataTermino - DateTime.Today).Days;
+            int diasRestantes = CalcularDiasUteis(DateTime.Today, dataTermino);
+
+            txt_dataFim.Text = dataTermino.ToShortDateString();
+            // Exibir os dias restantes na TextBox
+            //txtDiasRestantes.Text = diasRestantes.ToString();
+
+        }
+
+        protected int CalcularDiasUteis(DateTime dataInicio, DateTime dataFim)
+        {
+            int diasUteis = 0;
+
+            DateTime dataAtual = dataInicio;
+
+            while (dataAtual <= dataFim)
+            {
+                if (dataAtual.DayOfWeek != DayOfWeek.Saturday && dataAtual.DayOfWeek != DayOfWeek.Sunday && !EhFeriadoNacional(dataAtual))
+                {
+                    diasUteis++;
+                }
+
+                dataAtual = dataAtual.AddDays(1);
+            }
+
+            return diasUteis;
+        }
+
+        protected DateTime CalcularDataTermino(DateTime dataInicio, int horasFormacao, int horasPorDia)
+        {
+            DateTime dataAtual = dataInicio;
+            int horasRestantes = horasFormacao;
+
+            while (horasRestantes > 0)
+            {
+                // Verificar se o dia atual é útil (não é sábado, domingo ou feriado)
+                if (dataAtual.DayOfWeek != DayOfWeek.Saturday && dataAtual.DayOfWeek != DayOfWeek.Sunday && !EhFeriadoNacional(dataAtual))
+                {
+                    int horasDia = Math.Min(horasPorDia, horasRestantes);
+
+                    // Adicionar as horas do dia atual
+                    dataAtual = dataAtual.AddHours(horasDia);
+                    horasRestantes -= horasDia;
+
+
+                }
+
+                if (horasRestantes != 0)
+                    dataAtual = dataAtual.AddDays(1); // Passar para o próximo dia
+            }
+
+            return dataAtual;
+        }
+
+        bool EhFeriadoNacional(DateTime data)
+        {
+            int dia = data.Day;
+            int mes = data.Month;
+            int ano = data.Year;
+
+            // Feriados fixos
+            if (dia == 1 && mes == 1) // Ano Novo
+                return true;
+            if (dia == 25 && mes == 4) // Dia da Liberdade
+                return true;
+            if (dia == 1 && mes == 5) // Dia do Trabalhador
+                return true;
+            if (dia == 10 && mes == 6) // Dia de Portugal
+                return true;
+            if (dia == 5 && mes == 10) // Implantação da República
+                return true;
+            if (dia == 1 && mes == 11) // Dia de Todos os Santos
+                return true;
+            if (dia == 1 && mes == 12) // Dia da Restauração da Independência
+                return true;
+            if (dia == 8 && mes == 12) // Dia da Imaculada Conceição
+                return true;
+            if (dia == 25 && mes == 12) // Natal
+                return true;
+
+            // Feriados móveis
+            DateTime pascoa = CalcularDataPascoa(ano);
+            DateTime sextaFeiraSanta = pascoa.AddDays(-2);
+            DateTime segundaFeiraPascoa = pascoa.AddDays(1);
+            DateTime corpoDeus = pascoa.AddDays(60);
+
+            if (data.Date == sextaFeiraSanta.Date)
+                return true;
+            if (data.Date == segundaFeiraPascoa.Date)
+                return true;
+            if (data.Date == corpoDeus.Date)
+                return true;
+
+            return false;
+        }
+
+        DateTime CalcularDataPascoa(int ano)
+        {
+            int a = ano % 19;
+            int b = ano / 100;
+            int c = ano % 100;
+            int d = b / 4;
+            int e = b % 4;
+            int f = (b + 8) / 25;
+            int g = (b - f + 1) / 3;
+            int h = (19 * a + b - d - g + 15) % 30;
+            int i = c / 4;
+            int k = c % 4;
+            int l = (32 + 2 * e + 2 * i - h - k) % 7;
+            int m = (a + 11 * h + 22 * l) / 451;
+            int mes = (h + l - 7 * m + 114) / 31;
+            int dia = ((h + l - 7 * m + 114) % 31) + 1;
+
+            return new DateTime(ano, mes, dia);
+        }
+
+
     }
 }

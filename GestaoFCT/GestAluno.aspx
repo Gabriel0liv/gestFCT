@@ -380,6 +380,14 @@
                                                                     <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server" />
                                                                 </div>
                                                                 <div class="form-group">
+                                                                    <label for="ddl_curso">Curso</label>
+                                                                    <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="ddl_Encarregado">Encarregado de Educação</label>
+                                                                    <asp:DropDownList ID="ddl_Encarregado" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
                                                                     <label for="txt_pass">Palavra passe</label>
                                                                     <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" runat="server" />
                                                                 </div>
@@ -387,15 +395,11 @@
                                                             <div id="formFCT" runat="server" visible="false">
 
                                                                 <div class="form-group">
-                                                                    <label for="ddl_entidade">Aluno</label>
+                                                                    <label for="txt_aluno">Aluno</label>
                                                                     <asp:TextBox ID="txt_aluno" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="ddl_entidade">Curso</label>
-                                                                    <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Professor Orientador</label>
+                                                                    <label for="ddl_professor">Professor Orientador</label>
                                                                     <asp:DropDownList ID="ddl_professor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
@@ -403,20 +407,39 @@
                                                                     <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" AutoPostBack="true" ClientIDMode="Static" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="ddl_entidade">Tutor</label>
+                                                                    <label for="ddl_tutor">Tutor</label>
                                                                     <asp:DropDownList ID="ddl_tutor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">número de horas</label>
-                                                                        <input type="text" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
+                                                                        <input type="number" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
+                                                                    </div>
+
+                                                                    <div style="display: inline-block">
+                                                                        <label for="txt_nome">número de horas diárias</label>
+                                                                        <%--<input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" enableviewstate="true" runat="server" />--%>
+                                                                        <asp:TextBox ID="txt_numMaxHoras" class="form-control" placeholder="Número máximo de horas diárias" TextMode="Number" runat="server"></asp:TextBox>
                                                                     </div>
 
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">Ano</label>
                                                                         <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" />
+
                                                                     </div>
 
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <div style="display: inline-block">
+                                                                        <label for="txt_nome">Data de inicio da formação</label>
+                                                                        <asp:TextBox ID="txt_dataInicio" class="form-control" placeholder="Ex: 16/05/2023" runat="server" AutoPostBack="true" OnTextChanged="txt_dataInicio_TextChanged"></asp:TextBox>
+                                                                        <%--<input type="text" class="form-control" id="txt_dataInicio" placeholder="Ex: 16/05/2023" enableviewstate="true" runat="server" />--%>
+                                                                    </div>
+                                                                    <div style="display: inline-block">
+                                                                        <label for="txt_nome">Estimativa de término</label>
+                                                                        <%--<input type="text" class="form-control" id="" placeholder="Ex: 16/08/2023" enableviewstate="true" runat="server" />--%>
+                                                                        <asp:TextBox ID="txt_dataFim" class="form-control" placeholder="Ex: 18/07/2023" AutoPostBack="true" runat="server"></asp:TextBox>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -491,6 +514,8 @@
                 columns: [
                     { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
                     { title: "Nome", field: "nome", width: 230, resizable: false, headerFilter: "input" },
+                    { title: "Curso", field: "curso", width: 230, resizable: false, headerFilter: "input" },
+                    { title: "Encarregado", field: "encarregado", width: 230, resizable: false, headerFilter: "input" },
                     { title: "NIF", field: "nif", width: 80, resizable: false, headerFilter: "number" },
                     { title: "E-mail", field: "email", width: 230, resizable: false, headerFilter: "input" },
                     { title: "Morada", field: "morada", width: 230, resizable: false, headerFilter: "input" },
@@ -498,7 +523,7 @@
                     { title: "C.Postal", field: "codPost", width: 80, resizable: false, headerFilter: "input" },
                     { title: "Telefone", field: "telefone", width: 156, resizable: false, headerFilter: "number" },
                     { title: "Bi", field: "bi", width: 156, resizable: false, headerFilter: "input" },
-                    { title: "Validade", field: "valbi", width: 100, resizable: false, headerFilter: "input" },
+                    { title: "Validade", field: "valbi", width: 70, resizable: false, headerFilter: "input" },
                     { title: "Password", field: "pass_aluno", width: 125, resizable: false, headerFilter: "input" },
 
 
@@ -533,16 +558,18 @@
                 <asp:Repeater ID="rptItems" runat="server">
                     <ItemTemplate>
                         {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_aluno") %>',
-                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
-                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_aluno") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "email_aluno") %>', 
-                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_aluno") %>',
-                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_aluno") %>', 
-                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_aluno") %>',
-                    telefone: '<%#DataBinder.Eval(Container.DataItem, "telefone_aluno") %>',
-                    bi: '<%#DataBinder.Eval(Container.DataItem, "bi_aluno") %>',
-                    valbi: '<%#DataBinder.Eval(Container.DataItem, "valBi_aluno") %>',
-                    pass_aluno: '<%#DataBinder.Eval(Container.DataItem, "pass_aluno") %>'},
+                        nome: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
+                        curso: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>',
+                        encarregado: '<%#DataBinder.Eval(Container.DataItem, "nome_ee") %>',
+                        nif: '<%#DataBinder.Eval(Container.DataItem, "nif_aluno") %>', 
+                        email: '<%#DataBinder.Eval(Container.DataItem, "email_aluno") %>', 
+                        morada: '<%#DataBinder.Eval(Container.DataItem, "morada_aluno") %>',
+                        localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_aluno") %>', 
+                        codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_aluno") %>',
+                        telefone: '<%#DataBinder.Eval(Container.DataItem, "telefone_aluno") %>',
+                        bi: '<%#DataBinder.Eval(Container.DataItem, "bi_aluno") %>',
+                        valbi: '<%#DataBinder.Eval(Container.DataItem, "valBi_aluno") %>',
+                        pass_aluno: '<%#DataBinder.Eval(Container.DataItem, "pass_aluno") %>'},
 
                     </ItemTemplate>
                 </asp:Repeater >];
@@ -557,6 +584,7 @@
                 $('#ddl_curso').select2();
                 $('#ddl_professor').select2();
                 $('#ddl_tutor').select2();
+                $('#ddl_Encarregado').select2();
             });
 
         </script>

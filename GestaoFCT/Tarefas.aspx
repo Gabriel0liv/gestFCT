@@ -95,7 +95,7 @@
                     <!-- begin sidebar scrollbar -->
                     <div class="sidebar-left" data-simplebar="" style="height: 100%;">
                         <!-- sidebar menu -->
-                        <ul class="nav sidebar-inner" id="sidebar-menu" >
+                        <ul class="nav sidebar-inner" id="sidebar-menu">
 
                             <li id="NavSum" runat="server">
                                 <a class="sidenav-item-link" href="Sumarios.aspx">
@@ -111,7 +111,7 @@
                                 </a>
                             </li>
 
-                            <li id="NavDoc" runat="server" >
+                            <li id="NavDoc" runat="server">
                                 <a class="sidenav-item-link" href="chat.html">
                                     <i class="mdi mdi-file-multiple"></i>
                                     <span class="nav-text">Documentos</span>
@@ -346,15 +346,15 @@
                                                                 <label for="txt_tarefa">Descrição da tarefa</label>
                                                                 <input type="text" class="form-control" id="txt_tarefa" enableviewstate="true" runat="server" />
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_tarefa">Empresa</label>
-                                                                <asp:DropDownList ID="ddl_TarEntidade" class="form-control" runat="server"></asp:DropDownList>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_tarefa">Descrição da tarefa</label>
-                                                                <input type="text" class="form-control" id="Text2" enableviewstate="true" runat="server" />
-                                                                <asp:DropDownList ID="ddl_TarTutor" class="form-control" runat="server"></asp:DropDownList>
-
+                                                            <div id="ChooseDiv" runat="server">
+                                                                <div class="form-group">
+                                                                    <label for="txt_tarefa">Empresa</label>
+                                                                    <asp:DropDownList ID="ddl_TarEntidade" class="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_TarEntidade_SelectedIndexChanged1" ></asp:DropDownList>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="txt_tarefa">Tutor</label>
+                                                                    <asp:DropDownList ID="ddl_TarTutor" class="form-control" runat="server"></asp:DropDownList>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -491,9 +491,8 @@
 
             $(document).ready(function () {
                 $('#ddl_entidade').select2();
-                $('#ddl_curso').select2();
-                $('#ddl_professor').select2();
-                $('#ddl_tutor').select2();
+                $('#ddl_TarEntidade').select2();
+                $('#ddl_TarTutor').select2();
             });
 
         </script>
