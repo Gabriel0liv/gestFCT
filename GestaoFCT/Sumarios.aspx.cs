@@ -35,25 +35,9 @@ namespace GestaoFCT
 
                 if (TextBox1.Text != "")
                 {
-                    //TextBox1.Text = TextBox1.Text.Replace(',', ';');
-                    ClientScript.RegisterStartupScript(
-                          this.GetType(),
-                          "showAlert",
-                          "showAlert(\"" + TextBox1.Text + "\")",
-                          true);
-
-                    //string[] array = TextBox1.Text.Split(',');
-                    //int[] result = new int[array.Length];
-
-                    //for (int i = 0; i < array.Length; i++)
-                    //{
-                    //    result[i] = int.Parse(array[i]);
-                    //}
-
-                    //foreach (int i in result)
-                    //{
-                    //    ddl_Tarefas.Items.FindByValue(i.ToString()).Selected = true;
-                    //}
+                    //vai manter a multi-select com os itens selecionados ao recarregar a página
+                    TarefasSelecionadas();
+                    
                 }
 
             }
@@ -104,7 +88,8 @@ namespace GestaoFCT
 
             txt_sumario.Text = "";
             txt_dataSum.Value = "";
-
+            txt_numHora.Value = "";
+            TextBox1.Text = "";
 
             using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
             {
@@ -170,6 +155,7 @@ namespace GestaoFCT
 
             if(labelCod.Text != "0")
             {
+                reset();
                 Atualizar();
                 exampleModalFormTitle.InnerText = "Editar Sumário";
                 btn_enviar.Text = "Editar Sumário";
@@ -196,6 +182,7 @@ namespace GestaoFCT
 
             if(labelCod.Text != "0")
             {
+                reset();
                 btnDeletar.Visible = true;
                 textoCancelar.InnerText = "Tem certeza que deseja eliminar o Sumário?";
             }
@@ -211,21 +198,6 @@ namespace GestaoFCT
 
         }
 
-
-        public static string MinhaFuncaoCSharp(string variaveis)
-        {
-            // Acessar as variáveis individuais
-            
-            string parametro1 = variaveis.ToString();
-            string parametro2 = variaveis.ToString();
-
-
-            // Código da sua função C#
-            Xis = variaveis.ToString();
-            // Retornar um resultado
-            return "";
-        }
-
         protected void Comandos(object sender, EventArgs e)
         {
 
@@ -233,9 +205,7 @@ namespace GestaoFCT
             if (operacao.Text == "1")
             {
 
-                //string parametro1 = variaveis.ToString();
 
-                //Response.Write("<script>alert('11111')</script>");
 
                 if (Session["cargo"].ToString() == "4")
                 {
@@ -243,19 +213,19 @@ namespace GestaoFCT
 
                     //Database.NonQuerySqlSrv(linhasql)
 
-                    string[] cortado = TextBox1.Text.Split(',');
-                    int[] result = new int[cortado.Length];
-                    for (int i = 0; i < cortado.Length; i++)
+                    string[] array = TextBox1.Text.Split(',');
+                    int[] result = new int[array.Length];
+
+                    for (int i = 0; i < array.Length; i++)
                     {
-                        result[i] = int.Parse(cortado[i]);
+                        result[i] = int.Parse(array[i]);
                     }
 
-                    for (int i = 0; 1 < cortado.Length; i++)
+                    for ( int i = 0; i < result.Length; i++)
                     {
-                        linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values ( " + cortado[i] + ", (select id_sumario from Sumarios where ));";
-
+                        linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + result[i] + ", ( select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Value + "'));";
+                        Database.NonQuerySqlSrv(linhasql);
                     }
-
                 }
 
 
@@ -307,7 +277,44 @@ namespace GestaoFCT
             exampleModal.Visible = false;
         }
 
+        protected void TarefasSelecionadas()
+        {
+            string[] array = TextBox1.Text.Split(',');
+            int[] result = new int[array.Length];
 
+            for (int i = 0; i < array.Length; i++)
+            {
+                result[i] = int.Parse(array[i]);
+            }
+
+            // SELECIONAR ITENS DO DROPDOWN
+            if (result.Length == 1)
+            {
+                ClientScript.RegisterStartupScript(
+                      this.GetType(),
+                      "showAlert",
+                      "SlcTar1(" + result[0] + ")",
+                      true);
+            }
+
+            if (result.Length == 2)
+            {
+                ClientScript.RegisterStartupScript(
+                      this.GetType(),
+                      "showAlert",
+                      "SlcTar2(" + result[0] + "," + result[1] + ")",
+                      true);
+            }
+
+            if (result.Length == 3)
+            {
+                ClientScript.RegisterStartupScript(
+                      this.GetType(),
+                      "showAlert",
+                      "SlcTar3(" + result[0] + "," + result[1] + "," + result[2] + ")",
+                      true);
+            }
+        }
 
         protected void ddl_entidade_SelectedIndexChanged1(object sender, EventArgs e)
         {

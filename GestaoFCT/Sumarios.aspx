@@ -491,7 +491,7 @@
 
 
             $(document).ready(function () {
-                $('#ddl_Tarefas').select2();
+                $('#ddl_Tarefas').select2({ maximumSelectionLength: 3 });
 
             });
 
@@ -531,11 +531,24 @@
                 alert("Valores: [" + valores + "]");
                 //$('#ddl_Tarefas').select2("[" + valores + "]");
                 valores = "[" + valores + "]";
-                $('#ddl_Tarefas').val(['1','2']);
+                //$('#ddl_Tarefas').val(['1','2']);
 
 
             }
 
+            function SlcTar1(a) {
+                alert("Valores: " + a);
+                $('#ddl_Tarefas').val([a]);
+            }
+
+            function SlcTar2(a, b) {
+                alert("Valores: " + b + "," + a );
+                $('#ddl_Tarefas').val([a, b]);
+            }
+            function SlcTar3(a, b, c) {
+                alert("Valores: " + a + "," + b + "," + c);
+                $('#ddl_Tarefas').val([a, b, c]);
+            }
 
         </script>
 
