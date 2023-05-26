@@ -97,14 +97,21 @@
                         <!-- sidebar menu -->
                         <ul class="nav sidebar-inner" id="sidebar-menu">
 
-                            <li class="active">
+                            <li id="NavSum" runat="server" class="active">
+                                <a class="sidenav-item-link" href="Sumarios.aspx">
+                                    <i class="mdi mdi-calendar-check"></i>
+                                    <span class="nav-text">Sumarios</span>
+                                </a>
+                            </li>
+
+                            <li id="NavTar" runat="server">
                                 <a class="sidenav-item-link" href="Tarefas.aspx">
                                     <i class="mdi mdi-calendar-check"></i>
                                     <span class="nav-text">Tarefas</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavDoc" runat="server">
                                 <a class="sidenav-item-link" href="chat.html">
                                     <i class="mdi mdi-file-multiple"></i>
                                     <span class="nav-text">Documentos</span>
@@ -112,52 +119,52 @@
                             </li>
 
 
-                            <li class="section-title">Gestão
+                            <li id="SecGest" class="section-title" runat="server">Gestão
                             </li>
 
-                            <li>
+                            <li id="NavFCT" runat="server">
                                 <a class="sidenav-item-link" href="GestFCT.aspx">
                                     <i class="fa-solid fa-address-card" style="font-size: 18px"></i>
                                     <span class="nav-text">Gestão da FCT</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavAln" runat="server">
                                 <a class="sidenav-item-link" href="GestAluno.aspx">
                                     <i class="fa-solid fa-users" style="font-size: 18px"></i>
                                     <span class="nav-text">Alunos</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavEE" runat="server">
                                 <a class="sidenav-item-link" href="GestEnc.aspx">
                                     <i class="mdi mdi-account-group"></i>
                                     <span class="nav-text">Enc. Educação</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavCurso" runat="server">
                                 <a class="sidenav-item-link" href="GestCursos.aspx">
                                     <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
                                     <span class="nav-text">Entidades</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavProf" runat="server">
                                 <a class="sidenav-item-link" href="GestProf.aspx">
                                     <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
                                     <span class="nav-text">Professores</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavTut" runat="server">
                                 <a class="sidenav-item-link" href="GestTutor.aspx">
                                     <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
                                     <span class="nav-text">Tutores</span>
@@ -337,17 +344,21 @@
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
                                                             <div class="form-group">
+                                                                <label for="txt_numhora">Data do sumário</label>
+                                                                <input type="text" class="form-control" id="txt_dataSum" placeholder="Data de sumario" enableviewstate="true" runat="server" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="txt_sumario">Descrição do sumário</label>
+                                                                <asp:TextBox ID="txt_sumario" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
+                                                            </div>
+                                                            <div class="form-group">
                                                                 <div style="display: flex; justify-content: space-between">
                                                                     <label for="ddl_Tarefas">Tarefas Associadas</label>
                                                                     <%--<button class="btn btn-secondary" onclick="ShowValue()" style="height: 20px;font-size: 12px;padding: 4px;line-height: 5px;">Guardar tarefas</button>--%>
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
-                                                                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                                                <asp:TextBox ID="TextBox1" runat="server" style="display: none" ></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_sumario">Descrição do sumário</label>
-                                                                <asp:TextBox ID="txt_sumario" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div style="display: inline-block">
@@ -356,12 +367,13 @@
                                                                 </div>
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_status">Estado do sumário</label>
-                                                                    <input type="text" class="form-control" id="txt_status" enableviewstate="true" value="Pendente" readonly="readonly" runat="server" />
+                                                                    <%--<input type="text" class="form-control" id="txt_status" enableviewstate="true" value="Pendente" readonly="readonly" runat="server" />--%>
+                                                                    <asp:DropDownList ID="ddl_Status" CssClass="form-control" runat="server" Enabled="false">
+                                                                        <asp:ListItem Text="Pendente" Value="Pendente"></asp:ListItem>
+                                                                        <asp:ListItem Text="Validado" Value="Validado"></asp:ListItem>
+                                                                        <asp:ListItem Text="Rejeitado" Value="Rejeitado"></asp:ListItem>
+                                                                    </asp:DropDownList>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_numhora">Data do sumário</label>
-                                                                <input type="text" class="form-control" id="txt_dataSum" placeholder="Data de sumario" enableviewstate="true" runat="server" />
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -442,7 +454,6 @@
                 layout: "fitDataStretch",
                 columns: [
                     { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
-                    { title: "Tarefas", field: "tarefas_sumario", width: 325, resizable: false, headerFilter: "input" },
                     { title: "Descrição", field: "descricao_sumario", width: 325, resizable: false, headerFilter: "input" },
                     { title: "Horas", field: "horas_sumario", width: 50, resizable: false, headerFilter: "number" },
                     { title: "Status", field: "status_sumario", width: 150, resizable: false, headerFilter: "input" },
@@ -497,62 +508,32 @@
 
             function ShowValue() {
 
-
-
-                /*                alert("o valor1 é:" + $('#ddl_Tarefas').select2("val") + "!");*/
-
                 bt.value = $('#ddl_Tarefas').select2("val");
-                //alert(bt.value);
+                /*alert(bt.value);*/
                 bt.innerText = $('#ddl_Tarefas').select2("val");
 
                 //alert("o valor2 é:" + $('#ddl_Tarefas').select2("val") + "!");
-                selectedTasks = $('#ddl_Tarefas').select2("val");
 
             }
 
-            function onSucesso(resultado) {
-                // Tratar o resultado retornado pelo code-behind
-                console.log(resultado);
-            }
-
-            function onFalha(erro) {
-                // Tratar o erro, se houver
-                console.log(erro);
-            }
-            //var btn = document.getElementById('Button1');
-
-
-            function showAlert(valores) {
-                alert("Hello from C#!");
-
-                alert("Valores: " + valores);
-
-
-                alert("Valores: [" + valores + "]");
-                //$('#ddl_Tarefas').select2("[" + valores + "]");
-                valores = "[" + valores + "]";
-                //$('#ddl_Tarefas').val(['1','2']);
-
-
-            }
 
             function SlcTar1(a) {
-                alert("Valores: " + a);
+                //alert("Valores: " + a);
                 $('#ddl_Tarefas').val([a]);
             }
 
             function SlcTar2(a, b) {
-                alert("Valores: " + b + "," + a );
+                //alert("Valores: " + b + "," + a );
                 $('#ddl_Tarefas').val([a, b]);
             }
             function SlcTar3(a, b, c) {
-                alert("Valores: " + a + "," + b + "," + c);
+                //alert("Valores: " + a + "," + b + "," + c);
                 $('#ddl_Tarefas').val([a, b, c]);
             }
 
         </script>
 
-        <asp:HiddenField ID="HiddenField2" runat="server" />
+        <asp:TextBox ID="oldTar" runat="server" Visible="false"></asp:TextBox>
 
         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
         <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -96,14 +96,21 @@
                         <!-- sidebar menu -->
                         <ul class="nav sidebar-inner" id="sidebar-menu">
 
-                            <li>
+                            <li id="NavSum" runat="server">
+                                <a class="sidenav-item-link" href="Sumarios.aspx">
+                                    <i class="mdi mdi-calendar-check"></i>
+                                    <span class="nav-text">Sumarios</span>
+                                </a>
+                            </li>
+
+                            <li id="NavTar" runat="server">
                                 <a class="sidenav-item-link" href="Tarefas.aspx">
                                     <i class="mdi mdi-calendar-check"></i>
                                     <span class="nav-text">Tarefas</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavDoc" runat="server">
                                 <a class="sidenav-item-link" href="chat.html">
                                     <i class="mdi mdi-file-multiple"></i>
                                     <span class="nav-text">Documentos</span>
@@ -111,52 +118,52 @@
                             </li>
 
 
-                            <li class="section-title">Gestão
+                            <li id="SecGest" class="section-title" runat="server">Gestão
                             </li>
 
-                            <li>
+                            <li id="NavFCT" runat="server">
                                 <a class="sidenav-item-link" href="GestFCT.aspx">
                                     <i class="fa-solid fa-address-card" style="font-size: 18px"></i>
                                     <span class="nav-text">Gestão da FCT</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavAln" runat="server">
                                 <a class="sidenav-item-link" href="GestAluno.aspx">
                                     <i class="fa-solid fa-users" style="font-size: 18px"></i>
                                     <span class="nav-text">Alunos</span>
                                 </a>
                             </li>
 
-                            <li class="active">
+                            <li id="NavEE" runat="server" class="active">
                                 <a class="sidenav-item-link" href="GestEnc.aspx">
                                     <i class="mdi mdi-account-group"></i>
                                     <span class="nav-text">Enc. Educação</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavCurso" runat="server">
                                 <a class="sidenav-item-link" href="GestCursos.aspx">
                                     <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
                                     <span class="nav-text">Entidades</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavProf" runat="server">
                                 <a class="sidenav-item-link" href="GestProf.aspx">
                                     <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
                                     <span class="nav-text">Professores</span>
                                 </a>
                             </li>
 
-                            <li>
+                            <li id="NavTut" runat="server">
                                 <a class="sidenav-item-link" href="GestTutor.aspx">
                                     <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
                                     <span class="nav-text">Tutores</span>

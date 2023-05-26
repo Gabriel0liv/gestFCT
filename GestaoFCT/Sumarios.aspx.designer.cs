@@ -78,6 +78,105 @@ namespace GestaoFCT
         protected global::System.Web.UI.WebControls.SqlDataSource SumSQLData;
 
         /// <summary>
+        /// Controle NavSum.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavSum;
+
+        /// <summary>
+        /// Controle NavTar.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavTar;
+
+        /// <summary>
+        /// Controle NavDoc.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavDoc;
+
+        /// <summary>
+        /// Controle SecGest.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SecGest;
+
+        /// <summary>
+        /// Controle NavFCT.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavFCT;
+
+        /// <summary>
+        /// Controle NavAln.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavAln;
+
+        /// <summary>
+        /// Controle NavEE.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavEE;
+
+        /// <summary>
+        /// Controle NavCurso.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavCurso;
+
+        /// <summary>
+        /// Controle NavEnt.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavEnt;
+
+        /// <summary>
+        /// Controle NavProf.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavProf;
+
+        /// <summary>
+        /// Controle NavTut.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavTut;
+
+        /// <summary>
         /// Controle NomeUser.
         /// </summary>
         /// <remarks>
@@ -150,6 +249,24 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlButton spanFechar;
 
         /// <summary>
+        /// Controle txt_dataSum.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_dataSum;
+
+        /// <summary>
+        /// Controle txt_sumario.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txt_sumario;
+
+        /// <summary>
         /// Controle Button1.
         /// </summary>
         /// <remarks>
@@ -177,15 +294,6 @@ namespace GestaoFCT
         protected global::System.Web.UI.WebControls.DropDownList ddl_Tarefas;
 
         /// <summary>
-        /// Controle txt_sumario.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_sumario;
-
-        /// <summary>
         /// Controle txt_numHora.
         /// </summary>
         /// <remarks>
@@ -195,22 +303,13 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_numHora;
 
         /// <summary>
-        /// Controle txt_status.
+        /// Controle ddl_Status.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_status;
-
-        /// <summary>
-        /// Controle txt_dataSum.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_dataSum;
+        protected global::System.Web.UI.WebControls.DropDownList ddl_Status;
 
         /// <summary>
         /// Controle btn_fechar.
@@ -285,12 +384,12 @@ namespace GestaoFCT
         protected global::System.Web.UI.WebControls.Repeater rptItems2;
 
         /// <summary>
-        /// Controle HiddenField2.
+        /// Controle oldTar.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenField2;
+        protected global::System.Web.UI.WebControls.TextBox oldTar;
     }
 }

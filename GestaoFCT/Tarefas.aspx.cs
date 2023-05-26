@@ -28,7 +28,6 @@ namespace GestaoFCT
 
             if (Session["cargo"].ToString() == "4")
             {
-
                 NavAln.Visible = false;
                 NavCurso.Visible = false;
                 NavEE.Visible = false;
