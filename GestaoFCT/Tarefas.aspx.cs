@@ -50,22 +50,39 @@ namespace GestaoFCT
 
             if (!IsPostBack)
             {
+                if(Session["cargo"].ToString() == "2")
+                {
+                    using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("SELECT E.id_entidade, E.nome_entidade FROM FichasFCT F JOIN Professores P ON F.id_professor = P.id_prof JOIN Entidades E ON F.id_entidade = E.id_entidade WHERE P.id_prof =" + Session["id"].ToString() + ";", sqlConn);
+                        sqlConn.Open();
+                        ddl_entidade.DataTextField = "nome_entidade";
+                        ddl_entidade.DataValueField = "id_entidade";
+                        ddl_entidade.DataSource = cmd.ExecuteReader();
+                        ddl_entidade.DataBind();
+                        sqlConn.Close();
+                    }
+                }
+                if (Session["cargo"].ToString() == "1")
+                {
+                    using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select id_entidade, nome_entidade from Entidades;", sqlConn);
+                        sqlConn.Open();
+                        ddl_entidade.DataTextField = "nome_entidade";
+                        ddl_entidade.DataValueField = "id_entidade";
+                        ddl_entidade.DataSource = cmd.ExecuteReader();
+                        ddl_entidade.DataBind();
+                        sqlConn.Close();
+                    }
+                }
+
+
                 if (rptItems.Items.Count == 0)
                 {
                     refresh();
                 }
 
-
-                using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
-                {
-                    SqlCommand cmd = new SqlCommand("select id_entidade, nome_entidade from entidades;", sqlConn);
-                    sqlConn.Open();
-                    ddl_entidade.DataTextField = "nome_entidade";
-                    ddl_entidade.DataValueField = "id_entidade";
-                    ddl_entidade.DataSource = cmd.ExecuteReader();
-                    ddl_entidade.DataBind();
-                    sqlConn.Close();
-                }
             }
 
 
@@ -73,11 +90,31 @@ namespace GestaoFCT
 
         protected void refresh()
         {
-            String linhasql = "select * from Tarefas_table;";
-            DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+            if (Session["cargo"].ToString() == "1") // se for administrador
+            {
+                String linhasql = "select * from Tarefas_table;";
+                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
-            rptItems.DataSource = dt;
-            rptItems.DataBind();
+                rptItems.DataSource = dt;
+                rptItems.DataBind();
+            }
+            if(Session["cargo"].ToString() == "2") // se for professor
+            {
+                String linhasql = "select * from Tarefas_table where id_entidade = " + ddl_entidade.SelectedValue + ";";
+                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+
+                rptItems.DataSource = dt;
+                rptItems.DataBind();
+            }
+            if(Session["cargo"].ToString() == "3")
+            {
+                String linhasql = "select * from Tarefas_table where id_entidade = " + Session["entidade"].ToString() + ";";
+                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+
+                rptItems.DataSource = dt;
+                rptItems.DataBind();
+            }
+
 
         }
 
