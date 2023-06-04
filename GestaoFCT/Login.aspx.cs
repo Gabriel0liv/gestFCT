@@ -66,6 +66,7 @@ namespace GestaoFCT
                     Session["email"] = dt.Rows[0]["email"];
                     Session["curso"] = dt.Rows[0]["curso"];
                     Session["pass"] = dt.Rows[0]["pass"];
+                    Session["direcao"] = dt.Rows[0]["direcao"];
                     Response.Redirect("~/GestAluno.aspx"); // redireciona para pagina de alunos
                 }
                 if (Session["cargo"].ToString() == "1") // se for um administrador

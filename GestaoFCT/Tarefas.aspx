@@ -388,9 +388,7 @@
                                             </div>
 
                                             <div class="head-left-options">
-                                                <button type="button" class="btn btn-outline">
-                                                    Tarefas
-                                                </button>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click" >Tarefas</asp:LinkButton>
                                             </div>
 
                                             <div class="head-right-options">

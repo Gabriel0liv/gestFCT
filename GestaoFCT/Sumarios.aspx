@@ -357,7 +357,7 @@
                                                                     <%--<button class="btn btn-secondary" onclick="ShowValue()" style="height: 20px;font-size: 12px;padding: 4px;line-height: 5px;">Guardar tarefas</button>--%>
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
-                                                                <asp:TextBox ID="TextBox1" runat="server" style="display: none" ></asp:TextBox>
+                                                                <asp:TextBox ID="TextBox1" runat="server" Style="display: none"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
                                                             </div>
                                                             <div class="form-group">
@@ -406,14 +406,16 @@
                                             </div>
 
                                             <div class="head-left-options">
-                                                <button type="button" class="btn btn-outline" onclick="tblSumarios()">
-                                                    Sumários
-                                                </button>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Sumários</asp:LinkButton>
                                             </div>
 
                                             <div class="head-right-options">
+
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <asp:DropDownList ID="ddl_entidade" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged1"></asp:DropDownList>
+                                                </div>
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <asp:DropDownList ID="ddl_aluno" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_aluno_SelectedIndexChanged1" Visible="false"></asp:DropDownList>
                                                 </div>
                                             </div>
                                         </div>
@@ -457,6 +459,7 @@
                     { title: "Descrição", field: "descricao_sumario", width: 325, resizable: false, headerFilter: "input" },
                     { title: "Horas", field: "horas_sumario", width: 50, resizable: false, headerFilter: "number" },
                     { title: "Status", field: "status_sumario", width: 150, resizable: false, headerFilter: "input" },
+                    { title: "Aluno", field: "aluno", width: 300, resizable: false, headerFilter: "input" },
                     { title: "FCT", field: "id_fct", width: 50, resizable: false, headerFilter: "number" },
 
                 ],
@@ -491,6 +494,7 @@
                     descricao_sumario: '<%#DataBinder.Eval(Container.DataItem, "descricao_sumario") %>', 
                     horas_sumario: '<%#DataBinder.Eval(Container.DataItem, "horas_sumario") %>', 
                     status_sumario: '<%#DataBinder.Eval(Container.DataItem, "status_sumario") %>',
+                    aluno: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
                     id_fct: '<%#DataBinder.Eval(Container.DataItem, "id_fct") %>'},
                     </ItemTemplate>
                 </asp:Repeater >];

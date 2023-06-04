@@ -15,7 +15,7 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["Utilizador"] == null || Session["cargo"] == null)
+            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2" && Session["cargo"].ToString() != "3")
             {
                 //Redirect to login page.
                 Response.Redirect("~/Login.aspx");
@@ -24,26 +24,25 @@ namespace GestaoFCT
             {
                 //Redirect to home page
                 NomeUser.InnerText = Session["Utilizador"].ToString();
+
+                if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
+                    ddl_entidade.Visible = true;
+                else
+                    ddl_entidade.Visible = false;
+
+                if (Session["cargo"].ToString() == "3")
+                {
+                    //oculta opções de navegação
+                    NavAln.Visible = false;
+                    NavCurso.Visible = false;
+                    NavEE.Visible = false;
+                    NavEnt.Visible = false;
+                    NavFCT.Visible = false;
+                    NavProf.Visible = false;
+                    SecGest.Visible = false;
+                    NavTut.Visible = false;
+                }
             }
-
-            if (Session["cargo"].ToString() == "4")
-            {
-                NavAln.Visible = false;
-                NavCurso.Visible = false;
-                NavEE.Visible = false;
-                NavEnt.Visible = false;
-                NavFCT.Visible = false;
-                NavProf.Visible = false;
-                SecGest.Visible = false;
-                NavTar.Visible = false;
-                NavTut.Visible = false;
-            }
-
-
-            if (Session["cargo"].ToString() == "1" || Session["cargo"].ToString() == "2")
-                ddl_entidade.Visible = true; 
-            else
-                ddl_entidade.Visible = false;
 
 
 
@@ -52,15 +51,32 @@ namespace GestaoFCT
             {
                 if(Session["cargo"].ToString() == "2")
                 {
-                    using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+
+                    if (Convert.ToBoolean(Session["direcao"])) // se for diretor de curso
                     {
-                        SqlCommand cmd = new SqlCommand("SELECT E.id_entidade, E.nome_entidade FROM FichasFCT F JOIN Professores P ON F.id_professor = P.id_prof JOIN Entidades E ON F.id_entidade = E.id_entidade WHERE P.id_prof =" + Session["id"].ToString() + ";", sqlConn);
-                        sqlConn.Open();
-                        ddl_entidade.DataTextField = "nome_entidade";
-                        ddl_entidade.DataValueField = "id_entidade";
-                        ddl_entidade.DataSource = cmd.ExecuteReader();
-                        ddl_entidade.DataBind();
-                        sqlConn.Close();
+                        using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+                        {
+                            SqlCommand cmd = new SqlCommand("Select distinct id_entidade, nome_entidade from Tarefas_curso where id_curso = " + Session["curso"].ToString() + ";", sqlConn);
+                            sqlConn.Open();
+                            ddl_entidade.DataTextField = "nome_entidade";
+                            ddl_entidade.DataValueField = "id_entidade";
+                            ddl_entidade.DataSource = cmd.ExecuteReader();
+                            ddl_entidade.DataBind();
+                            sqlConn.Close();
+                        }
+                    }
+                    else
+                    {
+                        using (SqlConnection sqlConn = new SqlConnection(TarSQLData.ConnectionString))
+                        {
+                            SqlCommand cmd = new SqlCommand("SELECT distinct E.id_entidade, E.nome_entidade FROM FichasFCT F JOIN Professores P ON F.id_professor = P.id_prof JOIN Entidades E ON F.id_entidade = E.id_entidade WHERE P.id_prof =" + Session["codigo"].ToString() + ";", sqlConn);
+                            sqlConn.Open();
+                            ddl_entidade.DataTextField = "nome_entidade";
+                            ddl_entidade.DataValueField = "id_entidade";
+                            ddl_entidade.DataSource = cmd.ExecuteReader();
+                            ddl_entidade.DataBind();
+                            sqlConn.Close();
+                        }
                     }
                 }
                 if (Session["cargo"].ToString() == "1")
@@ -92,7 +108,7 @@ namespace GestaoFCT
         {
             if (Session["cargo"].ToString() == "1") // se for administrador
             {
-                String linhasql = "select * from Tarefas_table;";
+                String linhasql = "select * from Tarefas;";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;
@@ -100,15 +116,27 @@ namespace GestaoFCT
             }
             if(Session["cargo"].ToString() == "2") // se for professor
             {
-                String linhasql = "select * from Tarefas_table where id_entidade = " + ddl_entidade.SelectedValue + ";";
-                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+                if (Convert.ToBoolean(Session["direcao"]))
+                {
+                    String linhasql = "select * from Tarefas_Curso where id_curso = " + Session["curso"].ToString() + ";";
+                    DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
-                rptItems.DataSource = dt;
-                rptItems.DataBind();
+                    rptItems.DataSource = dt;
+                    rptItems.DataBind();
+                }
+                else
+                {
+                    String linhasql = "select * from Tarefas_table where id_professor = " + Session["codigo"].ToString() + ";";
+                    DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+
+                    rptItems.DataSource = dt;
+                    rptItems.DataBind();
+                }
+
             }
-            if(Session["cargo"].ToString() == "3")
+            if(Session["cargo"].ToString() == "3") // se for tutor
             {
-                String linhasql = "select * from Tarefas_table where id_entidade = " + Session["entidade"].ToString() + ";";
+                String linhasql = "select * from Tarefas where id_entidade = " + Session["entidade"].ToString() + ";";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;
@@ -398,12 +426,17 @@ namespace GestaoFCT
 
         protected void ddl_entidade_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            String linhasql = "select * from Tarefas_table where id_entidade =" + ddl_entidade.SelectedValue + ";";
+            String linhasql = "select distinct id_tarefa, descricao_tarefa, id_entidade, nome_entidade, id_tutor, nome_tutor from Tarefas_table where id_entidade =" + ddl_entidade.SelectedValue + ";";
             DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
             rptItems.DataSource = dt;
             rptItems.DataBind();
 
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
         }
     }
 }

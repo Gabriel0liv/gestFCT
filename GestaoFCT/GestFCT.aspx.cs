@@ -17,7 +17,7 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["Utilizador"] == null)
+            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2")
             {
                 //Redirect to login page.
                 Response.Redirect("~/Login.aspx");

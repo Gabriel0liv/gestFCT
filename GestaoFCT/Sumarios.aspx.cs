@@ -18,14 +18,14 @@ namespace GestaoFCT
         {
             int[] DadosAtual = new int[3];
 
-            if (Session["Utilizador"] == null)
+            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2" && Session["cargo"].ToString() != "3")
             {
                 //Redirect to login page.
                 Response.Redirect("~/Login.aspx");
             }
             else
             {
-                //Redirect to home page
+               
                 NomeUser.InnerText = Session["Utilizador"].ToString();
 
 
@@ -34,6 +34,7 @@ namespace GestaoFCT
                 { 
 
                     ddl_Status.Enabled = false;
+                    ddl_entidade.Visible = false;
 
                     //oculta opções de navegação
                     NavAln.Visible = false;
@@ -53,6 +54,8 @@ namespace GestaoFCT
 
                     if(Session["cargo"].ToString() == "3")
                     {
+                        //oculta filtro
+                        ddl_entidade.Visible = false;
                         //oculta opções de navegação
                         NavAln.Visible = false;
                         NavCurso.Visible = false;
@@ -63,6 +66,7 @@ namespace GestaoFCT
                         SecGest.Visible = false;
                         NavTut.Visible = false;
                     }
+
                 }
 
 
@@ -88,16 +92,34 @@ namespace GestaoFCT
                     refresh();
                 }
 
-                using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                if (Session["cargo"].ToString() == "2")//se for professor
                 {
-                    SqlCommand cmd = new SqlCommand("select id_entidade, nome_entidade from entidades;", sqlConn);
-                    sqlConn.Open();
-                    ddl_entidade.DataTextField = "nome_entidade";
-                    ddl_entidade.DataValueField = "id_entidade";
-                    ddl_entidade.DataSource = cmd.ExecuteReader();
-                    ddl_entidade.DataBind();
-                    sqlConn.Close();
+                    using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select distinct id_entidade, nome_entidade from sumarios_table where id_professor = " + Session["codigo"] + ";", sqlConn);
+                        sqlConn.Open();
+                        ddl_entidade.DataTextField = "nome_entidade";
+                        ddl_entidade.DataValueField = "id_entidade";
+                        ddl_entidade.DataSource = cmd.ExecuteReader();
+                        ddl_entidade.DataBind();
+                        sqlConn.Close();
+                    }
                 }
+                if (Session["cargo"].ToString() == "1")//se for administrador
+                {
+                    using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select distinct id_entidade, nome_entidade from sumarios_table ;", sqlConn);
+                        sqlConn.Open();
+                        ddl_entidade.DataTextField = "nome_entidade";
+                        ddl_entidade.DataValueField = "id_entidade";
+                        ddl_entidade.DataSource = cmd.ExecuteReader();
+                        ddl_entidade.DataBind();
+                        sqlConn.Close();
+                    }
+                }
+
+
 
 
             }
@@ -107,12 +129,38 @@ namespace GestaoFCT
 
         protected void refresh()
         {
+            if (Session["cargo"].ToString() == "1")
+            {
+                String linhasql2 = "select * from Sumarios_table;";
+                DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
-            String linhasql2 = "select * from Sumarios;";
-            DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+            }
+            if (Session["cargo"].ToString() == "2")
+            {
+                String linhasql2 = "select * from Sumarios_table where id_professor = " + Session["codigo"].ToString() + ";";
+                DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
-            rptItems2.DataSource = dt2;
-            rptItems2.DataBind();
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+            }
+            if (Session["cargo"].ToString() == "3") //se for tutor
+            {
+                String linhasql2 = "select * from Sumarios_table where id_tutor =" + Session["codigo"].ToString() + ";";
+                DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+            }
+            if (Session["cargo"].ToString() == "4")
+            {
+                String linhasql2 = "select * from Sumarios_table where id_aluno = " + Session["codigo"].ToString() + ";";
+                DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+            }
         }
 
         protected void btn_logout_Click(object sender, EventArgs e)
@@ -130,16 +178,21 @@ namespace GestaoFCT
             txt_numHora.Value = "";
             TextBox1.Text = "";
 
-            using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+
+            if (Session["cargo"].ToString() == "4")
             {
-                SqlCommand cmd = new SqlCommand("select id_tarefa, descricao_tarefa from Tarefas;", sqlConn);
-                sqlConn.Open();
-                ddl_Tarefas.DataTextField = "descricao_tarefa";
-                ddl_Tarefas.DataValueField = "id_tarefa";
-                ddl_Tarefas.DataSource = cmd.ExecuteReader();
-                ddl_Tarefas.DataBind();
-                sqlConn.Close();
+                using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("select id_tarefa, descricao_tarefa from Tarefas where id_entidade = (select id_entidade from FichasFCT where id_aluno = " + Session["codigo"].ToString() + ");", sqlConn);
+                    sqlConn.Open();
+                    ddl_Tarefas.DataTextField = "descricao_tarefa";
+                    ddl_Tarefas.DataValueField = "id_tarefa";
+                    ddl_Tarefas.DataSource = cmd.ExecuteReader();
+                    ddl_Tarefas.DataBind();
+                    sqlConn.Close();
+                }
             }
+
 
         }
 
@@ -434,12 +487,39 @@ namespace GestaoFCT
         protected void ddl_entidade_SelectedIndexChanged1(object sender, EventArgs e)
         {
 
-            String linhasql2 = "select * from sumarios where id_entidade =" + ddl_entidade.SelectedValue + ";";
+            String linhasql2 = "select * from sumarios_table where id_entidade =" + ddl_entidade.SelectedValue + ";";
+            DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+
+            rptItems2.DataSource = dt2;
+            rptItems2.DataBind();
+
+            using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("select id_aluno, nome_aluno from Sumarios_table where id_entidade = " + ddl_entidade.SelectedValue + ";", sqlConn);
+                sqlConn.Open();
+                ddl_aluno.DataTextField = "nome_aluno";
+                ddl_aluno.DataValueField = "id_aluno";
+                ddl_aluno.DataSource = cmd.ExecuteReader();
+                ddl_aluno.DataBind();
+                sqlConn.Close();
+            }
+            ddl_aluno.Visible = true;
+        }
+
+        protected void ddl_aluno_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            String linhasql2 = "select * from sumarios where id_entidade =" + ddl_entidade.SelectedValue + " and id_aluno = " + ddl_aluno.SelectedValue + ";";
             DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
             rptItems2.DataSource = dt2;
             rptItems2.DataBind();
         }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
+
 
     }
 }

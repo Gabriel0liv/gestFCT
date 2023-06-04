@@ -15,7 +15,7 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["Utilizador"] == null)
+            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2")
             {
                 //Redirect to login page.
                 Response.Redirect("~/Login.aspx");
@@ -183,7 +183,7 @@ namespace GestaoFCT
 
                 String linhasql = "insert into EncarregadosEducacao (nome_ee, nif_ee, morada_ee, loc_ee, email_ee, cpostal_ee, telefone_ee, telemovel_ee, bi_ee, valBi_ee) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_bi.Value + "', '" + txt_val.Value + "');";
 
-                Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
