@@ -108,7 +108,7 @@ namespace GestaoFCT
         {
             if (Session["cargo"].ToString() == "1") // se for administrador
             {
-                String linhasql = "select * from Tarefas;";
+                String linhasql = "select * from Tarefas_table;";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;
@@ -136,7 +136,7 @@ namespace GestaoFCT
             }
             if(Session["cargo"].ToString() == "3") // se for tutor
             {
-                String linhasql = "select * from Tarefas where id_entidade = " + Session["entidade"].ToString() + ";";
+                String linhasql = "select * from Tarefas_table where id_entidade = " + Session["entidade"].ToString() + ";";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;

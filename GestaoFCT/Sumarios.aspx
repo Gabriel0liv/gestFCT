@@ -357,7 +357,7 @@
                                                                     <%--<button class="btn btn-secondary" onclick="ShowValue()" style="height: 20px;font-size: 12px;padding: 4px;line-height: 5px;">Guardar tarefas</button>--%>
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
-                                                                <asp:TextBox ID="TextBox1" runat="server" Style="display: none"></asp:TextBox>
+                                                                <asp:TextBox ID="TextBox1" runat="server" ></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
                                                             </div>
                                                             <div class="form-group">
@@ -458,6 +458,7 @@
                     { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
                     { title: "Descrição", field: "descricao_sumario", width: 325, resizable: false, headerFilter: "input" },
                     { title: "Horas", field: "horas_sumario", width: 50, resizable: false, headerFilter: "number" },
+                    { title: "Data", field: "data_sumario", width: 100, resizable: false, headerFilter: "input" },
                     { title: "Status", field: "status_sumario", width: 150, resizable: false, headerFilter: "input" },
                     { title: "Aluno", field: "aluno", width: 300, resizable: false, headerFilter: "input" },
                     { title: "FCT", field: "id_fct", width: 50, resizable: false, headerFilter: "number" },
@@ -494,6 +495,7 @@
                     descricao_sumario: '<%#DataBinder.Eval(Container.DataItem, "descricao_sumario") %>', 
                     horas_sumario: '<%#DataBinder.Eval(Container.DataItem, "horas_sumario") %>', 
                     status_sumario: '<%#DataBinder.Eval(Container.DataItem, "status_sumario") %>',
+                    data_sumario: '<%#DataBinder.Eval(Container.DataItem, "data_sumario") %>',
                     aluno: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
                     id_fct: '<%#DataBinder.Eval(Container.DataItem, "id_fct") %>'},
                     </ItemTemplate>
@@ -507,7 +509,8 @@
 
             $(document).ready(function () {
                 $('#ddl_Tarefas').select2({ maximumSelectionLength: 3 });
-
+                $('#ddl_entidade').select2();
+                $('#ddl_aluno').select2();
             });
 
             function ShowValue() {

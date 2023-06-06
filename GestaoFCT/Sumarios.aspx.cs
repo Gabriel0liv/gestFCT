@@ -18,7 +18,7 @@ namespace GestaoFCT
         {
             int[] DadosAtual = new int[3];
 
-            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2" && Session["cargo"].ToString() != "3")
+            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2" && Session["cargo"].ToString() != "3" && Session["cargo"].ToString() != "4")
             {
                 //Redirect to login page.
                 Response.Redirect("~/Login.aspx");
@@ -48,7 +48,7 @@ namespace GestaoFCT
                     NavTut.Visible = false;
                 }
                 // se for tutor ou professor
-                if (Session["cargo"].ToString() == "3" || Session["cargo"].ToString() == "2")
+                if (Session["cargo"].ToString() == "3" || Session["cargo"].ToString() == "2" || Session["cargo"].ToString() == "1")
                 {
                     ddl_Status.Enabled = true;
 
@@ -155,7 +155,7 @@ namespace GestaoFCT
             }
             if (Session["cargo"].ToString() == "4")
             {
-                String linhasql2 = "select * from Sumarios_table where id_aluno = " + Session["codigo"].ToString() + ";";
+                String linhasql2 = "select * from Sumarios_table where id_aluno = " + Session["codigo"].ToString() + "order by id_sumario asc, data_sumario asc, horas_sumario asc, nome_aluno asc, status_sumario asc, descricao_sumario asc, id_fct asc;";
                 DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
                 rptItems2.DataSource = dt2;
@@ -184,6 +184,19 @@ namespace GestaoFCT
                 using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand("select id_tarefa, descricao_tarefa from Tarefas where id_entidade = (select id_entidade from FichasFCT where id_aluno = " + Session["codigo"].ToString() + ");", sqlConn);
+                    sqlConn.Open();
+                    ddl_Tarefas.DataTextField = "descricao_tarefa";
+                    ddl_Tarefas.DataValueField = "id_tarefa";
+                    ddl_Tarefas.DataSource = cmd.ExecuteReader();
+                    ddl_Tarefas.DataBind();
+                    sqlConn.Close();
+                }
+            }
+            else
+            {
+                using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand("select id_tarefa, descricao_tarefa from Tarefas where id_entidade = (select id_entidade from Sumarios_table where id_sumario = " + labelCod.Text + ");", sqlConn);
                     sqlConn.Open();
                     ddl_Tarefas.DataTextField = "descricao_tarefa";
                     ddl_Tarefas.DataValueField = "id_tarefa";
@@ -230,8 +243,6 @@ namespace GestaoFCT
             sqlConn.Open();
             SqlDataReader r = com.ExecuteReader();
 
-            if (operacao.Text == "2")
-            {
                 // Obter as tarefas
    
                 while (r.Read())
@@ -254,7 +265,7 @@ namespace GestaoFCT
                 // selecionar na dropdown as tarefas
                 TarefasSelecionadas();
 
-            }
+            
             r.Close();
             sqlConn.Close();
 
@@ -372,13 +383,22 @@ namespace GestaoFCT
                     string[] array = TextBox1.Text.Split(',');
                     int[] result = new int[array.Length];
 
-                    for (int i = 0; i < array.Length; i++)
+                    if (result[0] == 0)
                     {
-                        result[i] = int.Parse(array[i]);
-                        linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + result[i] + ", ( select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Value + "'));";
-                        Database.NonQuerySqlSrv(linhasql);
+                        Response.Write("<script>alert('Não há Tarefas guardadas')</script>");
 
                     }
+                    else
+                    {
+                        for (int i = 0; i < array.Length; i++)
+                        {
+                            result[i] = int.Parse(array[i]);
+                            linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + result[i] + ", ( select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Value + "'));";
+                            Database.NonQuerySqlSrv(linhasql);
+
+                        }
+                    }
+
 
                 }
 
@@ -400,7 +420,11 @@ namespace GestaoFCT
                     {
                         linhasql = "delete from Tarefas_Sumarios where id_TS = " + idTar[i] + ";";
                         Database.NonQuerySqlSrv(linhasql);
-                        linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + newTar[i] + "," + labelCod.Text + ");";
+
+                    }
+                    for (int j = 0; j < newTar.Length; j++)
+                    {
+                        linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + newTar[j] + "," + labelCod.Text + ");";
                         Database.NonQuerySqlSrv(linhasql);
                     }
 
