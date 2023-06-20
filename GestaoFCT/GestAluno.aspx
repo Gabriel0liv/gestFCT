@@ -112,7 +112,7 @@
                             </li>
 
                             <li id="NavDoc" runat="server">
-                                <a class="sidenav-item-link" href="chat.html">
+                                <a class="sidenav-item-link" href="Documentos.aspx">
                                     <i class="mdi mdi-file-multiple"></i>
                                     <span class="nav-text">Documentos</span>
                                 </a>
@@ -482,7 +482,15 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Tarefas</asp:LinkButton>
+                                            </div>
 
+                                            <div class="head-right-options">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <asp:DropDownList ID="ddl_turma" CssClass="form-control" AutoPostBack="true" runat="server"></asp:DropDownList>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <%--TABULATOR--%>
@@ -592,6 +600,7 @@
                 $('#ddl_professor').select2();
                 $('#ddl_tutor').select2();
                 $('#ddl_Encarregado').select2();
+                $('#ddl_turma').select2();
             });
 
         </script>

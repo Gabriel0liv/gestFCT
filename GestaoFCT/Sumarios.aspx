@@ -112,7 +112,7 @@
                             </li>
 
                             <li id="NavDoc" runat="server">
-                                <a class="sidenav-item-link" href="chat.html">
+                                <a class="sidenav-item-link" href="Documentos.aspx">
                                     <i class="mdi mdi-file-multiple"></i>
                                     <span class="nav-text">Documentos</span>
                                 </a>

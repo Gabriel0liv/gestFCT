@@ -45,6 +45,15 @@
     <Reference Include="AjaxControlToolkit, Version=20.1.0.0, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e, processorArchitecture=MSIL">
       <HintPath>..\packages\AjaxControlToolkit.20.1.0\lib\net40\AjaxControlToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp.pdfa, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\itextsharp.pdfa.5.5.13.3\lib\itextsharp.pdfa.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -71,6 +80,127 @@
   <ItemGroup>
     <Content Include="css\style-login.css" />
     <Content Include="css\style.css" />
+    <Content Include="Documentos.aspx" />
+    <Content Include="images\CadernetaFoto.png" />
+    <Content Include="images\ContratoFoto.png" />
+    <Content Include="images\elements\cc1.jpg" />
+    <Content Include="images\elements\cc1a.jpg" />
+    <Content Include="images\elements\cc1b.jpg" />
+    <Content Include="images\elements\cc1c.jpg" />
+    <Content Include="images\elements\cc2a.jpg" />
+    <Content Include="images\elements\cc2b.jpg" />
+    <Content Include="images\elements\cc2c.jpg" />
+    <Content Include="images\elements\cc3a.jpg" />
+    <Content Include="images\elements\cc3b.jpg" />
+    <Content Include="images\elements\cc3c.jpg" />
+    <Content Include="images\elements\cc4a.jpg" />
+    <Content Include="images\elements\cc4b.jpg" />
+    <Content Include="images\elements\cc4c.jpg" />
+    <Content Include="images\elements\client.png" />
+    <Content Include="images\elements\hc1.jpg" />
+    <Content Include="images\elements\hc2.jpg" />
+    <Content Include="images\elements\maintanace.jpg" />
+    <Content Include="images\elements\slide1.jpg" />
+    <Content Include="images\elements\slide2.jpg" />
+    <Content Include="images\elements\slide3.jpg" />
+    <Content Include="images\elements\slide4.jpg" />
+    <Content Include="images\elements\slider5.jpg" />
+    <Content Include="images\elements\slider6.jpg" />
+    <Content Include="images\elements\slider7.jpg" />
+    <Content Include="images\elements\slider8.jpg" />
+    <Content Include="images\elements\user-lg-1.jpg" />
+    <Content Include="images\elements\user-lg-2.jpg" />
+    <Content Include="images\elements\user-lg-3.jpg" />
+    <Content Include="images\elements\user-lg-4.jpg" />
+    <Content Include="images\elements\user-md-1.jpg" />
+    <Content Include="images\elements\user-md-2.jpg" />
+    <Content Include="images\elements\user-md-3.jpg" />
+    <Content Include="images\favicon.png" />
+    <Content Include="images\gallery\gallery-img-01.jpg" />
+    <Content Include="images\gallery\gallery-img-02.jpg" />
+    <Content Include="images\gallery\gallery-img-03.jpg" />
+    <Content Include="images\gallery\gallery-img-04.jpg" />
+    <Content Include="images\gallery\gallery-img-05.jpg" />
+    <Content Include="images\gallery\gallery-img-06.jpg" />
+    <Content Include="images\gallery\gallery-img-07.jpg" />
+    <Content Include="images\gallery\gallery-img-08.jpg" />
+    <Content Include="images\gallery\gallery-img-09.jpg" />
+    <Content Include="images\gallery\gallery-img-10.jpg" />
+    <Content Include="images\gallery\gallery-img-11.jpg" />
+    <Content Include="images\github\analytics.png" />
+    <Content Include="images\github\chart-widgets.png" />
+    <Content Include="images\github\chrome.png" />
+    <Content Include="images\github\ecommerce.png" />
+    <Content Include="images\github\edge.png" />
+    <Content Include="images\github\firefox.png" />
+    <Content Include="images\github\general-widgets.png" />
+    <Content Include="images\github\opera.png" />
+    <Content Include="images\github\safari.png" />
+    <Content Include="images\github\sleek.gif" />
+    <Content Include="images\lightenning.png" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\products\p1.jpg" />
+    <Content Include="images\products\p2.jpg" />
+    <Content Include="images\products\p3.jpg" />
+    <Content Include="images\products\pa1.jpg" />
+    <Content Include="images\products\pa2.jpg" />
+    <Content Include="images\products\pa3.jpg" />
+    <Content Include="images\products\pa4.jpg" />
+    <Content Include="images\products\pa5.jpg" />
+    <Content Include="images\products\pa6.jpg" />
+    <Content Include="images\products\products-xs-01.jpg" />
+    <Content Include="images\products\products-xs-02.jpg" />
+    <Content Include="images\products\products-xs-03.jpg" />
+    <Content Include="images\products\products-xs-04.jpg" />
+    <Content Include="images\products\products-xs-05.jpg" />
+    <Content Include="images\products\products-xs-06.jpg" />
+    <Content Include="images\products\products-xs-07.jpg" />
+    <Content Include="images\products\products-xs-08.jpg" />
+    <Content Include="images\products\products-xs-09.jpg" />
+    <Content Include="images\products\products-xs-10.jpg" />
+    <Content Include="images\products\products-xs-11.jpg" />
+    <Content Include="images\products\products-xs-12.jpg" />
+    <Content Include="images\products\products-xs-13.jpg" />
+    <Content Include="images\products\products-xs-14.jpg" />
+    <Content Include="images\products\products-xs-15.jpg" />
+    <Content Include="images\ProtocoloFoto.png" />
+    <Content Include="images\shop\cart1.jpg" />
+    <Content Include="images\shop\cart2.jpg" />
+    <Content Include="images\sidebar\sidebar-bg-01.jpg" />
+    <Content Include="images\sidebar\sidebar-bg-02.jpg" />
+    <Content Include="images\sidebar\sidebar-bg-03.jpg" />
+    <Content Include="images\sidebar\sidebar-bg-04.jpg" />
+    <Content Include="images\sidebar\sidebar-bg-05.jpg" />
+    <Content Include="images\sleek-icon.png" />
+    <Content Include="images\user\u-xl-1.jpg" />
+    <Content Include="images\user\u-xl-10.jpg" />
+    <Content Include="images\user\u-xl-11.jpg" />
+    <Content Include="images\user\u-xl-12.jpg" />
+    <Content Include="images\user\u-xl-2.jpg" />
+    <Content Include="images\user\u-xl-3.jpg" />
+    <Content Include="images\user\u-xl-4.jpg" />
+    <Content Include="images\user\u-xl-5.jpg" />
+    <Content Include="images\user\u-xl-6.jpg" />
+    <Content Include="images\user\u-xl-7.jpg" />
+    <Content Include="images\user\u-xl-8.jpg" />
+    <Content Include="images\user\u-xl-9.jpg" />
+    <Content Include="images\user\u6.jpg" />
+    <Content Include="images\user\u7.jpg" />
+    <Content Include="images\user\u8.jpg" />
+    <Content Include="images\user\user-bg-01.jpg" />
+    <Content Include="images\user\user-md-01.jpg" />
+    <Content Include="images\user\user-md-1.jpg" />
+    <Content Include="images\user\user-md-2.jpg" />
+    <Content Include="images\user\user-md-3.jpg" />
+    <Content Include="images\user\user-md-4.jpg" />
+    <Content Include="images\user\user-md-5.jpg" />
+    <Content Include="images\user\user-sm-01.jpg" />
+    <Content Include="images\user\user-sm-02.jpg" />
+    <Content Include="images\user\user-sm-03.jpg" />
+    <Content Include="images\user\user-sm-04.jpg" />
+    <Content Include="images\user\user-sm-05.jpg" />
+    <Content Include="images\user\user-sm-06.jpg" />
+    <Content Include="images\user\user-xs-01.jpg" />
     <Content Include="Sumarios.aspx" />
     <Content Include="Tarefas.aspx" />
     <Content Include="GestEnc.aspx" />
@@ -90,6 +220,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database.cs" />
+    <Compile Include="Documentos.aspx.cs">
+      <DependentUpon>Documentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Documentos.aspx.designer.cs">
+      <DependentUpon>Documentos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Sumarios.aspx.cs">
       <DependentUpon>Sumarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

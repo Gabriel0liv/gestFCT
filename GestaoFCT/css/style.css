@@ -5632,6 +5632,11 @@ a.badge-smoke:focus, a.badge-smoke.focus {
   border-color: #484b52;
 }
 
+
+.boxTableDocs {
+    padding: 5px 25px; 
+}
+
 .close {
   float: right;
   font-size: 1.40625rem;

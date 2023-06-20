@@ -26,7 +26,41 @@ namespace GestaoFCT
                 NomeUser.InnerText = Session["Utilizador"].ToString();
             }
 
-            if (rptItems.Items.Count == 0)
+
+            if (!IsPostBack)
+            {
+                if (Session["cargo"].ToString() == "2")
+                {
+                    using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos where nome_curso = (select nome_curso from cursos where id_curso = " + Session["curso"].ToString() + ");", sqlConn);
+                        sqlConn.Open();
+                        ddl_entidade.DataTextField = "curso_info";
+                        ddl_entidade.DataValueField = "id_curso";
+                        ddl_entidade.DataSource = cmd.ExecuteReader();
+                        ddl_entidade.DataBind();
+                        sqlConn.Close();
+                    }
+                }
+                else
+                {
+                    using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos ;", sqlConn);
+                        sqlConn.Open();
+                        ddl_entidade.DataTextField = "curso_info";
+                        ddl_entidade.DataValueField = "id_curso";
+                        ddl_entidade.DataSource = cmd.ExecuteReader();
+                        ddl_entidade.DataBind();
+                        sqlConn.Close();
+                    }
+                }
+
+
+
+            }
+
+                if (rptItems.Items.Count == 0)
             {
                 refresh();
             }
@@ -37,11 +71,24 @@ namespace GestaoFCT
 
         protected void refresh()
         {
-            String linhasql = "select * from Alunos_info;";
-            DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
-            rptItems.DataSource = dt;
-            rptItems.DataBind();
+            if (Session["cargo"].ToString() == "2")
+            {
+                String linhasql = "select * from Alunos_info where id_curso = " + Session["curso"].ToString() + ";";
+                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+
+                rptItems.DataSource = dt;
+                rptItems.DataBind();
+            }
+            else
+            {
+                String linhasql = "select * from Alunos_info;";
+                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+
+                rptItems.DataSource = dt;
+                rptItems.DataBind();
+            }
+
         }
 
         protected void btn_logout_Click(object sender, EventArgs e)
@@ -72,22 +119,46 @@ namespace GestaoFCT
 
             using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
             {
+                if (Session["cargo"].ToString() == "1")
+                {
+                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso, ano_curso, turma_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from cursos;", sqlConn);
+                    sqlConn.Open();
+                    ddl_curso.DataTextField = "curso_info";
+                    ddl_curso.DataValueField = "id_curso";
+                    ddl_curso.DataSource = cmd.ExecuteReader();
+                    ddl_curso.DataBind();
+                    sqlConn.Close();
 
-                SqlCommand cmd = new SqlCommand("select id_curso, nome_curso, ano_curso, turma_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from cursos;", sqlConn);
-                sqlConn.Open();
-                ddl_curso.DataTextField = "curso_info";
-                ddl_curso.DataValueField = "id_curso";
-                ddl_curso.DataSource = cmd.ExecuteReader();
-                ddl_curso.DataBind();
-                sqlConn.Close();
+                    SqlCommand cmd2 = new SqlCommand("select id_ee, nome_ee from EncarregadosEducacao;", sqlConn);
+                    sqlConn.Open();
+                    ddl_Encarregado.DataTextField = "nome_ee";
+                    ddl_Encarregado.DataValueField = "id_ee";
+                    ddl_Encarregado.DataSource = cmd2.ExecuteReader();
+                    ddl_Encarregado.DataBind();
+                    sqlConn.Close();
+                }
+                if (Session["cargo"].ToString() == "2")
+                {
+                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso, ano_curso, turma_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from cursos where id_curso = " + Session["curso"].ToString() + ";", sqlConn);
+                    sqlConn.Open();
+                    ddl_curso.DataTextField = "curso_info";
+                    ddl_curso.DataValueField = "id_curso";
+                    ddl_curso.DataSource = cmd.ExecuteReader();
+                    ddl_curso.DataBind();
+                    sqlConn.Close();
 
-                SqlCommand cmd2 = new SqlCommand("select id_ee, nome_ee from EncarregadosEducacao;", sqlConn);
-                sqlConn.Open();
-                ddl_Encarregado.DataTextField = "nome_ee";
-                ddl_Encarregado.DataValueField = "id_ee";
-                ddl_Encarregado.DataSource = cmd2.ExecuteReader();
-                ddl_Encarregado.DataBind();
-                sqlConn.Close();
+                    SqlCommand cmd2 = new SqlCommand("select distinct id_ee, nome_ee from Alunos_info where id_curso = " + Session["curso"].ToString() + ";", sqlConn);
+                    sqlConn.Open();
+                    ddl_Encarregado.DataTextField = "nome_ee";
+                    ddl_Encarregado.DataValueField = "id_ee";
+                    ddl_Encarregado.DataSource = cmd2.ExecuteReader();
+                    ddl_Encarregado.DataBind();
+                    sqlConn.Close();
+                }
+
+
+
+
 
             }
 
@@ -95,7 +166,7 @@ namespace GestaoFCT
 
         protected void Atualizar()
         {
-            
+
 
             string linhadesql = "select * from Alunos where id_aluno = " + labelCod.Text + ";";
             var sqlConn = new SqlConnection(AlnSQLData.ConnectionString);
@@ -150,7 +221,7 @@ namespace GestaoFCT
             operacao.Text = "2";
             labelCod.Text = HiddenField1.Value;
             reset();
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
 
                 Atualizar();
@@ -177,7 +248,7 @@ namespace GestaoFCT
             operacao.Text = "3";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
                 btnDeletar.Visible = true;
                 string linhadesql = "select nome_aluno from alunos where id_aluno = " + labelCod.Text + ";";
@@ -261,7 +332,7 @@ namespace GestaoFCT
                 // ano da FCT
                 mes = DateTime.Now.Month;
                 if (mes >= 9) { txt_anoFCT.Value = (DateTime.Now.Year).ToString() + "/" + (DateTime.Now.Year + 1).ToString(); }
-                else if (mes < 9) { txt_anoFCT.Value = (DateTime.Now.Year -1).ToString() + "/" + DateTime.Now.Year.ToString(); }
+                else if (mes < 9) { txt_anoFCT.Value = (DateTime.Now.Year - 1).ToString() + "/" + DateTime.Now.Year.ToString(); }
 
                 formAluno.Visible = false;
                 formFCT.Visible = true;
@@ -275,7 +346,7 @@ namespace GestaoFCT
             }
 
         }
-        
+
         protected void Comandos(object sender, EventArgs e)
         {
 
@@ -284,7 +355,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno, id_ee, id_curso, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + txt_pass.Value + "', '" + ddl_Encarregado.SelectedValue + "', '" + ddl_curso.SelectedValue + "', 4);";
+                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno, id_ee, id_curso, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value + "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + txt_pass.Value + "', '" + ddl_Encarregado.SelectedValue + "', '" + ddl_curso.SelectedValue + "', 4);";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
@@ -298,7 +369,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update alunos set nome_aluno = '" + txt_nome.Value + "', nif_aluno = '" + txt_nif.Value + "', email_aluno = '" + txt_email.Value + "', loc_aluno = '" + txt_local.Value + "', morada_aluno = '" + txt_morada.Value +  "', telefone_aluno = '" + txt_telefone.Value +  "', cpostal_aluno = '" + txt_CodPost.Value + "', bi_aluno = '" + txt_bi.Value + "', valBi_aluno = '" + txt_val.Value + "', pass_aluno = '" + txt_pass.Value + "', id_ee = " + ddl_Encarregado.SelectedValue + ", id_curso = " + ddl_curso.SelectedValue + "where id_aluno = " + labelCod.Text + ";";
+                String linhasql = "update alunos set nome_aluno = '" + txt_nome.Value + "', nif_aluno = '" + txt_nif.Value + "', email_aluno = '" + txt_email.Value + "', loc_aluno = '" + txt_local.Value + "', morada_aluno = '" + txt_morada.Value + "', telefone_aluno = '" + txt_telefone.Value + "', cpostal_aluno = '" + txt_CodPost.Value + "', bi_aluno = '" + txt_bi.Value + "', valBi_aluno = '" + txt_val.Value + "', pass_aluno = '" + txt_pass.Value + "', id_ee = " + ddl_Encarregado.SelectedValue + ", id_curso = " + ddl_curso.SelectedValue + "where id_aluno = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");
@@ -306,7 +377,7 @@ namespace GestaoFCT
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
-                
+
             }
 
             if (operacao.Text == "3")
@@ -321,7 +392,7 @@ namespace GestaoFCT
                 refresh();
             }
 
-            if(operacao.Text == "4")
+            if (operacao.Text == "4")
             {
                 String linhasql = "insert into FichasFCT (id_aluno, id_entidade, id_tutor, id_professor, num_horas, ano_fct, HorasDiarias, inicio_fct, fim_fct) values('" + labelCod.Text + "', '" + ddl_entidade.SelectedValue + "', '" + ddl_tutor.SelectedValue + "', '" + ddl_professor.SelectedValue + "' ,'" + txt_numHora.Value + "', '" + txt_anoFCT.Value + "', '" + txt_numMaxHoras.Text + "', '" + txt_dataInicio.Text + "', '" + txt_dataFim.Text + "');";
 
@@ -335,7 +406,7 @@ namespace GestaoFCT
             exampleModalForm.Visible = false;
             exampleModal.Visible = false;
         }
-        
+
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
@@ -376,6 +447,8 @@ namespace GestaoFCT
             //txtDiasRestantes.Text = diasRestantes.ToString();
 
         }
+
+        
 
         protected int CalcularDiasUteis(DateTime dataInicio, DateTime dataFim)
         {
@@ -484,6 +557,10 @@ namespace GestaoFCT
             return new DateTime(ano, mes, dia);
         }
 
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
     }
 
 }

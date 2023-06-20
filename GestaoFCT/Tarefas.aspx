@@ -171,6 +171,15 @@
                                 </a>
                             </li>
 
+                            <li id="Li1" class="section-title" runat="server">Conta</li>
+
+                            <li id="Li2" runat="server">
+                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                </asp:LinkButton>
+                            </li>
+
                         </ul>
                     </div>
 
@@ -239,47 +248,6 @@
                             <ul class="nav navbar-nav">
                                 <!-- Offcanvas -->
 
-                                <!-- User Account -->
-                                <li class="dropdown user-menu">
-                                    <button class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                        <img src="images/user/user-xs-01.jpg" class="user-image rounded-circle" alt="User Image" />
-                                        <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-profile.html">
-                                                <i class="mdi mdi-account-outline"></i>
-                                                <span class="nav-text">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="email-inbox.html">
-                                                <i class="mdi mdi-email-outline"></i>
-                                                <span class="nav-text">Message</span>
-                                                <span class="badge badge-pill badge-primary">24</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-activities.html">
-                                                <i class="mdi mdi-diamond-stone"></i>
-                                                <span class="nav-text">Activitise</span></a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-account-settings.html">
-                                                <i class="mdi mdi-settings"></i>
-                                                <span class="nav-text">Account Setting</span>
-                                            </a>
-                                        </li>
-
-                                        <li class="dropdown-footer">
-                                            <%--<a class="dropdown-link-item" href="sign-in.html"> <i class="mdi mdi-logout"></i> Log Out </a>--%>
-                                            <asp:LinkButton ID="btn_logout" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                              <i class="mdi mdi-logout"></i> 
-                                              Log Out 
-                                            </asp:LinkButton>
-                                        </li>
-                                    </ul>
-                                </li>
                             </ul>
                         </div>
                     </nav>
@@ -349,7 +317,7 @@
                                                             <div id="ChooseDiv" runat="server">
                                                                 <div class="form-group">
                                                                     <label for="txt_tarefa">Empresa</label>
-                                                                    <asp:DropDownList ID="ddl_TarEntidade" class="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_TarEntidade_SelectedIndexChanged1" ></asp:DropDownList>
+                                                                    <asp:DropDownList ID="ddl_TarEntidade" class="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddl_TarEntidade_SelectedIndexChanged1"></asp:DropDownList>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_tarefa">Tutor</label>
@@ -388,7 +356,7 @@
                                             </div>
 
                                             <div class="head-left-options">
-                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click" >Tarefas</asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Tarefas</asp:LinkButton>
                                             </div>
 
                                             <div class="head-right-options">

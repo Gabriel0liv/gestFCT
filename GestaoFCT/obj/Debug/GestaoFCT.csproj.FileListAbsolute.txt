@@ -57,6 +57,8 @@ C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\ob
 C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\obj\Debug\GestaoFCT.csproj.CopyComplete
 C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\obj\Debug\GestaoFCT.dll
 C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\obj\Debug\GestaoFCT.pdb
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.AssemblyReference.cache
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.CoreCompileInputs.cache
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\GestaoFCT.dll.config
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\GestaoFCT.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\GestaoFCT.pdb
@@ -77,8 +79,12 @@ C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\Microsoft.DiaSymReader.
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\Microsoft.Managed.Core.targets
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Buffers.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Memory.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Numerics.Vectors.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Text.Encoding.CodePages.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Threading.Tasks.Extensions.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\vbc.exe
@@ -86,15 +92,13 @@ C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\vbc.exe.config
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\vbc.rsp
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\VBCSCompiler.exe
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\AjaxControlToolkit.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.AssemblyReference.cache
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.CoreCompileInputs.cache
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.CopyComplete
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.pdb
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Buffers.dll
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Memory.dll
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Numerics.Vectors.dll
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\roslyn\System.Runtime.CompilerServices.Unsafe.dll
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\AjaxControlToolkit.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\BouncyCastle.Crypto.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\itextsharp.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\itextsharp.pdfa.dll
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\itextsharp.xml

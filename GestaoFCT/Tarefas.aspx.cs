@@ -94,13 +94,12 @@ namespace GestaoFCT
                 }
 
 
-                if (rptItems.Items.Count == 0)
-                {
-                    refresh();
-                }
-
             }
 
+            if (rptItems.Items.Count == 0)
+            {
+                refresh();
+            }
 
         }
 
