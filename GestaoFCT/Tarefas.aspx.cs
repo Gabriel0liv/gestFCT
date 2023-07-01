@@ -107,7 +107,7 @@ namespace GestaoFCT
         {
             if (Session["cargo"].ToString() == "1") // se for administrador
             {
-                String linhasql = "select * from Tarefas_table;";
+                String linhasql = "select distinct * from Tarefas_table;";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;
@@ -117,7 +117,7 @@ namespace GestaoFCT
             {
                 if (Convert.ToBoolean(Session["direcao"]))
                 {
-                    String linhasql = "select * from Tarefas_Curso where id_curso = " + Session["curso"].ToString() + ";";
+                    String linhasql = "select distinct * from Tarefas_Curso where id_curso = " + Session["curso"].ToString() + ";";
                     DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                     rptItems.DataSource = dt;
@@ -125,7 +125,7 @@ namespace GestaoFCT
                 }
                 else
                 {
-                    String linhasql = "select * from Tarefas_table where id_professor = " + Session["codigo"].ToString() + ";";
+                    String linhasql = "select distinct * from Tarefas_table where id_professor = " + Session["codigo"].ToString() + ";";
                     DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                     rptItems.DataSource = dt;
@@ -135,7 +135,7 @@ namespace GestaoFCT
             }
             if(Session["cargo"].ToString() == "3") // se for tutor
             {
-                String linhasql = "select * from Tarefas_table where id_entidade = " + Session["entidade"].ToString() + ";";
+                String linhasql = "select distinct id_tarefa, descricao_tarefa, id_tutor, nome_tutor, id_entidade, nome_entidade from Tarefas_table where id_entidade = " + Session["entidade"].ToString() + ";";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;

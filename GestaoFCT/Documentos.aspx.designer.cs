@@ -213,13 +213,31 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NomeUser;
 
         /// <summary>
-        /// Controle btn_logout.
+        /// Controle GeraContrato.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btn_logout;
+        protected global::System.Web.UI.WebControls.LinkButton GeraContrato;
+
+        /// <summary>
+        /// Controle DivProtocolo.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivProtocolo;
+
+        /// <summary>
+        /// Controle tableDocs.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tableDocs;
 
         /// <summary>
         /// Controle rptItems.

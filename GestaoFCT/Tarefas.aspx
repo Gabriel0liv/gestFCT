@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mono - Responsive Admin & Dashboard Template</title>
+    <title>GestFCT - Tarefas</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -35,7 +35,7 @@
     <script type="text/javascript" src="tabulator-master/dist/js/tabulator.js"></script>
 
     <!-- FAVICON -->
-    <link href="images/favicon.png" rel="shortcut icon" />
+    <link href="images/logo GestFCT.png" rel="shortcut icon" />
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -88,7 +88,7 @@
                     <!-- Aplication Brand -->
                     <div class="app-brand">
                         <a href="/index.html">
-                            <img src="images/logo.png" alt="Mono">
+                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono" />
                             <span class="brand-name">GestFCT</span>
                         </a>
                     </div>
@@ -112,7 +112,7 @@
                             </li>
 
                             <li id="NavDoc" runat="server">
-                                <a class="sidenav-item-link" href="chat.html">
+                                <a class="sidenav-item-link" href="Documentos.aspx">
                                     <i class="mdi mdi-file-multiple"></i>
                                     <span class="nav-text">Documentos</span>
                                 </a>
@@ -216,38 +216,14 @@
 
                         <div class="navbar-right ">
 
-                            <!-- search form -->
-                            <div class="search-form">
-                                <form action="index.html" method="get">
-                                    <div class="input-group input-group-sm" id="input-group-search">
-                                        <input type="text" autocomplete="off" name="query" id="search-input" class="form-control" placeholder="Search..." />
-                                        <div class="input-group-append">
-                                            <button class="btn" type="button">/</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <ul class="dropdown-menu dropdown-menu-search">
-
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Morbi leo risus</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Dapibus ac facilisis in</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Porta ac consectetur ac</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Vestibulum at eros</a>
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
                             <ul class="nav navbar-nav">
                                 <!-- Offcanvas -->
-
+                                <li class="dropdown user-menu">
+                                    <button class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                        <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
+                                        <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
+                                    </button>
+                                </li>
                             </ul>
                         </div>
                     </nav>
@@ -356,7 +332,7 @@
                                             </div>
 
                                             <div class="head-left-options">
-                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Tarefas</asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Atualizar</asp:LinkButton>
                                             </div>
 
                                             <div class="head-right-options">

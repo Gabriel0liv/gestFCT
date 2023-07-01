@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
-
+using System.Globalization;
 
 namespace GestaoFCT
 {
@@ -70,9 +70,20 @@ namespace GestaoFCT
                 ddl_tutor.SelectedValue = r["id_tutor"].ToString();
                 txt_anoFCT.Value = r["ano_fct"].ToString();
                 txt_numHora.Value = r["num_horas"].ToString();
-                txt_dataInicio.Text = r["inicio_fct"].ToString();
                 txt_numMaxHoras.Text = r["horasDiarias"].ToString();
-                txt_dataFim.Text = r["fim_fct"].ToString();
+                // Converter o Texto da data do sumário 
+                DateTime data;
+                if (DateTime.TryParseExact(r["inicio_fct"].ToString(), "dd/MM/yyyy" , CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(r["fim_fct"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    txt_dataInicio.Text = data.ToString("yyyy-MM-dd");
+                    txt_dataFim.Text = data.ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    // A string fornecida não está no formato esperado
+                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                }
+
             }
             r.Close();
             sqlConn.Close();
@@ -192,6 +203,20 @@ namespace GestaoFCT
             if (operacao.Text == "2")
             {
                 //Response.Write("<script>alert('22222')</script>");
+
+
+                DateTime data;
+                if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(txt_dataFim.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    txt_dataInicio.Text = data.ToString("dd/MM/yyyy");
+                    txt_dataFim.Text = data.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    // A string fornecida não está no formato esperado
+                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                }
+
 
                 String linhasql = "update tabelas_FCT set id_tutor = '" + ddl_tutor.SelectedValue + "', id_professor = '" + ddl_professor.SelectedValue + "', id_entidade = '" + ddl_entidade.SelectedValue + "', ano_fct = '" + txt_anoFCT.Value + "', num_horas = '" + txt_numHora.Value + "', fim_fct = '" + txt_dataFim.Text + "', horasDiarias = '" + txt_numMaxHoras.Text + "', inicio_fct = '" + txt_dataInicio.Text + "' where id_fct = " + labelCod.Text + ";";
 

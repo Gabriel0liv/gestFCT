@@ -26,7 +26,7 @@
     <script type="text/javascript" src="tabulator-master/dist/js/tabulator.js"></script>
 
     <!-- FAVICON -->
-    <link href="images/favicon.png" rel="shortcut icon" />
+    <link href="images/logo GestFCT.png" rel="shortcut icon" />
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -69,7 +69,7 @@
                     <!-- Aplication Brand -->
                     <div class="app-brand">
                         <a href="/index.html">
-                            <img src="images/logo.png" alt="Mono">
+                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono" />
                             <span class="brand-name">GestFCT</span>
                         </a>
                     </div>
@@ -202,42 +202,9 @@
                                 <!-- User Account -->
                                 <li class="dropdown user-menu">
                                     <button class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                        <img src="images/user/user-xs-01.jpg" class="user-image rounded-circle" alt="User Image" />
+                                        <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-profile.html">
-                                                <i class="mdi mdi-account-outline"></i>
-                                                <span class="nav-text">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="email-inbox.html">
-                                                <i class="mdi mdi-email-outline"></i>
-                                                <span class="nav-text">Message</span>
-                                                <span class="badge badge-pill badge-primary">24</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-activities.html">
-                                                <i class="mdi mdi-diamond-stone"></i>
-                                                <span class="nav-text">Activitise</span></a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-account-settings.html">
-                                                <i class="mdi mdi-settings"></i>
-                                                <span class="nav-text">Account Setting</span>
-                                            </a>
-                                        </li>
-
-                                        <li class="dropdown-footer">
-                                            <asp:LinkButton ID="btn_logout" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                              <i class="mdi mdi-logout"></i> 
-                                              Log Out 
-                                            </asp:LinkButton>
-                                        </li>
-                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -280,16 +247,16 @@
 
                                                 <div class="media-body">
                                                     <h5 class="mt-0 mb-2 text-dark">Contrato de Formação</h5>
-                                                    <button type="button" class="mb-1 btn btn-outline-primary">
+                                                    <asp:LinkButton ID="GeraContrato" CssClass="mb-1 btn btn-outline-primary" runat="server" OnClick="GeraContrato_Click">
                                                         <i class=" mdi mdi-star-outline mr-1"></i>
                                                         Gerar Contrato
-                                                    </button>
+                                                    </asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6 col-xl-4">
+                                    <div id="DivProtocolo" class="col-lg-6 col-xl-4" runat="server">
                                         <div class="card card-default p-4">
                                             <div class="media text-secondary">
                                                 <img src="images/ProtocoloFoto.png" class="mr-3 img-fluid rounded" alt="Avatar Image" style="max-width: 100px; max-height: 100px;" />
@@ -319,7 +286,7 @@
                             </div>
 
                             <div class="boxTableDocs">
-                                <div id="tableDocs"></div>
+                                <div id="tableDocs" runat="server"></div>
                             </div>
 
                         </div>

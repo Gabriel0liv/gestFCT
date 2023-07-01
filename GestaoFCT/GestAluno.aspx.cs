@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -33,12 +34,12 @@ namespace GestaoFCT
                 {
                     using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
                     {
-                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos where nome_curso = (select nome_curso from cursos where id_curso = " + Session["curso"].ToString() + ");", sqlConn);
+                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos where id_curso =  " + Session["curso"].ToString() + ";", sqlConn);
                         sqlConn.Open();
-                        ddl_entidade.DataTextField = "curso_info";
-                        ddl_entidade.DataValueField = "id_curso";
-                        ddl_entidade.DataSource = cmd.ExecuteReader();
-                        ddl_entidade.DataBind();
+                        ddl_turma.DataTextField = "curso_info";
+                        ddl_turma.DataValueField = "id_curso";
+                        ddl_turma.DataSource = cmd.ExecuteReader();
+                        ddl_turma.DataBind();
                         sqlConn.Close();
                     }
                 }
@@ -46,12 +47,12 @@ namespace GestaoFCT
                 {
                     using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
                     {
-                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos ;", sqlConn);
+                        SqlCommand cmd = new SqlCommand("select id_curso,ano_curso + turma_curso + ' ' + nome_curso as curso_info from Cursos ;", sqlConn);
                         sqlConn.Open();
-                        ddl_entidade.DataTextField = "curso_info";
-                        ddl_entidade.DataValueField = "id_curso";
-                        ddl_entidade.DataSource = cmd.ExecuteReader();
-                        ddl_entidade.DataBind();
+                        ddl_turma.DataTextField = "curso_info";
+                        ddl_turma.DataValueField = "id_curso";
+                        ddl_turma.DataSource = cmd.ExecuteReader();
+                        ddl_turma.DataBind();
                         sqlConn.Close();
                     }
                 }
@@ -394,6 +395,18 @@ namespace GestaoFCT
 
             if (operacao.Text == "4")
             {
+                DateTime data;
+                if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(txt_dataFim.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    txt_dataInicio.Text = data.ToString("dd/MM/yyyy");
+                    txt_dataFim.Text = data.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    // A string fornecida não está no formato esperado
+                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                }
+
                 String linhasql = "insert into FichasFCT (id_aluno, id_entidade, id_tutor, id_professor, num_horas, ano_fct, HorasDiarias, inicio_fct, fim_fct) values('" + labelCod.Text + "', '" + ddl_entidade.SelectedValue + "', '" + ddl_tutor.SelectedValue + "', '" + ddl_professor.SelectedValue + "' ,'" + txt_numHora.Value + "', '" + txt_anoFCT.Value + "', '" + txt_numMaxHoras.Text + "', '" + txt_dataInicio.Text + "', '" + txt_dataFim.Text + "');";
 
                 Database.NonQuerySqlSrv(linhasql);
@@ -430,21 +443,44 @@ namespace GestaoFCT
 
         protected void txt_dataInicio_TextChanged(object sender, EventArgs e)
         {
+            DateTime data;
+            DateTime dataInicial = new DateTime();
+            if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+            {
+                dataInicial = DateTime.Parse(data.ToString("dd/MM/yyyy"));
+            }
+            else
+            {
+                // A string fornecida não está no formato esperado
+                // Faça o tratamento adequado, como mostrar uma mensagem de erro
+            }
 
-            DateTime dataInicio = DateTime.Parse(txt_dataInicio.Text);
+            //DateTime dataInicio = DateTime.Parse(dataInicial);
             int horasFormacao = int.Parse(txt_numHora.Value);
             int maxHorasDia = int.Parse(txt_numMaxHoras.Text);
 
 
-            DateTime dataTermino = CalcularDataTermino(dataInicio, horasFormacao, maxHorasDia);
+            DateTime dataTermino = CalcularDataTermino(dataInicial, horasFormacao, maxHorasDia);
 
             // Calcular a diferença em dias entre a data de término e a data atual
             //int diasRestantes = (dataTermino - DateTime.Today).Days;
             int diasRestantes = CalcularDiasUteis(DateTime.Today, dataTermino);
 
+
             txt_dataFim.Text = dataTermino.ToShortDateString();
-            // Exibir os dias restantes na TextBox
-            //txtDiasRestantes.Text = diasRestantes.ToString();
+
+            if (DateTime.TryParseExact(txt_dataFim.Text, "dd/MM/yyyy" , CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+            {
+                txt_dataFim.Text = data.ToString("yyyy-MM-dd");
+
+            }
+            else
+            {
+                // A string fornecida não está no formato esperado
+                // Faça o tratamento adequado, como mostrar uma mensagem de erro
+            }
+
+
 
         }
 
@@ -560,6 +596,15 @@ namespace GestaoFCT
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
             refresh();
+        }
+
+        protected void ddl_turma_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String linhasql = "select * from Alunos_info where id_curso = " + ddl_turma.SelectedValue + ";";
+            DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+
+            rptItems.DataSource = dt;
+            rptItems.DataBind();
         }
     }
 

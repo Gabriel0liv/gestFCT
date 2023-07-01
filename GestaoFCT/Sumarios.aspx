@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mono - Responsive Admin & Dashboard Template</title>
+    <title>GestFCT - Sumários</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -35,7 +35,7 @@
     <script type="text/javascript" src="tabulator-master/dist/js/tabulator.js"></script>
 
     <!-- FAVICON -->
-    <link href="images/favicon.png" rel="shortcut icon" />
+    <link href="images/logo GestFCT.png" rel="shortcut icon" />
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -88,7 +88,7 @@
                     <!-- Aplication Brand -->
                     <div class="app-brand">
                         <a href="/index.html">
-                            <img src="images/logo.png" alt="Mono">
+                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono">
                             <span class="brand-name">GestFCT</span>
                         </a>
                     </div>
@@ -171,6 +171,14 @@
                                 </a>
                             </li>
 
+                            <li id="Li1" class="section-title" runat="server">Conta</li>
+
+                            <li id="Li2" runat="server">
+                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                </asp:LinkButton>
+                            </li>
                         </ul>
                     </div>
 
@@ -207,78 +215,13 @@
 
                         <div class="navbar-right ">
 
-                            <!-- search form -->
-                            <div class="search-form">
-                                <form action="index.html" method="get">
-                                    <div class="input-group input-group-sm" id="input-group-search">
-                                        <input type="text" autocomplete="off" name="query" id="search-input" class="form-control" placeholder="Search..." />
-                                        <div class="input-group-append">
-                                            <button class="btn" type="button">/</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <ul class="dropdown-menu dropdown-menu-search">
-
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Morbi leo risus</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Dapibus ac facilisis in</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Porta ac consectetur ac</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Vestibulum at eros</a>
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
                             <ul class="nav navbar-nav">
-                                <!-- Offcanvas -->
-
                                 <!-- User Account -->
                                 <li class="dropdown user-menu">
                                     <button class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                        <img src="images/user/user-xs-01.jpg" class="user-image rounded-circle" alt="User Image" />
+                                        <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-profile.html">
-                                                <i class="mdi mdi-account-outline"></i>
-                                                <span class="nav-text">My Profile</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="email-inbox.html">
-                                                <i class="mdi mdi-email-outline"></i>
-                                                <span class="nav-text">Message</span>
-                                                <span class="badge badge-pill badge-primary">24</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-activities.html">
-                                                <i class="mdi mdi-diamond-stone"></i>
-                                                <span class="nav-text">Activitise</span></a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-link-item" href="user-account-settings.html">
-                                                <i class="mdi mdi-settings"></i>
-                                                <span class="nav-text">Account Setting</span>
-                                            </a>
-                                        </li>
-
-                                        <li class="dropdown-footer">
-                                            <%--<a class="dropdown-link-item" href="sign-in.html"> <i class="mdi mdi-logout"></i> Log Out </a>--%>
-                                            <asp:LinkButton ID="btn_logout" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                              <i class="mdi mdi-logout"></i> 
-                                              Log Out 
-                                            </asp:LinkButton>
-                                        </li>
-                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -345,7 +288,8 @@
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
                                                             <div class="form-group">
                                                                 <label for="txt_numhora">Data do sumário</label>
-                                                                <input type="text" class="form-control" id="txt_dataSum" placeholder="Data de sumario" enableviewstate="true" runat="server" />
+                                                                <%--<input type="text" class="form-control" id="" placeholder="Data de sumario" enableviewstate="true" runat="server" />--%>
+                                                                <asp:TextBox ID="txt_dataSum" class="form-control" runat="server" TextMode="Date" > </asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_sumario">Descrição do sumário</label>
@@ -357,7 +301,7 @@
                                                                     <%--<button class="btn btn-secondary" onclick="ShowValue()" style="height: 20px;font-size: 12px;padding: 4px;line-height: 5px;">Guardar tarefas</button>--%>
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
-                                                                <asp:TextBox ID="TextBox1" runat="server" ></asp:TextBox>
+                                                                <asp:TextBox ID="TextBox1" runat="server" style="display:none" ></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
                                                             </div>
                                                             <div class="form-group">
@@ -406,7 +350,7 @@
                                             </div>
 
                                             <div class="head-left-options">
-                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Sumários</asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Atualizar</asp:LinkButton>
                                             </div>
 
                                             <div class="head-right-options">

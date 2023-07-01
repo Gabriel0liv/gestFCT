@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -37,6 +38,7 @@ namespace GestaoFCT
                     ddl_entidade.Visible = false;
 
                     //oculta opções de navegação
+                    NavDoc.Visible = false;
                     NavAln.Visible = false;
                     NavCurso.Visible = false;
                     NavEE.Visible = false;
@@ -52,11 +54,12 @@ namespace GestaoFCT
                 {
                     ddl_Status.Enabled = true;
 
-                    if(Session["cargo"].ToString() == "3")
+                    if(Session["cargo"].ToString() == "3") //tutor
                     {
                         //oculta filtro
                         ddl_entidade.Visible = false;
                         //oculta opções de navegação
+                        NavDoc.Visible = false;
                         NavAln.Visible = false;
                         NavCurso.Visible = false;
                         NavEE.Visible = false;
@@ -131,7 +134,7 @@ namespace GestaoFCT
         {
             if (Session["cargo"].ToString() == "1")
             {
-                String linhasql2 = "select * from Sumarios_table;";
+                String linhasql2 = "select * from Sumarios_table ORDER BY CONVERT(date, data_sumario, 103) desc;";
                 DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
                 rptItems2.DataSource = dt2;
@@ -139,7 +142,7 @@ namespace GestaoFCT
             }
             if (Session["cargo"].ToString() == "2")
             {
-                String linhasql2 = "select * from Sumarios_table where id_professor = " + Session["codigo"].ToString() + ";";
+                String linhasql2 = "select * from Sumarios_table where id_professor = " + Session["codigo"].ToString() + " ORDER BY CONVERT(date, data_sumario, 103) desc;";
                 DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
                 rptItems2.DataSource = dt2;
@@ -147,7 +150,7 @@ namespace GestaoFCT
             }
             if (Session["cargo"].ToString() == "3") //se for tutor
             {
-                String linhasql2 = "select * from Sumarios_table where id_tutor =" + Session["codigo"].ToString() + ";";
+                String linhasql2 = "select * from Sumarios_table where id_tutor =" + Session["codigo"].ToString() + " ORDER BY CONVERT(date, data_sumario, 103) desc;";
                 DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
                 rptItems2.DataSource = dt2;
@@ -155,7 +158,7 @@ namespace GestaoFCT
             }
             if (Session["cargo"].ToString() == "4")
             {
-                String linhasql2 = "select * from Sumarios_table where id_aluno = " + Session["codigo"].ToString() + "order by id_sumario asc, data_sumario asc, horas_sumario asc, nome_aluno asc, status_sumario asc, descricao_sumario asc, id_fct asc;";
+                String linhasql2 = "select * from Sumarios_table where id_aluno = " + Session["codigo"].ToString() + " ORDER BY CONVERT(date, data_sumario, 103) desc;";
                 DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
                 rptItems2.DataSource = dt2;
@@ -174,7 +177,7 @@ namespace GestaoFCT
         {
 
             txt_sumario.Text = "";
-            txt_dataSum.Value = "";
+            txt_dataSum.Text = "";
             txt_numHora.Value = "";
             TextBox1.Text = "";
 
@@ -219,10 +222,21 @@ namespace GestaoFCT
             SqlDataReader r = com.ExecuteReader();
             while (r.Read())
             {
-                txt_sumario.Text = r["descricao_sumario"].ToString();
+                txt_sumario.Text = r["descricao_sumario"].ToString().Replace(" \\n ", "\r\n");
                 txt_numHora.Value = r["horas_sumario"].ToString();
                 ddl_Status.SelectedValue = r["status_sumario"].ToString();
-                txt_dataSum.Value = r["data_sumario"].ToString();
+                // Converter o Texto da data do sumário 
+                DateTime data;
+                if (DateTime.TryParseExact(r["data_sumario"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    txt_dataSum.Text = data.ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    // A string fornecida não está no formato esperado
+                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                }
+
             }
             r.Close();
             sqlConn.Close();
@@ -240,7 +254,7 @@ namespace GestaoFCT
             if(operacao.Text == "3" || operacao.Text == "2")
                 linhadesql = "select id_tarefa from Tarefas_Sumarios where id_sumario =" + labelCod.Text + ";";
             else
-                linhadesql = "select id_tarefa from Tarefas_Sumarios where id_sumario = (select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Value + "');";
+                linhadesql = "select id_tarefa from Tarefas_Sumarios where id_sumario = (select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Text + "');";
 
 
             var sqlConn = new SqlConnection(SumSQLData.ConnectionString);
@@ -382,6 +396,17 @@ namespace GestaoFCT
                 if (Session["cargo"].ToString() == "4")
                 {
 
+                    // Converter o Texto da data do sumário 
+                    DateTime data;
+                    if (DateTime.TryParseExact(txt_dataSum.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                    {
+                        txt_dataSum.Text = data.ToString("dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        // A string fornecida não está no formato esperado
+                        // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                    }
 
 
                     string[] array = TextBox1.Text.Split(',');
@@ -399,14 +424,14 @@ namespace GestaoFCT
                     }
                     else
                     {
-                        String linhasql = "insert into Sumarios (descricao_sumario, horas_sumario, status_sumario, data_sumario, id_fct) values('" + txt_sumario.Text + "', '" + txt_numHora.Value + "','" + ddl_Status.SelectedValue + "', '" + txt_dataSum.Value + "', (select id_fct from FichasFCT where id_aluno = " + Session["codigo"].ToString() + ") );";
+                        String linhasql = "insert into Sumarios (descricao_sumario, horas_sumario, status_sumario, data_sumario, id_fct) values('" + txt_sumario.Text.Replace("\r\n", " \\n ") + "', '" + txt_numHora.Value + "','" + ddl_Status.SelectedValue + "', '" + txt_dataSum.Text + "', (select id_fct from FichasFCT where id_aluno = " + Session["codigo"].ToString() + ") );";
 
                         Database.NonQuerySqlSrv(linhasql);
 
                         for (int i = 0; i < array.Length; i++)
                         {
                             result[i] = int.Parse(array[i]);
-                            linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + result[i] + ", ( select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Value + "'));";
+                            linhasql = "insert into Tarefas_Sumarios (id_tarefa, id_sumario) values(" + result[i] + ", ( select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text.Replace("\r\n", " \\n ") + "' and data_sumario = '" + txt_dataSum.Text + "'));";
                             Database.NonQuerySqlSrv(linhasql);
 
                         }
@@ -421,7 +446,20 @@ namespace GestaoFCT
 
             if (operacao.Text == "2")
             {
-                String linhasql = "update Sumarios set descricao_sumario = '" + txt_sumario.Text + "', horas_sumario = '" + txt_numHora.Value + "', status_sumario = '" + ddl_Status.SelectedValue + "', data_sumario = '" + txt_dataSum.Value + "' where id_sumario = " + labelCod.Text + ";";
+
+                // Converter o Texto da data do sumário 
+                DateTime data;
+                if (DateTime.TryParseExact(txt_dataSum.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    txt_dataSum.Text = data.ToString("dd/MM/yyyy");
+                }
+                else
+                {
+                    // A string fornecida não está no formato esperado
+                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                }
+
+                String linhasql = "update Sumarios set descricao_sumario = '" + txt_sumario.Text.Replace("\r\n", " \\n ") + "', horas_sumario = '" + txt_numHora.Value + "', status_sumario = '" + ddl_Status.SelectedValue + "', data_sumario = '" + txt_dataSum.Text + "' where id_sumario = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 Database.NonQuerySqlSrv(linhasql);
