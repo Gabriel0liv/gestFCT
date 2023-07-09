@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using AjaxControlToolkit;
 using Microsoft.Office.Interop.Word;
 
 
@@ -17,11 +20,11 @@ namespace GestaoFCT
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2" && Session["cargo"].ToString() != "3")
-            //{
-            //    //Redirect to login page.
-            //    Response.Redirect("~/Login.aspx");
-            //}
+            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2")
+            {
+                //Redirect to login page.
+                Response.Redirect("~/Login.aspx");
+            }
 
             NomeUser.InnerText = Session["Utilizador"].ToString();
 
@@ -53,34 +56,27 @@ namespace GestaoFCT
 
         protected void refresh()
         {
-            if (Session["cargo"].ToString() == "1")
+
+            if (Session["cargo"].ToString() == "2")
             {
-                String linhasql = "select * from tabelas_FCT;";
+                String linhasql = "select distinct * from tabelas_FCT where id_professor =" + Session["codigo"].ToString() + ";";
                 System.Data.DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;
                 rptItems.DataBind();
+
+                String linhasql2 = "";
+                if (Convert.ToBoolean(Session["direcao"]))
+                    linhasql2 = "select distinct * from protocolo where id_curso = " + Session["curso"].ToString() + ";";
+                else
+                    linhasql2 = "select distinct * from Protocolo where id_professor =" + Session["codigo"].ToString() + ";";
+
+                System.Data.DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+
             }
-
-            if(Session["cargo"].ToString() == "2")
-            {
-                String linhasql = "select * from tabelas_FCT where id_professor =" + Session["codigo"].ToString() + ";";
-                System.Data.DataTable dt = Database.GetFromDBSqlSrv(linhasql);
-
-                rptItems.DataSource = dt;
-                rptItems.DataBind();
-            }
-
-            if (Session["cargo"].ToString() == "3")
-            {
-                String linhasql = "select * from tabelas_FCT where id_tutor =" + Session["codigo"].ToString() + ";";
-                System.Data.DataTable dt = Database.GetFromDBSqlSrv(linhasql);
-
-                rptItems.DataSource = dt;
-                rptItems.DataBind();
-            }
-
-
 
         }
 
@@ -92,87 +88,569 @@ namespace GestaoFCT
 
         protected void GeraContrato_Click(object sender, EventArgs e)
         {
-            Application wordApp = new Application();
-            Document doc = new Document();
+            labelCod.Text = HiddenField1.Value;
+            labelStats.Text = HiddenField2.Value;
 
-
-            doc = wordApp.Documents.Open(Server.MapPath("~/teste/Contrato.doc"));
-
-            string linhadesql = "";
-            if (doc != null)
+            if (labelCod.Text != "0")
             {
+                if (labelStats.Text == "1A")
+                {
+                    Application wordApp = null;
+                    Document doc = null;
+                    try
+                    {
+                        wordApp = new Application();
+                        doc = new Document();
+                        doc = wordApp.Documents.Open(Server.MapPath("~/teste/Contrato.doc"));
+                    }
+                    catch (Exception ex)
+                    {
+                        exampleModalLabel.InnerText = "Documento possívelmente aberto!";
+                        textoCancelar.InnerText = "Feche o documento modelo ou termine as tarefas do word.";
+                        exampleModal.Visible = true;
+                    }
 
-                if (Session["cargo"].ToString() == "4")
-                   linhadesql = "select * from Contratos where id_aluno = " + Session["codigo"].ToString() + ";";
+                    string linhadesql = "";
+
+
+
+                    if (doc != null)
+                    {
+
+                        linhadesql = "select * from Contratos where id_fct = " + labelCod.Text + ";";
+
+                        var sqlConn = new SqlConnection(DocSQLData.ConnectionString);
+                        var com = new SqlCommand(linhadesql, sqlConn);
+                        sqlConn.Open();
+                        SqlDataReader r = com.ExecuteReader();
+                        while (r.Read())
+                        {
+
+                            string[] dataInicio = r["inicio_fct"].ToString().Split('/');
+                            // Obtém o dia, mês e ano
+                            int dia = int.Parse(dataInicio[0]);
+                            int mes = int.Parse(dataInicio[1]);
+                            int ano = int.Parse(dataInicio[2]);
+                            // Converte o mês para formato por extenso
+                            string mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
+                            string data1 = dia.ToString() + "/" + mesPorExtenso + "/" + ano.ToString();
+                            doc.Variables["dataInicio"].Value = data1;
+
+
+                            dataInicio = r["fim_fct"].ToString().Split('/');
+                            dia = int.Parse(dataInicio[0]);
+                            mes = int.Parse(dataInicio[1]);
+                            ano = int.Parse(dataInicio[2]);
+                            mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
+                            data1 = dia.ToString() + "/" + mesPorExtenso + "/" + ano.ToString();
+                            doc.Variables["dataFim"].Value = data1;
+
+                            doc.Variables["ano_fct"].Value = r["ano_fct"].ToString();
+                            doc.Variables["nome_curso"].Value = r["nome_curso"].ToString();
+                            doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString();
+                            doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString();
+                            doc.Variables["turma"].Value = r["turma"].ToString();
+                            doc.Variables["nome_professor"].Value = r["nome_prof"].ToString();
+                            doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString();
+                            doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
+                            doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString();
+                            doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString();
+                            doc.Variables["num_horas"].Value = r["num_horas"].ToString();
+                            doc.Variables["nome_ee"].Value = r["nome_ee"].ToString();
+
+                            doc.Variables["dataExFim"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+
+                            dataInicio = r["inicio_fct"].ToString().Split('/');
+                            dia = int.Parse(dataInicio[0]);
+                            mes = int.Parse(dataInicio[1]);
+                            ano = int.Parse(dataInicio[2]);
+                            mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
+                            data1 = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+                            doc.Variables["dataExInicio"].Value = data1;
+
+                        }
+                        r.Close();
+                        sqlConn.Close();
+
+                        doc.Fields.Update();
+                        doc.Save();
+
+
+                        if (checkFileFormat.Checked)
+                        {
+                            string directoryPath = Server.MapPath("~/temp/");
+                            string pdfPath = Path.Combine(directoryPath, "Contrato.pdf");
+
+                            // Verificar se o diretório existe e criar se necessário
+                            if (!Directory.Exists(directoryPath))
+                            {
+                                Directory.CreateDirectory(directoryPath);
+                            }
+
+                            doc.SaveAs2(pdfPath, WdSaveFormat.wdFormatPDF);
+
+                            doc.Close();
+                            wordApp.Quit();
+
+                            //string pdfPath = Server.MapPath("~/temp/documento.pdf");
+
+                            //Transferir o arquivo para o usuário
+                            HttpResponse response = HttpContext.Current.Response;
+                            response.Clear();
+                            response.ContentType = "application/pdf";
+                            response.AppendHeader("Content-Disposition", "attachment; filename=ContratoFormação.pdf");
+                            response.TransmitFile(pdfPath);
+                            response.End();
+                        }
+                        else
+                        {
+                            string directoryPath = Server.MapPath("~/temp/");
+                            string docPath = Path.Combine(directoryPath, "Contrato.doc");
+
+                            // Verificar se o diretório existe e criar se necessário
+                            if (!Directory.Exists(directoryPath))
+                            {
+                                Directory.CreateDirectory(directoryPath);
+                            }
+
+                            doc.SaveAs2(docPath, WdSaveFormat.wdFormatDocument);
+
+                            doc.Close();
+                            wordApp.Quit();
+
+                            // Transferir o arquivo para o usuário
+                            HttpResponse response = HttpContext.Current.Response;
+                            response.Clear();
+                            response.ContentType = "application/msword";
+                            response.AppendHeader("Content-Disposition", "attachment; filename=ContratoFormação.doc");
+                            response.TransmitFile(docPath);
+                            response.End();
+                        }
+
+
+
+                    }
+
+                }
                 else
-                    linhadesql = "select * from Contratos where id_fct = " + labelCod.Text + ";";
-
-
-                var sqlConn = new SqlConnection(DocSQLData.ConnectionString);
-                var com = new SqlCommand(linhadesql, sqlConn);
-                sqlConn.Open();
-                SqlDataReader r = com.ExecuteReader();
-                while (r.Read())
                 {
-                    //txt_sumario.Text = r["descricao_sumario"].ToString();
-                    //txt_numHora.Value = r["horas_sumario"].ToString();
-                    //ddl_Status.SelectedValue = r["status_sumario"].ToString();
-                    //txt_dataSum.Value = r["data_sumario"].ToString();
-
-                    doc.Variables["nome_curso"].Value = r["nome_curso"].ToString();
-                    doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString();
-                    doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString();
-                    doc.Variables["turma"].Value = r["turma"].ToString();
-                    doc.Variables["nome_professor"].Value = r["nome_prof"].ToString();
-                    doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString();
-                    doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
-                    doc.Variables["localidade_entidade"].Value = r["loc_entidade"].ToString();
-                    doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString();
-                    doc.Variables["num_horas"].Value = r["num_horas"].ToString();
-
-
-   
-
-                }
-                r.Close();
-                sqlConn.Close();
-
-                doc.Fields.Update();
-                doc.Save();
-
-
-
-
-                string directoryPath = Server.MapPath("~/temp/");
-                string pdfPath = Path.Combine(directoryPath, "Contrato.pdf");
-
-                // Verificar se o diretório existe e criar se necessário
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
+                    exampleModalLabel.InnerText = "Nenhum Aluno selecionado!";
+                    textoCancelar.InnerText = "Uma entidade foi selecionado, alterne para a tabela de Alunos.";
+                    exampleModal.Visible = true;
                 }
 
-                doc.SaveAs2(pdfPath, WdSaveFormat.wdFormatPDF);
 
-                doc.Close();
-                wordApp.Quit();
-
-                //string pdfPath = Server.MapPath("~/temp/documento.pdf");
-
-
-
-
-
-                //Transferir o arquivo para o usuário
-                HttpResponse response = HttpContext.Current.Response;
-                response.Clear();
-                response.ContentType = "application/pdf";
-                response.AppendHeader("Content-Disposition", "attachment; filename=documento.pdf");
-                response.TransmitFile(pdfPath);
-                response.End();
 
             }
+            else
+            {
+                textoCancelar.InnerText = "Nenhum registo foi selecionado!";
+                exampleModal.Visible = true;
+            }
 
+        }
+
+
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            exampleModal.Visible = false;
+        }
+
+        protected void GeraProtocolo_Click(object sender, EventArgs e)
+        {
+            labelCod.Text = HiddenField1.Value;
+            labelStats.Text = HiddenField2.Value;
+
+            if (labelCod.Text != "0")
+            {
+                if (labelStats.Text == "1E")
+                {
+                    Application wordApp = null;
+                    Document doc = null;
+                    try
+                    {
+                        wordApp = new Application();
+                        doc = new Document();
+                        doc = wordApp.Documents.Open(Server.MapPath("~/teste/Protocolo.doc"));
+                    }
+                    catch (Exception ex)
+                    {
+                        exampleModalLabel.InnerText = "Documento possívelmente aberto!";
+                        textoCancelar.InnerText = "Feche o documento modelo ou termine as tarefas do word.";
+                        exampleModal.Visible = true;
+                    }
+
+                    string linhadesql = "";
+
+                    if (doc != null)
+                    {
+                        if (Convert.ToBoolean(Session["direcao"]))
+                            linhadesql = "select distinct * from Protocolo where id_curso = " + labelCod.Text + ";";
+                        else
+                            linhadesql = "select distinct * from Protocolo where id_professor = " + labelCod.Text + ";";
+
+                        var sqlConn = new SqlConnection(DocSQLData.ConnectionString);
+                        var com = new SqlCommand(linhadesql, sqlConn);
+                        sqlConn.Open();
+                        SqlDataReader r = com.ExecuteReader();
+                        while (r.Read())
+                        {
+
+                            doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
+                            doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString();
+                            doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString();
+                            doc.Variables["cargo_resp"].Value = r["cargo_resp"].ToString();
+                            doc.Variables["nome_curso"].Value = r["nome_curso"].ToString();
+                            doc.Variables["dia"].Value = DateTime.Now.Day.ToString();
+                            doc.Variables["mes"].Value = DateTime.Now.ToString("MMMM", new CultureInfo("pt-BR"));
+                            doc.Variables["ano"].Value = DateTime.Now.Year.ToString();
+
+                        }
+                        r.Close();
+                        sqlConn.Close();
+
+                        doc.Fields.Update();
+                        doc.Save();
+
+
+
+                        if (checkFileFormat.Checked)
+                        {
+                            string directoryPath = Server.MapPath("~/temp/");
+                            string pdfPath = Path.Combine(directoryPath, "Protocolo.pdf");
+
+                            // Verificar se o diretório existe e criar se necessário
+                            if (!Directory.Exists(directoryPath))
+                            {
+                                Directory.CreateDirectory(directoryPath);
+                            }
+
+                            doc.SaveAs2(pdfPath, WdSaveFormat.wdFormatPDF);
+
+                            doc.Close();
+                            wordApp.Quit();
+
+                            //Transferir o arquivo para o usuário
+                            HttpResponse response = HttpContext.Current.Response;
+                            response.Clear();
+                            response.ContentType = "application/pdf";
+                            response.AppendHeader("Content-Disposition", "attachment; filename=ProtocoloCooperação.pdf");
+                            response.TransmitFile(pdfPath);
+                            response.End();
+
+                        }
+                        else
+                        {
+                            string directoryPath = Server.MapPath("~/temp/");
+                            string docPath = Path.Combine(directoryPath, "Protocolo.doc");
+
+                            // Verificar se o diretório existe e criar se necessário
+                            if (!Directory.Exists(directoryPath))
+                            {
+                                Directory.CreateDirectory(directoryPath);
+                            }
+
+                            doc.SaveAs2(docPath, WdSaveFormat.wdFormatDocument);
+
+                            doc.Close();
+                            wordApp.Quit();
+
+                            // Transferir o arquivo para o usuário
+                            HttpResponse response = HttpContext.Current.Response;
+                            response.Clear();
+                            response.ContentType = "application/msword";
+                            response.AppendHeader("Content-Disposition", "attachment; filename=ProtocoloCooperação.doc");
+                            response.TransmitFile(docPath);
+                            response.End();
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    exampleModalLabel.InnerText = "Nenhuma entidade selecionada!";
+                    textoCancelar.InnerText = "Um aluno foi selecionado, alterne para a tabela de entidades.";
+                    exampleModal.Visible = true;
+                }
+
+
+
+            }
+            else
+            {
+                textoCancelar.InnerText = "Nenhum registo foi selecionado!";
+                exampleModal.Visible = true;
+            }
+        }
+
+        protected void GeraCaderneta_Click(object sender, EventArgs e)
+        {
+            labelCod.Text = HiddenField1.Value;
+            labelStats.Text = HiddenField2.Value;
+
+            if (labelCod.Text != "0")
+            {
+                if (labelStats.Text == "1A")
+                {
+                    Application wordApp = null;
+                    Document doc = null;
+                    try
+                    {
+                        wordApp = new Application();
+                        doc = new Document();
+                        doc = wordApp.Documents.Open(Server.MapPath("~/teste/CadernetaAluno.doc"));
+                    }
+                    catch (Exception ex)
+                    {
+                        exampleModalLabel.InnerText = "Documento possívelmente aberto!";
+                        textoCancelar.InnerText = "Feche o documento modelo ou termine as tarefas do word.";
+                        exampleModal.Visible = true;
+                    }
+
+
+
+
+                    string linhadesql = "";
+                    if (doc != null)
+                    {
+
+                        // Dados gerais ***************************************************************************
+                        linhadesql = "select * from Cadernetas where id_fct = " + labelCod.Text + ";";
+
+                        var sqlConn = new SqlConnection(DocSQLData.ConnectionString);
+                        var com = new SqlCommand(linhadesql, sqlConn);
+                        sqlConn.Open();
+                        SqlDataReader r = com.ExecuteReader();
+                        while (r.Read())
+                        {
+
+                            //variaveis ALUNO
+                            doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString();
+                            doc.Variables["morada_aluno"].Value = r["morada_aluno"].ToString();
+                            doc.Variables["cpostal_aluno"].Value = r["cpostal_aluno"].ToString();
+                            doc.Variables["loc_aluno"].Value = r["loc_aluno"].ToString();
+                            doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString();
+                            //doc.Variables["tlf_aluno"].Value = r["tlf_aluno"].ToString();
+                            doc.Variables["email_aluno"].Value = r["email_aluno"].ToString();
+
+
+                            //Variáveis ENCARREGADO
+                            doc.Variables["nome_ee"].Value = r["nome_ee"].ToString();
+                            doc.Variables["tlm_ee"].Value = r["tlm_ee"].ToString();
+                            doc.Variables["email_ee"].Value = r["email_ee"].ToString();
+
+                            //Variáveis ENTIDADE
+                            doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
+                            doc.Variables["nif_entidade"].Value = r["nif_entidade"].ToString();
+                            doc.Variables["morada_entidade"].Value = r["morada_entidade"].ToString();
+                            doc.Variables["cpostal_entidade"].Value = r["cpostal_entidade"].ToString();
+                            doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString();
+                            doc.Variables["tlf_entidade"].Value = r["tlf_entidade"].ToString();
+                            //doc.Variables["tlm_entidade"].Value = r["tlm_entidade"].ToString();
+                            doc.Variables["email_entidade"].Value = r["email_entidade"].ToString();
+                            doc.Variables["natjuridica"].Value = r["natjuridica"].ToString();
+                            doc.Variables["resp_entidade"].Value = r["resp_entidade"].ToString();
+                            doc.Variables["cargo_resp"].Value = r["cargo_resp"].ToString();
+                            doc.Variables["atv_principal"].Value = r["atv_principal"].ToString();
+
+                            //Variáveis  TUTOR
+                            doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString();
+                            doc.Variables["tlf_tutor"].Value = r["tlf_tutor"].ToString();
+                            //doc.Variables["tlm_tutor"].Value = r["tlm_tutor"].ToString();
+                            doc.Variables["email_tutor"].Value = r["email_tutor"].ToString();
+                            //doc.Variables["cargo_tutor"].Value = r["cargo_tutor"].ToString();
+
+                            //Variáveis PROFESSOR
+                            doc.Variables["nome_prof"].Value = r["nome_prof"].ToString();
+                            doc.Variables["tlm_prof"].Value = r["tlm_prof"].ToString();
+                            doc.Variables["email_prof"].Value = r["email_prof"].ToString();
+
+                            //Calendário da FCT
+                            string[] data1 = r["inicio_fct"].ToString().Split('/');
+                            int dia = int.Parse(data1[0]);
+                            int mes = int.Parse(data1[1]);
+                            int ano = int.Parse(data1[2]);
+                            string mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
+                            doc.Variables["inicio_fct"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+
+                            data1 = r["fim_fct"].ToString().Split('/');
+                            dia = int.Parse(data1[0]);
+                            mes = int.Parse(data1[1]);
+                            ano = int.Parse(data1[2]);
+                            mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
+                            doc.Variables["fim_fct"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+
+
+                            doc.Variables["num_horas"].Value = r["num_horas"].ToString();
+
+
+                        }
+                        r.Close();
+                        sqlConn.Close();
+
+
+                        // Objetivos ***************************************************************************
+                        linhadesql = "select * from Objetivos where id_curso = " + Convert.ToInt32(Session["curso"].ToString()) + ";";
+
+                        System.Data.DataTable dt = Database.GetFromDBSqlSrv(linhadesql);
+
+                        for (int i = 0; i < 14; i++)
+                        {
+                            if (i < dt.Rows.Count) //se tiver registos os introduz nas variáveis
+                                doc.Variables["objetivo" + (i + 1).ToString()].Value = dt.Rows[i]["descricao_objetivo"].ToString();
+                            else
+                                doc.Variables["objetivo" + (i + 1).ToString()].Value = " ";
+                        }
+
+
+                        // Sumários ***************************************************************************
+                        linhadesql = "select * from Sumarios_table where id_fct = " + labelCod.Text + " ORDER BY CONVERT(date, data_sumario, 103) asc;";
+
+                        dt = Database.GetFromDBSqlSrv(linhadesql);
+
+                        int totalHoras = 0; // Variável para armazenar o total de horas
+                        int j = 1;
+                        for (int i = 0; i < 75; i++)
+                        {
+                            if (i < dt.Rows.Count) //se tiver registos os introduz nas variáveis
+                            {
+                                string[] data1 = dt.Rows[i]["data_sumario"].ToString().Split('/');
+                                int dia = int.Parse(data1[0]);
+                                int mes = int.Parse(data1[1]);
+                                int ano = int.Parse(data1[2]);
+                                string mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
+                                doc.Variables["datasumario" + (i + 1).ToString()].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+
+
+                                doc.Variables["descSumario" + (i + 1).ToString()].Value = dt.Rows[i]["descricao_sumario"].ToString().Replace("\\n", Environment.NewLine);
+                                doc.Variables["horasSumario" + (i + 1).ToString()].Value = dt.Rows[i]["horas_sumario"].ToString();
+
+                                doc.Variables["txtData" + (i + 1).ToString()].Value = "Data do sumário: ";
+                                // Somar o número de horas aos 5 registros anteriores
+                                totalHoras += Convert.ToInt32(dt.Rows[i]["horas_sumario"]);
+
+                                // Atribuir o total de horas a uma variável a cada 5 registros
+                                if ((i + 1) % 5 == 0)
+                                {
+
+                                    doc.Variables["HorasSemanais" + j.ToString()].Value = totalHoras.ToString();
+                                    j++;
+                                    // Zerar o total de horas
+                                    totalHoras = 0;
+                                }
+                            }
+                            else //se não tiver mais registos, não exibir mensagem de erro nas seguintes variaveis
+                            {
+
+                                try
+                                {
+                                    doc.Variables["datasumario" + (i + 1).ToString()].Value = " ";
+                                    doc.Variables["descSumario" + (i + 1).ToString()].Value = " ";
+                                    doc.Variables["horasSumario" + (i + 1).ToString()].Value = " ";
+                                }
+                                catch (Exception ex) { }
+
+                                if (totalHoras != 0)
+                                {
+                                    totalHoras += 0;
+                                    if ((i + 1) % 5 == 0)
+                                    {
+                                        doc.Variables["HorasSemanais" + j.ToString()].Value = totalHoras.ToString();
+                                        j++;
+                                        // Zerar o total de horas
+                                        totalHoras = 0;
+                                    }
+
+                                }
+                                else { doc.Variables["HorasSemanais" + j.ToString()].Value = " "; j++; }
+
+                            }
+
+
+                        }
+
+                        doc.Fields.Update();
+                        doc.Save();
+
+
+
+                        if (checkFileFormat.Checked)
+                        {
+
+                            string directoryPath = Server.MapPath("~/temp/");
+                            string pdfPath = Path.Combine(directoryPath, "CadernetaAluno.pdf");
+
+                            // Verificar se o diretório existe e criar se necessário
+                            if (!Directory.Exists(directoryPath))
+                            {
+                                Directory.CreateDirectory(directoryPath);
+                            }
+
+                            doc.SaveAs2(pdfPath, WdSaveFormat.wdFormatPDF);
+
+                            doc.Close();
+                            wordApp.Quit();
+
+                            //Transferir o arquivo para o usuário
+                            HttpResponse response = HttpContext.Current.Response;
+                            response.Clear();
+                            response.ContentType = "application/pdf";
+                            response.AppendHeader("Content-Disposition", "attachment; filename=CadernetaAluno.pdf");
+                            response.TransmitFile(pdfPath);
+                            response.End();
+                        }
+                        else
+                        {
+                            string directoryPath = Server.MapPath("~/temp/");
+                            string docPath = Path.Combine(directoryPath, "CadernetaAluno.doc");
+
+                            // Verificar se o diretório existe e criar se necessário
+                            if (!Directory.Exists(directoryPath))
+                            {
+                                Directory.CreateDirectory(directoryPath);
+                            }
+
+                            doc.SaveAs2(docPath, WdSaveFormat.wdFormatDocument);
+
+                            doc.Close();
+                            wordApp.Quit();
+
+                            // Transferir o arquivo para o usuário
+                            HttpResponse response = HttpContext.Current.Response;
+                            response.Clear();
+                            response.ContentType = "application/msword";
+                            response.AppendHeader("Content-Disposition", "attachment; filename=CadernetaAluno.doc");
+                            response.TransmitFile(docPath);
+                            response.End();
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    exampleModalLabel.InnerText = "Nenhum Aluno selecionado!";
+                    textoCancelar.InnerText = "Uma entidade foi selecionado, alterne para a tabela de Alunos.";
+                    exampleModal.Visible = true;
+                }
+
+
+
+            }
+            else
+            {
+                exampleModalLabel.InnerText = "Nenhuma entidade selecionada!";
+                textoCancelar.InnerText = "Selecione uma entidade na tabela abaixo.";
+                exampleModal.Visible = true;
+            }
+
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
         }
     }
 }

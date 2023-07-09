@@ -148,7 +148,12 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-
+                            <li id="NavObj" runat="server">
+                                <a class="sidenav-item-link" href="GestObj.aspx">
+                                    <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
+                                    <span class="nav-text">Objetivos</span>
+                                </a>
+                            </li>
                             <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
@@ -169,7 +174,12 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
-
+                            <li id="NavAdm" runat="server">
+                                <a class="sidenav-item-link" href="Administradores.aspx">
+                                    <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
+                                    <span class="nav-text">Administradores</span>
+                                </a>
+                            </li>
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
                             <li id="Li2" runat="server">
@@ -295,19 +305,15 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Ano </label>
-                                                                <input type="text" class="form-control" id="txt_ano" placeholder="Insira o ano da turma. Ex: 11º" runat="server" />
+                                                                <asp:DropDownList ID="slc_ano" class="form-control" runat="server">
+                                                                    <asp:ListItem Value="10" Text="10º ano"></asp:ListItem>
+                                                                    <asp:ListItem Value="11" Text="11º ano"></asp:ListItem>
+                                                                    <asp:ListItem Value="12" Text="12º ano"></asp:ListItem>
+                                                                </asp:DropDownList>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Turma</label>
                                                                 <input type="text" class="form-control" id="txt_turma" placeholder="Insira a letra da turma. Ex: S" runat="server" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_CodPost">Data de Início</label>
-                                                                <input type="text" class="form-control" id="txt_dataIni" placeholder="Insira o ano de inicio do curso. Ex: 2022" runat="server" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_CodPost">Data de Finalização</label>
-                                                                <input type="text" class="form-control" id="txt_dataFim" placeholder="Insira o ano de finalização do curso. Ex: 2023" runat="server" />
                                                             </div>
 
                                                         </div>
@@ -326,7 +332,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo da professor</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel" runat="server">Eliminar registo do curso</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -379,11 +385,9 @@
                 layout: "fitDataStretch",
                 columns: [
                     { title: "Cód.", field: "codigo", width: 100, resizable: false, headerFilter: "number" },
-                    { title: "Nome", field: "nome", width: 300, resizable: false, headerFilter: "input" },
+                    { title: "Nome", field: "nome", width: 400, resizable: false, headerFilter: "input" },
                     { title: "Ano", field: "ano", width: 100, resizable: false, headerFilter: "input" },
                     { title: "Turma", field: "turma", width: 100, resizable: false, headerFilter: "input" },
-                    { title: "Data de início", field: "dataini", width: 150, resizable: false, headerFilter: "input" },
-                    { title: "Data de finalização", field: "datafim", width: 150, resizable: false, headerFilter: "input" },
                 ],
 
             });
@@ -416,9 +420,7 @@
                         {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_curso") %>',
                     nome: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>',
                     ano: '<%#DataBinder.Eval(Container.DataItem, "ano_curso") %>',
-                    turma: '<%#DataBinder.Eval(Container.DataItem, "turma_curso") %>',
-                    dataini: '<%#DataBinder.Eval(Container.DataItem, "dataI_curso") %>', 
-                    datafim: '<%#DataBinder.Eval(Container.DataItem, "dataF_curso") %>'},
+                    turma: '<%#DataBinder.Eval(Container.DataItem, "turma_curso") %>'},
                     </ItemTemplate>
                 </asp:Repeater >];
 

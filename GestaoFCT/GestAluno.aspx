@@ -149,7 +149,12 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-
+                            <li id="NavObj" runat="server" >
+                                <a class="sidenav-item-link" href="GestObj.aspx">
+                                    <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
+                                    <span class="nav-text">Objetivos</span>
+                                </a>
+                            </li>
                             <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
@@ -170,7 +175,12 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
-
+                            <li id="NavAdm" runat="server">
+                                <a class="sidenav-item-link" href="Administradores.aspx">
+                                    <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
+                                    <span class="nav-text">Administradores</span>
+                                </a>
+                            </li>
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
                             <li id="Li2" runat="server">
@@ -296,16 +306,16 @@
                                                             <div id="formAluno" runat="server">
                                                                 <div class="form-group">
                                                                     <label for="txt_nome">Nome</label>
-                                                                    <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Aluno" enableviewstate="true" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Aluno" enableviewstate="true" runat="server" required="required" />
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <label for="txt_nif">NIF</label>
-                                                                    <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_val">Validade</label>
@@ -313,24 +323,24 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_email">Email address</label>
-                                                                    <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do aluno" runat="server" />
+                                                                    <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do aluno" runat="server" required="required" />
                                                                     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_telefone">Telefone</label>
-                                                                    <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do aluno" runat="server" />
+                                                                    <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do aluno" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_morada">Morada</label>
-                                                                    <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do aluno" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do aluno" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_local">Localidade</label>
-                                                                    <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do aluno" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do aluno" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_CodPost">Código Postal</label>
-                                                                    <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="ddl_curso">Curso</label>
@@ -367,18 +377,18 @@
                                                                 <div class="form-group">
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">número de horas</label>
-                                                                        <input type="number" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
+                                                                        <input type="number" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" required="required" />
                                                                     </div>
 
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">número de horas diárias</label>
                                                                         <%--<input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" enableviewstate="true" runat="server" />--%>
-                                                                        <asp:TextBox ID="txt_numMaxHoras" class="form-control" placeholder="Número máximo de horas diárias" TextMode="Number" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox ID="txt_numMaxHoras" class="form-control" placeholder="Número máximo de horas diárias" TextMode="Number" runat="server" required="required"></asp:TextBox>
                                                                     </div>
 
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">Ano</label>
-                                                                        <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" />
+                                                                        <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" readonly="readonly" />
 
                                                                     </div>
 
@@ -386,11 +396,11 @@
                                                                 <div class="form-group">
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">Data de inicio da formação</label>
-                                                                        <asp:TextBox ID="txt_dataInicio" class="form-control" runat="server" AutoPostBack="true" TextMode="Date" OnTextChanged="txt_dataInicio_TextChanged"></asp:TextBox>
+                                                                        <asp:TextBox ID="txt_dataInicio" class="form-control" runat="server" AutoPostBack="true" TextMode="Date" OnTextChanged="txt_dataInicio_TextChanged" required="required"></asp:TextBox>
                                                                     </div>
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">Estimativa de término</label>
-                                                                        <asp:TextBox ID="txt_dataFim" class="form-control" placeholder="Ex: 18/07/2023" AutoPostBack="true" TextMode="Date" runat="server"></asp:TextBox>
+                                                                        <asp:TextBox ID="txt_dataFim" class="form-control" placeholder="Ex: 18/07/2023" AutoPostBack="true" TextMode="Date" runat="server" required="required"></asp:TextBox>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -410,7 +420,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo do aluno</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel" runat="server">Eliminar registo do aluno</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -419,9 +429,7 @@
                                                             <span id="textoCancelar" runat="server"></span>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <%--<button type="button" class="btn btn-danger btn-pill" onclick="" >Close</button>--%>
                                                             <asp:Button ID="btnCancelar" class="btn btn-danger btn-pill" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
-                                                            <%--<button type="button" class="btn btn-primary btn-pill">Save Changes</button>--%>
                                                             <asp:Button ID="btnDeletar" class="btn btn-primary btn-pill" runat="server" Text="Eliminar" OnClick="Comandos" />
                                                         </div>
                                                     </div>

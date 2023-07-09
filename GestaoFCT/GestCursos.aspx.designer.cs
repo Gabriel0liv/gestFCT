@@ -150,6 +150,15 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavCurso;
 
         /// <summary>
+        /// Controle NavObj.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavObj;
+
+        /// <summary>
         /// Controle NavEnt.
         /// </summary>
         /// <remarks>
@@ -175,6 +184,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavTut;
+
+        /// <summary>
+        /// Controle NavAdm.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavAdm;
 
         /// <summary>
         /// Controle Li1.
@@ -276,13 +294,13 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_nome;
 
         /// <summary>
-        /// Controle txt_ano.
+        /// Controle slc_ano.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_ano;
+        protected global::System.Web.UI.WebControls.DropDownList slc_ano;
 
         /// <summary>
         /// Controle txt_turma.
@@ -292,24 +310,6 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_turma;
-
-        /// <summary>
-        /// Controle txt_dataIni.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_dataIni;
-
-        /// <summary>
-        /// Controle txt_dataFim.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_dataFim;
 
         /// <summary>
         /// Controle btn_fechar.
@@ -337,6 +337,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl exampleModal;
+
+        /// <summary>
+        /// Controle exampleModalLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl exampleModalLabel;
 
         /// <summary>
         /// Controle textoCancelar.

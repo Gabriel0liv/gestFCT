@@ -51,11 +51,7 @@ namespace GestaoFCT
 
         protected void reset()
         {
-
             txt_nome.Value = "";
-            txt_dataIni.Value = "";
-            txt_dataFim.Value = "";
-            txt_ano.Value = "";
             txt_turma.Value = "";
 
         }
@@ -71,9 +67,7 @@ namespace GestaoFCT
             while (r.Read())
             {
                 txt_nome.Value = r["nome_curso"].ToString();
-                txt_dataIni.Value = r["dataI_curso"].ToString();
-                txt_dataFim.Value = r["dataF_curso"].ToString();
-                txt_ano.Value = r["ano_curso"].ToString();
+                slc_ano.SelectedValue = r["ano_curso"].ToString();
                 txt_turma.Value = r["turma_curso"].ToString();
             }
             r.Close();
@@ -167,9 +161,9 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into cursos (nome_curso, dataI_curso, dataF_curso) values('" + txt_nome.Value + "', '" + txt_dataIni.Value + "', '" + txt_dataFim.Value + "');";
+                String linhasql = "insert into cursos (nome_curso, ano_curso, turma_curso) values('" + txt_nome.Value + "', '" + slc_ano.SelectedValue + "', '" + txt_turma.Value + "');";
 
-                Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
@@ -181,7 +175,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update cursos set nome_curso = '" + txt_nome.Value + "', dataI_curso = '" + txt_dataIni.Value + "', dataF_curso = '" + txt_dataFim.Value + "' where id_curso = " + labelCod.Text + ";";
+                String linhasql = "update cursos set nome_curso = '" + txt_nome.Value + "', ano_curso = '" + slc_ano.SelectedValue + "', turma_curso = '" + txt_turma.Value + "' where id_curso = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestEmp.aspx.cs" Inherits="GestaoFCT.GestEmp" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestObj.aspx.cs" Inherits="GestaoFCT.GestObj" %>
 
 
 <!DOCTYPE html>
@@ -16,14 +16,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GestFCT - Entidades</title>
+    <title>GestFCT - Cursos</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
     <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
     <link href="plugins/simplebar/simplebar.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/89865b6117.js" crossorigin="anonymous"></script>
-
 
     <!-- PLUGINS CSS STYLE -->
     <link href="plugins/nprogress/nprogress.css" rel="stylesheet" />
@@ -37,6 +36,10 @@
 
     <!-- FAVICON -->
     <link href="images/logo GestFCT.png" rel="shortcut icon" />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
     <!--
     HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -71,7 +74,7 @@
             <asp:Label ID="operacao" runat="server" Text="" Visible="false"></asp:Label>
             <asp:HiddenField ID="HiddenField1" runat="server" />
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <asp:SqlDataSource ID="EntSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
+            <asp:SqlDataSource ID="ObjSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
 
 
 
@@ -145,13 +148,14 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-                            <li id="NavObj" runat="server">
+                            <li id="NavObj" runat="server" class="active">
                                 <a class="sidenav-item-link" href="GestObj.aspx">
                                     <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
                                     <span class="nav-text">Objetivos</span>
                                 </a>
                             </li>
-                            <li id="NavEnt" runat="server" class="active">
+
+                            <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
                                     <span class="nav-text">Entidades</span>
@@ -171,6 +175,7 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
+
                             <li id="NavAdm" runat="server">
                                 <a class="sidenav-item-link" href="Administradores.aspx">
                                     <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
@@ -180,7 +185,7 @@
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
                             <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                <asp:LinkButton ID="LinkButton1" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
                                     Log Out 
                                 </asp:LinkButton>
@@ -204,6 +209,7 @@
             </aside>
 
 
+
             <!-- ====================================
       ——— PAGE WRAPPER
       ===================================== -->
@@ -217,11 +223,14 @@
                             <span class="sr-only">Toggle navigation</span>
                         </button>
 
-                        <span class="page-title">Gestão de Entidades</span>
+                        <span class="page-title">Gestão de Cursos</span>
 
                         <div class="navbar-right ">
 
+
                             <ul class="nav navbar-nav">
+                                <!-- Offcanvas -->
+
                                 <!-- User Account -->
                                 <li class="dropdown user-menu">
                                     <button class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -247,7 +256,7 @@
                         <div class="email-wrapper rounded border bg-white">
                             <div class="row no-gutters justify-content-center">
                                 <div class="col-lg-4 col-xl-3 col-xxl-2">
-                                    <div class="email-left-column email-options p-4 p-xl-5">
+                                    <div class="email-left-column email-options p-4 ">
                                         <p class="text-dark font-weight-medium">Opções</p>
                                         <ul>
                                             <li class="mt-4">
@@ -290,65 +299,23 @@
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
-                                                            <div class="form-group">
-                                                                <label for="txt_nome">Nome</label>
-                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da entidade" autocomplete="on" runat="server" required="required" />
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="txt_nif">NIF</label>
-                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF da entidade" runat="server" required="required" />
+                                                        <div class="modal-body">
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i> <span id="alerMessage" runat="server"></span> 
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="txt_email">Email address</label>
-                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email da entidade" runat="server" required="required" />
-                                                                <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+                                                                <label for="txt_nome">Descrição do objetivo</label>
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do curso" enableviewstate="true" runat="server" required="required" />
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_local">Telefone</label>
-                                                                <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" runat="server" required="required" />
+                                                            <div id="divCurso" class="form-group" runat="server" visible="false">
+                                                                <label for="slc_curso">Curso</label>
+                                                                <asp:DropDownList ID="slc_curso" class="form-control" runat="server">
+                                                                </asp:DropDownList>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_local">Morada</label>
-                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada da entidade" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_local">Localidade</label>
-                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade da entidade" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_CodPost">Código Postal</label>
-                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal da entidade" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_NatJuri">Natureza Jurídica</label>
-                                                                <input type="text" class="form-control" id="txt_NatJuri" placeholder="Insira a Natureza Jurídica" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_resp">Responsável</label>
-                                                                <input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_resp">Contacto do responsável</label>
-                                                                <input type="text" class="form-control" id="txt_tlmResp" placeholder="Insira o telefone de contacto do responsável pela entidade" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_resp">Cargo do responsável na entidade</label>
-                                                                <input type="text" class="form-control" id="txt_cargo" placeholder="Insira o cargo do responsável pela entidade" runat="server" required="required" />
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="txt_atvPrinc">Atividade principal da empresa</label>
-                                                                <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da entidade" runat="server" required="required"/>
-                                                            </div>
-
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-
-                                                            <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
-                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar entidade" OnClick="Comandos" />
+                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar professor" OnClick="Comandos" />
                                                         </div>
                                                 </div>
                                             </div>
@@ -359,7 +326,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo da Entidade</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel" runat="server">Eliminar registo do Objetivo</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -380,17 +347,15 @@
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
                                             <!-- <table class="table mb-0 table-email"> </table> -->
-
                                             <div id="example-table"></div>
-
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Footer -->
@@ -414,19 +379,9 @@
                 layout: "fitDataStretch",
                 columns: [
                     { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
-                    { title: "Nome", field: "nome", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "NIF", field: "nif", width: 80, resizable: false, headerFilter: "number" },
-                    { title: "E-mail", field: "email", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "Morada", field: "morada", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "localidade", field: "localidade", width: 156, resizable: false, headerFilter: "input" },
-                    { title: "C.Postal", field: "codPost", width: 80, resizable: false, headerFilter: "input" },
-                    { title: "Nat. Jurídica", field: "natJuri", width: 125, resizable: false, headerFilter: "input" },
-                    { title: "Responsável", field: "responsavel", width: 125, resizable: false, headerFilter: "input" },
-                    { title: "Contacto", field: "contacto", width: 125, resizable: false, headerFilter: "input" },
-                    { title: "Cargo", field: "cargo", width: 125, resizable: false, headerFilter: "input" },
-                    { title: "Ativ_Principal", field: "atvPrincipal", width: 125, resizable: false, headerFilter: "input" },
-
-
+                    { title: "Objetivos da FCT", field: "desc_obj", width: 500, resizable: false, headerFilter: "input" },
+                    { title: "idC", field: "id_curso", width: 50, resizable: false, headerFilter: "input" },
+                    { title: "Curso", field: "nome_curso", width: 200, resizable: false, headerFilter: "input" },
                 ],
 
             });
@@ -456,25 +411,18 @@
             var cat_tabledata = [
                 <asp:Repeater ID="rptItems" runat="server">
                     <ItemTemplate>
-                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_entidade") %>',
-                    nome: '<%#DataBinder.Eval(Container.DataItem, "nome_entidade") %>',
-                    nif: '<%#DataBinder.Eval(Container.DataItem, "nif_entidade") %>', 
-                    email: '<%#DataBinder.Eval(Container.DataItem, "email_entidade") %>', 
-                    morada: '<%#DataBinder.Eval(Container.DataItem, "morada_entidade") %>',
-                    localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_entidade") %>', 
-                    codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_entidade") %>',
-                    natJuri: '<%#DataBinder.Eval(Container.DataItem, "natjuridica") %>',
-                    responsavel: '<%#DataBinder.Eval(Container.DataItem, "resp_entidade") %>',
-                    contacto: '<%#DataBinder.Eval(Container.DataItem, "tlmResp_entidade") %>',
-                    cargo: '<%#DataBinder.Eval(Container.DataItem, "cargo_resp") %>',
-                    atvPrincipal: '<%#DataBinder.Eval(Container.DataItem, "atv_principal") %>'},
-
+                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_objetivo") %>',
+                    desc_obj: '<%#DataBinder.Eval(Container.DataItem, "descricao_objetivo") %>',
+                    id_curso: '<%#DataBinder.Eval(Container.DataItem, "id_curso") %>',
+                    nome_curso: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>'},
                     </ItemTemplate>
                 </asp:Repeater >];
 
             table.on("tableBuilt", function () {
                 table.setData(cat_tabledata);
             });
+
+
 
 
         </script>

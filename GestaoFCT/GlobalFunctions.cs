@@ -55,5 +55,25 @@ namespace GestaoFCT
         }
 
 
+        public static Boolean verify_SpecChar(string vrf)
+        {
+            Boolean resultado = false;
+            char[] wrongChars = { '\'', '*', '+', '`', '´', '\\', '|', '!', '"', '#', '@', '£', '$', '§', '%', '&', '/', '(', ')', '[', ']', '{', '}', '?', '«', '»', 'º', 'ª', '~', '^', '-', ',', '.', ';', ':', '<', '>' };
+
+            if (vrf.Contains('\''))
+            {
+                vrf = vrf.Replace("'", "");
+                resultado = true;
+            }
+
+            for (int ww = 0; ww < wrongChars.Length; ww++)
+            {
+                if (vrf.Contains(wrongChars[ww])) resultado = true;
+            }
+
+            return resultado;
+        }
+
+
     }
 }

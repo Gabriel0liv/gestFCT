@@ -150,6 +150,15 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavCurso;
 
         /// <summary>
+        /// Controle NavObj.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavObj;
+
+        /// <summary>
         /// Controle NavEnt.
         /// </summary>
         /// <remarks>
@@ -175,6 +184,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavTut;
+
+        /// <summary>
+        /// Controle NavAdm.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavAdm;
 
         /// <summary>
         /// Controle Li1.
@@ -303,6 +321,15 @@ namespace GestaoFCT
         protected global::System.Web.UI.WebControls.TextBox TextBox1;
 
         /// <summary>
+        /// Controle TextBox2.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+
+        /// <summary>
         /// Controle ddl_Tarefas.
         /// </summary>
         /// <remarks>
@@ -355,6 +382,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl exampleModal;
+
+        /// <summary>
+        /// Controle exampleModalLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl exampleModalLabel;
 
         /// <summary>
         /// Controle textoCancelar.

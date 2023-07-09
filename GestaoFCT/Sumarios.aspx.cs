@@ -26,13 +26,13 @@ namespace GestaoFCT
             }
             else
             {
-               
+
                 NomeUser.InnerText = Session["Utilizador"].ToString();
 
 
                 //se for aluno
                 if (Session["cargo"].ToString() == "4")
-                { 
+                {
 
                     ddl_Status.Enabled = false;
                     ddl_entidade.Visible = false;
@@ -54,7 +54,7 @@ namespace GestaoFCT
                 {
                     ddl_Status.Enabled = true;
 
-                    if(Session["cargo"].ToString() == "3") //tutor
+                    if (Session["cargo"].ToString() == "3") //tutor
                     {
                         //oculta filtro
                         ddl_entidade.Visible = false;
@@ -83,12 +83,12 @@ namespace GestaoFCT
                 {
                     //vai manter a multi-select com os itens selecionados ao recarregar a página
                     TarefasSelecionadas();
-                    
+
                 }
 
             }
 
-           if (!IsPostBack)
+            if (!IsPostBack)
             {
                 if (rptItems2.Items.Count == 0)
                 {
@@ -242,7 +242,7 @@ namespace GestaoFCT
             sqlConn.Close();
 
             ObterTarefas();
-          
+
 
         }
 
@@ -251,7 +251,7 @@ namespace GestaoFCT
             string tarefas = "";
             String linhadesql = "";
 
-            if(operacao.Text == "3" || operacao.Text == "2")
+            if (operacao.Text == "3" || operacao.Text == "2")
                 linhadesql = "select id_tarefa from Tarefas_Sumarios where id_sumario =" + labelCod.Text + ";";
             else
                 linhadesql = "select id_tarefa from Tarefas_Sumarios where id_sumario = (select id_sumario from sumarios where descricao_sumario = '" + txt_sumario.Text + "' and data_sumario = '" + txt_dataSum.Text + "');";
@@ -263,29 +263,29 @@ namespace GestaoFCT
             sqlConn.Open();
             SqlDataReader r = com.ExecuteReader();
 
-                // Obter as tarefas
-   
-                while (r.Read())
-                {
-                    string tar = r["id_tarefa"].ToString();
-                    tarefas += tar + ',';
-                }
+            // Obter as tarefas
+
+            while (r.Read())
+            {
+                string tar = r["id_tarefa"].ToString();
+                tarefas += tar + ',';
+            }
 
 
-                // Remover a última vírgula, se houver
-                if (!string.IsNullOrEmpty(tarefas))
-                {
-                    tarefas = tarefas.TrimEnd(',');
-                }
+            // Remover a última vírgula, se houver
+            if (!string.IsNullOrEmpty(tarefas))
+            {
+                tarefas = tarefas.TrimEnd(',');
+            }
 
-                // Atribuir os valores à propriedade Text da TextBox
-                TextBox1.Text = tarefas;
+            // Atribuir os valores à propriedade Text da TextBox
+            TextBox1.Text = tarefas;
 
 
-                // selecionar na dropdown as tarefas
-                TarefasSelecionadas();
+            // selecionar na dropdown as tarefas
+            TarefasSelecionadas();
 
-            
+
             r.Close();
             sqlConn.Close();
 
@@ -326,9 +326,11 @@ namespace GestaoFCT
         {
             //Response.Write("<script>alert('aaaaa')</script>");
             operacao.Text = "1";
+            TextBox2.Text = "";
             reset();
             exampleModalFormTitle.InnerText = "Criar Sumário";
             btn_enviar.Text = "Criar Sumário";
+            btn_enviar.Enabled = false;
             formSum.Visible = true;
 
         }
@@ -337,14 +339,16 @@ namespace GestaoFCT
         protected void Editar(object sender, EventArgs e)
         {
             operacao.Text = "2";
+            TextBox2.Text = "";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
                 reset();
                 Atualizar();
                 exampleModalFormTitle.InnerText = "Editar Sumário";
                 btn_enviar.Text = "Editar Sumário";
+                btn_enviar.Enabled = false;
                 formSum.Visible = true;
 
             }
@@ -366,7 +370,7 @@ namespace GestaoFCT
             operacao.Text = "3";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
                 reset();
                 btnDeletar.Visible = true;
@@ -410,14 +414,18 @@ namespace GestaoFCT
 
 
                     string[] array = TextBox1.Text.Split(',');
-                    int[] result = new int[array.Length];
+                    int[] result = null;
 
-                    for (int i = 0; i < array.Length; i++)
+                    if (array[0] != "")
                     {
-                        result[i] = int.Parse(array[i]);
+                         result = new int[array.Length];
+                        for (int i = 0; i < array.Length; i++)
+                        {
+                            result[i] = int.Parse(array[i]);
+                        }
                     }
 
-                    if (result[0] == 0)
+                    if (array[0] == "")
                     {
                         Response.Write("<script>alert('Não há Tarefas guardadas')</script>");
 
@@ -435,12 +443,13 @@ namespace GestaoFCT
                             Database.NonQuerySqlSrv(linhasql);
 
                         }
+                        formSum.Visible = true;
                     }
 
 
                 }
 
-                formSum.Visible = true;
+
                 //formSum.Visible = false;
             }
 
@@ -459,13 +468,22 @@ namespace GestaoFCT
                     // Faça o tratamento adequado, como mostrar uma mensagem de erro
                 }
 
-                String linhasql = "update Sumarios set descricao_sumario = '" + txt_sumario.Text.Replace("\r\n", " \\n ") + "', horas_sumario = '" + txt_numHora.Value + "', status_sumario = '" + ddl_Status.SelectedValue + "', data_sumario = '" + txt_dataSum.Text + "' where id_sumario = " + labelCod.Text + ";";
-
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                Database.NonQuerySqlSrv(linhasql);
-
                 string[] newTar = TextBox1.Text.Split(',');
                 string[] idTar = oldTar.Text.Split(',');
+
+
+                if (newTar[0] == "")
+                {
+                    Response.Write("<script>alert('Não há Tarefas guardadas')</script>");
+
+                }
+                else
+                {
+
+                    String linhasql = "update Sumarios set descricao_sumario = '" + txt_sumario.Text.Replace("\r\n", " \\n ") + "', horas_sumario = '" + txt_numHora.Value + "', status_sumario = '" + ddl_Status.SelectedValue + "', data_sumario = '" + txt_dataSum.Text + "' where id_sumario = " + labelCod.Text + ";";
+
+                    //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                    Database.NonQuerySqlSrv(linhasql);
 
                     for (int i = 0; i < idTar.Length; i++)
                     {
@@ -479,8 +497,11 @@ namespace GestaoFCT
                         Database.NonQuerySqlSrv(linhasql);
                     }
 
-                //formSum.Visible = true;
-                formSum.Visible = false;
+                    //formSum.Visible = true;
+                    formSum.Visible = false;
+                }
+
+
             }
 
             if (operacao.Text == "3")
@@ -516,7 +537,7 @@ namespace GestaoFCT
         }
 
 
-        
+
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
@@ -560,10 +581,10 @@ namespace GestaoFCT
                       true);
             }
         }
-
+        
         protected void ddl_entidade_SelectedIndexChanged1(object sender, EventArgs e)
         {
-
+            
             String linhasql2 = "select * from sumarios_table where id_entidade =" + ddl_entidade.SelectedValue + ";";
             DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
@@ -598,5 +619,11 @@ namespace GestaoFCT
         }
 
 
+
+        protected void TextBox2_TextChanged(object sender, EventArgs e)
+        {
+            if(TextBox2.Text != "")
+                btn_enviar.Enabled = true;
+        }
     }
 }

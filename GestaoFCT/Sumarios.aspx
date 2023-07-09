@@ -149,7 +149,12 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-
+                            <li id="NavObj" runat="server">
+                                <a class="sidenav-item-link" href="GestObj.aspx">
+                                    <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
+                                    <span class="nav-text">Objetivos</span>
+                                </a>
+                            </li>
                             <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
@@ -170,7 +175,12 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
-
+                            <li id="NavAdm" runat="server">
+                                <a class="sidenav-item-link" href="Administradores.aspx">
+                                    <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
+                                    <span class="nav-text">Administradores</span>
+                                </a>
+                            </li>
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
                             <li id="Li2" runat="server">
@@ -302,6 +312,7 @@
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
                                                                 <asp:TextBox ID="TextBox1" runat="server" style="display:none" ></asp:TextBox>
+                                                                <asp:TextBox ID="TextBox2" runat="server" style="display:none" AutoPostBack="true" OnTextChanged="TextBox2_TextChanged" ></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
                                                             </div>
                                                             <div class="form-group">
@@ -322,7 +333,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" OnClick="Comandos" Text="Criar Aluno" />
+                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" OnClick="Comandos" Text="Criar Sumário" ToolTip="ALOOO" />
                                                         </div>
                                                 </div>
                                             </div>
@@ -333,7 +344,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo do aluno</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel" runat="server">Nenhum sumário selecionado</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -390,6 +401,7 @@
             var stat = document.getElementById('<%= labelStats.ClientID %>');
             var cod = document.getElementById('<%= labelCod.ClientID %>');
             var bt = document.getElementById('<%= TextBox1.ClientID %>');
+            var enviar = document.getElementById('<%= TextBox2.ClientID %>');
 
             var selectedTasks = "";
 
@@ -462,7 +474,8 @@
                 bt.value = $('#ddl_Tarefas').select2("val");
                 /*alert(bt.value);*/
                 bt.innerText = $('#ddl_Tarefas').select2("val");
-
+                enviar.value = "enviado";
+                enviar.innerText = "enviado";
                 //alert("o valor2 é:" + $('#ddl_Tarefas').select2("val") + "!");
 
             }

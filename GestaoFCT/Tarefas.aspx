@@ -149,7 +149,12 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-
+                            <li id="NavObj" runat="server">
+                                <a class="sidenav-item-link" href="GestObj.aspx">
+                                    <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
+                                    <span class="nav-text">Objetivos</span>
+                                </a>
+                            </li>
                             <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
@@ -170,7 +175,12 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
-
+                            <li id="NavAdm" runat="server">
+                                <a class="sidenav-item-link" href="Administradores.aspx">
+                                    <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
+                                    <span class="nav-text">Administradores</span>
+                                </a>
+                            </li>
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
                             <li id="Li2" runat="server">
@@ -315,7 +325,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Eliminar registo do aluno</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Nenhuma tarefa selecionada</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>

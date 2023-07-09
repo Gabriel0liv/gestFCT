@@ -87,6 +87,7 @@
     <Content Include="css\style-login.css" />
     <Content Include="css\style.css" />
     <Content Include="Documentos.aspx" />
+    <Content Include="GestObj.aspx" />
     <Content Include="images\CadernetaFoto.png" />
     <Content Include="images\ContratoFoto.png" />
     <Content Include="images\elements\cc1.jpg" />
@@ -1308,6 +1309,13 @@
     <Compile Include="Documentos.aspx.designer.cs">
       <DependentUpon>Documentos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GestObj.aspx.cs">
+      <DependentUpon>GestObj.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GestObj.aspx.designer.cs">
+      <DependentUpon>GestObj.aspx</DependentUpon>
+    </Compile>
     <Compile Include="GlobalFunctions.cs" />
     <Compile Include="Sumarios.aspx.cs">
       <DependentUpon>Sumarios.aspx</DependentUpon>
@@ -1382,10 +1390,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Documentos\Contrato.doc" />
     <None Include="packages.config" />
     <Content Include="toasts\toastr.js.map" />
     <Content Include="teste\Contrato.doc" />
+    <Content Include="teste\CadernetaAluno.doc" />
+    <Content Include="teste\Protocolo.doc" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

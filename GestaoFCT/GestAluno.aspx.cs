@@ -234,6 +234,7 @@ namespace GestaoFCT
             }
             else
             {
+                exampleModalLabel.InnerText = "Editar registo do Aluno";
                 textoCancelar.InnerText = "Nenhum registo foi selecionado!";
                 btnDeletar.Visible = false;
                 exampleModal.Visible = true;
@@ -251,6 +252,7 @@ namespace GestaoFCT
 
             if (labelCod.Text != "0")
             {
+                exampleModalLabel.InnerText = "Eliminar registo do aluno";
                 btnDeletar.Visible = true;
                 string linhadesql = "select nome_aluno from alunos where id_aluno = " + labelCod.Text + ";";
                 var sqlConn = new SqlConnection(AlnSQLData.ConnectionString);
@@ -341,6 +343,7 @@ namespace GestaoFCT
             }
             else
             {
+                exampleModalLabel.InnerText = "Gerar ficha de FCT";
                 textoCancelar.InnerText = "Nenhum registo foi selecionado!";
                 btnDeletar.Visible = false;
                 exampleModal.Visible = true;

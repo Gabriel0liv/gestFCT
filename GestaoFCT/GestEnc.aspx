@@ -148,7 +148,12 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-
+                            <li id="NavObj" runat="server">
+                                <a class="sidenav-item-link" href="GestObj.aspx">
+                                    <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
+                                    <span class="nav-text">Objetivos</span>
+                                </a>
+                            </li>
                             <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
@@ -169,7 +174,12 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
-
+                            <li id="NavAdm" runat="server">
+                                <a class="sidenav-item-link" href="Administradores.aspx">
+                                    <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
+                                    <span class="nav-text">Administradores</span>
+                                </a>
+                            </li>
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
                             <li id="Li2" runat="server">
@@ -288,7 +298,7 @@
 
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Nome</label>
-                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Encarregado" enableviewstate="true" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Encarregado" enableviewstate="true" runat="server" required="required" />
                                                             </div>
 
                                                             <div class="form-group">
@@ -305,7 +315,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_email">Email address</label>
-                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do Encarregado" runat="server" />
+                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do Encarregado" runat="server" required="required" />
                                                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                                             </div>
                                                             <div class="form-group">
@@ -314,11 +324,11 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telemovel">Telemovel</label>
-                                                                <input type="number" class="form-control" id="txt_telemovel" placeholder="Insira o telefone do Encarregado" runat="server" />
+                                                                <input type="number" class="form-control" id="txt_telemovel" placeholder="Insira o telefone do Encarregado" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_morada">Morada</label>
-                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do encarregado" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do encarregado" runat="server"  />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Localidade</label>
