@@ -180,26 +180,20 @@
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
-
-                            <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton1" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                    <i class="mdi mdi-logout"></i> 
-                                    Log Out 
-                                </asp:LinkButton>
-                            </li>
 
                         </ul>
                     </div>
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <li>
-                                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
-                                <li>
-                                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+                            <ul >
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                    </asp:LinkButton>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -298,10 +292,12 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Nome do curso</label>
-                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do curso" enableviewstate="true" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do curso" enableviewstate="true" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Ano </label>
@@ -313,7 +309,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Turma</label>
-                                                                <input type="text" class="form-control" id="txt_turma" placeholder="Insira a letra da turma. Ex: S" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_turma" pattern="^[A-Z]{1}$" placeholder="Insira a letra da turma. Ex: S" runat="server" required="required"/>
                                                             </div>
 
                                                         </div>

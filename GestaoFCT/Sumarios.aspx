@@ -181,25 +181,19 @@
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
-
-                            <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                    <i class="mdi mdi-logout"></i> 
-                                    Log Out 
-                                </asp:LinkButton>
-                            </li>
                         </ul>
                     </div>
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <li>
-                                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
-                                <li>
-                                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+                            <ul >
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                    </asp:LinkButton>
                                 </li>
+
                             </ul>
                         </div>
                     </div>

@@ -57,6 +57,8 @@ C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\ob
 C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\obj\Debug\GestaoFCT.csproj.CopyComplete
 C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\obj\Debug\GestaoFCT.dll
 C:\Users\GabrielOliv\Documents\Projetos - sites\avaliacao\GestaoFCT\GestaoFCT\obj\Debug\GestaoFCT.pdb
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.AssemblyReference.cache
+C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.CoreCompileInputs.cache
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\GestaoFCT.dll.config
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\GestaoFCT.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\GestaoFCT.pdb
@@ -97,8 +99,6 @@ C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\itextsharp.pdfa.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\itextsharp.xml
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.AssemblyReference.cache
-C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.CoreCompileInputs.cache
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.csproj.CopyComplete
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.dll
 C:\Users\gabri\source\repos\NewRepo\GestaoFCT\obj\Debug\GestaoFCT.pdb

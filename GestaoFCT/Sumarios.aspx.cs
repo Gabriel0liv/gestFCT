@@ -48,6 +48,8 @@ namespace GestaoFCT
                     SecGest.Visible = false;
                     NavTar.Visible = false;
                     NavTut.Visible = false;
+                    NavObj.Visible = false;
+                    NavAdm.Visible = false;
                 }
                 // se for tutor ou professor
                 if (Session["cargo"].ToString() == "3" || Session["cargo"].ToString() == "2" || Session["cargo"].ToString() == "1")
@@ -68,6 +70,14 @@ namespace GestaoFCT
                         NavProf.Visible = false;
                         SecGest.Visible = false;
                         NavTut.Visible = false;
+                        NavObj.Visible = false;
+                        NavAdm.Visible = false;
+                    }
+                    if (Session["cargo"].ToString() == "2")
+                    {
+
+
+
                     }
 
                 }
@@ -107,6 +117,24 @@ namespace GestaoFCT
                         ddl_entidade.DataBind();
                         sqlConn.Close();
                     }
+
+                    String linhasql2 = "select * from sumarios_table where id_entidade =" + ddl_entidade.SelectedValue + ";";
+                    DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+
+                    rptItems2.DataSource = dt2;
+                    rptItems2.DataBind();
+
+                    using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select id_aluno, nome_aluno from Sumarios_table where id_entidade = " + ddl_entidade.Items[0].Value + ";", sqlConn);
+                        sqlConn.Open();
+                        ddl_aluno.DataTextField = "nome_aluno";
+                        ddl_aluno.DataValueField = "id_aluno";
+                        ddl_aluno.DataSource = cmd.ExecuteReader();
+                        ddl_aluno.DataBind();
+                        sqlConn.Close();
+                    }
+                    ddl_aluno.Visible = true;
                 }
                 if (Session["cargo"].ToString() == "1")//se for administrador
                 {

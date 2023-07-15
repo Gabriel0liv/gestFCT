@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.EnterpriseServices.CompensatingResourceManager;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -28,7 +29,7 @@ namespace GestaoFCT
 
             if (rptItems.Items.Count == 0)
             {
-                refresh ();
+                refresh();
             }
 
         }
@@ -101,7 +102,7 @@ namespace GestaoFCT
             operacao.Text = "2";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
 
                 Atualizar();
@@ -126,7 +127,7 @@ namespace GestaoFCT
             operacao.Text = "3";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
                 btnDeletar.Visible = true;
                 string linhadesql = "select nome_curso from cursos where id_curso = " + labelCod.Text + ";";
@@ -152,56 +153,74 @@ namespace GestaoFCT
 
         }
 
-        
+
         protected void Comandos(object sender, EventArgs e)
         {
+            Boolean erro = false;
 
+            if (operacao.Text != "3")
+            {
+                if (txt_nome.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O nome do curso não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_nome.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_nome.Value))
+                    {
+                        alerMessage.InnerHtml = "Nome do curso inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else //se não foi uma palavra reservada, então foi por algum caractere especial
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no nome do curso. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+            }
 
             if (operacao.Text == "1")
             {
-                //Response.Write("<script>alert('11111')</script>");
-
                 String linhasql = "insert into cursos (nome_curso, ano_curso, turma_curso) values('" + txt_nome.Value + "', '" + slc_ano.SelectedValue + "', '" + txt_turma.Value + "');";
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                }
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                exampleModalForm.Visible = false;
             }
 
             if (operacao.Text == "2")
             {
-                //Response.Write("<script>alert('22222')</script>");
 
                 String linhasql = "update cursos set nome_curso = '" + txt_nome.Value + "', ano_curso = '" + slc_ano.SelectedValue + "', turma_curso = '" + txt_turma.Value + "' where id_curso = " + labelCod.Text + ";";
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                //Response.Write("<script>alert('aaaaa')</script>");
-
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                }
             }
 
             if (operacao.Text == "3")
             {
-                //Response.Write("<script>alert('33333')</script>");
-
                 String linhasql = "delete from cursos where id_curso = " + labelCod.Text + ";";
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
+                exampleModal.Visible = false;
             }
-
-            exampleModalForm.Visible = false;
-            exampleModal.Visible = false;
         }
-        
+
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;

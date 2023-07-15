@@ -41,6 +41,10 @@ namespace GestaoFCT
                     NavProf.Visible = false;
                     SecGest.Visible = false;
                     NavTut.Visible = false;
+                    NavDoc.Visible = false;
+                    NavObj.Visible = false;
+                    NavAdm.Visible = false;
+
                 }
             }
 

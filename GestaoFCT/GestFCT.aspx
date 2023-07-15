@@ -174,26 +174,19 @@
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
-
-                            <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                    <i class="mdi mdi-logout"></i> 
-                                    Log Out 
-                                </asp:LinkButton>
-                            </li>
 
                         </ul>
                     </div>
-
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <li>
-                                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
-                                <li>
-                                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+                            <ul >
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton1" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                    </asp:LinkButton>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -219,34 +212,6 @@
 
                         <div class="navbar-right ">
 
-                            <!-- search form -->
-                            <div class="search-form">
-                                <form action="index.html" method="get">
-                                    <div class="input-group input-group-sm" id="input-group-search">
-                                        <input type="text" autocomplete="off" name="query" id="search-input" class="form-control" placeholder="Search..." />
-                                        <div class="input-group-append">
-                                            <button class="btn" type="button">/</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <ul class="dropdown-menu dropdown-menu-search">
-
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Morbi leo risus</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Dapibus ac facilisis in</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Porta ac consectetur ac</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="index.html">Vestibulum at eros</a>
-                                    </li>
-
-                                </ul>
-
-                            </div>
 
                             <ul class="nav navbar-nav">
                                 <!-- Offcanvas -->

@@ -195,31 +195,13 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl NavAdm;
 
         /// <summary>
-        /// Controle Li1.
+        /// Controle LinkButton3.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li1;
-
-        /// <summary>
-        /// Controle Li2.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li2;
-
-        /// <summary>
-        /// Controle LinkButton2.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
 
         /// <summary>
         /// Controle NomeUser.

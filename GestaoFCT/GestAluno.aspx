@@ -149,7 +149,7 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-                            <li id="NavObj" runat="server" >
+                            <li id="NavObj" runat="server">
                                 <a class="sidenav-item-link" href="GestObj.aspx">
                                     <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
                                     <span class="nav-text">Objetivos</span>
@@ -183,24 +183,18 @@
                             </li>
                             <li id="Li1" class="section-title" runat="server">Conta</li>
 
-                            <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                    <i class="mdi mdi-logout"></i> 
-                                    Log Out 
-                                </asp:LinkButton>
-                            </li>
-
                         </ul>
                     </div>
-
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <li>
-                                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
-                                <li>
-                                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+                            <ul>
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                    </asp:LinkButton>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -291,11 +285,10 @@
                                         <div class="email-right-header" style="margin-bottom: 0">
 
                                             <!-- FORM MODAL -->
-
                                             <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
                                                 aria-hidden="true" runat="server" visible="false">
                                                 <div class="modal-dialog" role="document">
-                                                    <iv class="modal-content">
+                                                    <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalFormTitle" runat="server" style="font-weight: bold;"></h5>
                                                             <button type="button" id="spanFechar" class="close" runat="server" onserverclick="spanFechar_Click">
@@ -303,6 +296,9 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div id="formAluno" runat="server">
                                                                 <div class="form-group">
                                                                     <label for="txt_nome">Nome</label>
@@ -311,24 +307,24 @@
 
                                                                 <div class="form-group">
                                                                     <label for="txt_nif">NIF</label>
-                                                                    <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" runat="server" required="required" />
+                                                                    <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" pattern="^\d{9}$" title="Por favor, insira um NIF válido de 9 dígitos" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" runat="server" required="required" />
+                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" pattern="^\d{8}-[0-9A](?:[A-Z0-9]{9})$" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_val">Validade</label>
-                                                                    <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" pattern="[0-9]{2}/[0-9]{2}" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_email">Email address</label>
-                                                                    <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do aluno" runat="server" required="required" />
+                                                                    <input type="email" class="form-control" id="txt_email" placeholder="Insira o email do aluno" runat="server" required="required" />
                                                                     <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="txt_telefone">Telefone</label>
-                                                                    <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do aluno" runat="server" required="required" />
+                                                                    <label for="txt_telefone">Telemóvel</label>
+                                                                    <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telemóvel do aluno" pattern="[9][1-9][0-9]{7}" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_morada">Morada</label>
@@ -340,7 +336,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_CodPost">Código Postal</label>
-                                                                    <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" runat="server" required="required" />
+                                                                    <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" pattern="[0-9]{4}-[0-9]{3}" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="ddl_curso">Curso</label>
@@ -352,7 +348,17 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_pass">Palavra passe</label>
-                                                                    <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" runat="server" />
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" pattern=".{8,}" runat="server" required="required" />
+                                                                        <div class="input-group-append">
+                                                                            <div class="input-group-text">
+                                                                                <label class="control control-checkbox d-inline-block mb-0">
+                                                                                    <input type="checkbox" onclick="myFunction()" />
+                                                                                    <div class="control-indicator"></div>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                             <%--Forumulário da FCT--%>
@@ -377,13 +383,12 @@
                                                                 <div class="form-group">
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">número de horas</label>
-                                                                        <input type="number" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" required="required" />
+                                                                        <input type="text" class="form-control" id="txt_numHora" placeholder="Número total de horas" title="Insira o total de horas da formação" pattern="^[0-9]{3}$" enableviewstate="true" runat="server" required="required" />
                                                                     </div>
 
                                                                     <div style="display: inline-block">
                                                                         <label for="txt_nome">número de horas diárias</label>
-                                                                        <%--<input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" enableviewstate="true" runat="server" />--%>
-                                                                        <asp:TextBox ID="txt_numMaxHoras" class="form-control" placeholder="Número máximo de horas diárias" TextMode="Number" runat="server" required="required"></asp:TextBox>
+                                                                        <input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" pattern="^[1-8]$" enableviewstate="true" runat="server" required="required" />
                                                                     </div>
 
                                                                     <div style="display: inline-block">
@@ -411,6 +416,7 @@
                                                             <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
                                                             <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar Aluno" OnClick="Comandos" />
                                                         </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -555,6 +561,15 @@
                 $('#ddl_Encarregado').select2();
                 $('#ddl_turma').select2();
             });
+
+            function myFunction() {
+                var x = document.getElementById("txt_pass");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
 
         </script>
 

@@ -180,26 +180,20 @@
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
-
-                            <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                    <i class="mdi mdi-logout"></i> 
-                                    Log Out 
-                                </asp:LinkButton>
-                            </li>
 
                         </ul>
                     </div>
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <li>
-                                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
-                                <li>
-                                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+                            <ul >
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                    </asp:LinkButton>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -295,7 +289,9 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Nome</label>
                                                                 <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Encarregado" enableviewstate="true" runat="server" required="required" />
@@ -303,11 +299,11 @@
 
                                                             <div class="form-group">
                                                                 <label for="txt_nif">NIF</label>
-                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Encarregado" runat="server" />
+                                                                <input type="number" class="form-control" id="txt_nif" placeholder="Insira o NIF do Encarregado" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do Encarregado" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do Encarregado" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_val">Validade</label>
@@ -320,30 +316,28 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telefone</label>
-                                                                <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do Encarregado" runat="server" />
+                                                                <input type="tel" class="form-control" id="txt_telefone" placeholder="Insira o telefone fixo, se houver." pattern="[2-8][0-9]{8}" runat="server" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telemovel">Telemovel</label>
-                                                                <input type="number" class="form-control" id="txt_telemovel" placeholder="Insira o telefone do Encarregado" runat="server" required="required" />
+                                                                <input type="tel" class="form-control" id="txt_telemovel" placeholder="Insira o telemóvel do Encarregado" pattern="[9][1-9][0-9]{7}" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_morada">Morada</label>
-                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do encarregado" runat="server"  />
+                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do encarregado" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Localidade</label>
-                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do encarregado" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do encarregado" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Código Postal</label>
-                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do encarregado" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal. ex: 3750-326" runat="server" pattern="[0-9]{4}-[0-9]{3}" required="required" />
                                                             </div>
 
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-
-                                                            <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
                                                             <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar encarregado" OnClick="Comandos" />
                                                         </div>
                                                 </div>

@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -61,7 +62,7 @@ namespace GestaoFCT
 
             }
 
-                if (rptItems.Items.Count == 0)
+            if (rptItems.Items.Count == 0)
             {
                 refresh();
             }
@@ -115,8 +116,7 @@ namespace GestaoFCT
             txt_anoFCT.Value = "";
             txt_dataFim.Text = "";
             txt_dataInicio.Text = "";
-            txt_numMaxHoras.Text = "";
-            txt_numHora.Value = "";
+
 
             using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
             {
@@ -148,7 +148,7 @@ namespace GestaoFCT
                     ddl_curso.DataBind();
                     sqlConn.Close();
 
-                    SqlCommand cmd2 = new SqlCommand("select distinct id_ee, nome_ee from Alunos_info where id_curso = " + Session["curso"].ToString() + ";", sqlConn);
+                    SqlCommand cmd2 = new SqlCommand("select distinct id_ee, nome_ee from encarregadoseducacao;", sqlConn);
                     sqlConn.Open();
                     ddl_Encarregado.DataTextField = "nome_ee";
                     ddl_Encarregado.DataValueField = "id_ee";
@@ -185,7 +185,7 @@ namespace GestaoFCT
                 txt_morada.Value = r["morada_aluno"].ToString();
                 txt_local.Value = r["loc_aluno"].ToString();
                 txt_CodPost.Value = r["cpostal_aluno"].ToString();
-                txt_pass.Value = r["pass_aluno"].ToString();
+                txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_aluno"].ToString()));
                 ddl_Encarregado.SelectedValue = r["id_ee"].ToString(); //ERRO AQUI
                 ddl_curso.SelectedValue = r["id_curso"].ToString();
             }
@@ -353,34 +353,181 @@ namespace GestaoFCT
 
         protected void Comandos(object sender, EventArgs e)
         {
+            Boolean erro = false;
+
+            if (operacao.Text != "3" && operacao.Text != "4")
+            {
+
+                if (txt_nome.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O nome não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_nome.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_nome.Value))
+                    {
+                        alerMessage.InnerHtml = "Nome inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no nome. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+
+                }
+                else if (txt_nif.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O nif não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_nif.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_nif.Value))
+                    {
+                        alerMessage.InnerHtml = "NIF inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no NIF. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_bi.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O B.I. não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_email.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_email.Value))
+                    {
+                        alerMessage.InnerHtml = "Email inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else //se não foi uma palavra reservada, então foi por algum caractere especial
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no email. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_morada.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "A morada não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_morada.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_morada.Value))
+                    {
+                        alerMessage.InnerHtml = "Morada inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na morada. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_local.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "A localidade não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_local.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_local.Value))
+                    {
+                        alerMessage.InnerHtml = "Localidade inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na localidade. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_CodPost.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_CodPost.Value))
+                    {
+                        alerMessage.InnerHtml = "Código postal inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no código postal. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_pass.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_pass.Value))
+                    {
+                        alerMessage.InnerHtml = "Password inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na password. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+
+            }
+
+            if (operacao.Text == "3")
+            {
+
+            }
 
 
             if (operacao.Text == "1")
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno, id_ee, id_curso, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value + "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + txt_pass.Value + "', '" + ddl_Encarregado.SelectedValue + "', '" + ddl_curso.SelectedValue + "', 4);";
+                String linhasql = "insert into alunos (nome_aluno, nif_aluno, morada_aluno, loc_aluno, email_aluno, cpostal_aluno, telefone_aluno, bi_aluno, valBi_aluno, pass_aluno, id_ee, id_curso, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value + "', '" + txt_bi.Value + "', '" + txt_val.Value + "', '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', '" + ddl_Encarregado.SelectedValue + "', '" + ddl_curso.SelectedValue + "', 4);";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                    exampleModal.Visible = false;
+                }
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                exampleModalForm.Visible = false;
             }
 
             if (operacao.Text == "2")
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update alunos set nome_aluno = '" + txt_nome.Value + "', nif_aluno = '" + txt_nif.Value + "', email_aluno = '" + txt_email.Value + "', loc_aluno = '" + txt_local.Value + "', morada_aluno = '" + txt_morada.Value + "', telefone_aluno = '" + txt_telefone.Value + "', cpostal_aluno = '" + txt_CodPost.Value + "', bi_aluno = '" + txt_bi.Value + "', valBi_aluno = '" + txt_val.Value + "', pass_aluno = '" + txt_pass.Value + "', id_ee = " + ddl_Encarregado.SelectedValue + ", id_curso = " + ddl_curso.SelectedValue + "where id_aluno = " + labelCod.Text + ";";
+                String linhasql = "update alunos set nome_aluno = '" + txt_nome.Value + "', nif_aluno = '" + txt_nif.Value + "', email_aluno = '" + txt_email.Value + "', loc_aluno = '" + txt_local.Value + "', morada_aluno = '" + txt_morada.Value + "', telefone_aluno = '" + txt_telefone.Value + "', cpostal_aluno = '" + txt_CodPost.Value + "', bi_aluno = '" + txt_bi.Value + "', valBi_aluno = '" + txt_val.Value + "', pass_aluno = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', id_ee = " + ddl_Encarregado.SelectedValue + ", id_curso = " + ddl_curso.SelectedValue + "where id_aluno = " + labelCod.Text + ";";
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                //Response.Write("<script>alert('aaaaa')</script>");
-
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                    exampleModal.Visible = false;
+                }
 
             }
 
@@ -399,18 +546,14 @@ namespace GestaoFCT
             if (operacao.Text == "4")
             {
                 DateTime data;
-                if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(txt_dataFim.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                DateTime data2;
+                if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(txt_dataFim.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data2))
                 {
                     txt_dataInicio.Text = data.ToString("dd/MM/yyyy");
-                    txt_dataFim.Text = data.ToString("dd/MM/yyyy");
-                }
-                else
-                {
-                    // A string fornecida não está no formato esperado
-                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                    txt_dataFim.Text = data2.ToString("dd/MM/yyyy");
                 }
 
-                String linhasql = "insert into FichasFCT (id_aluno, id_entidade, id_tutor, id_professor, num_horas, ano_fct, HorasDiarias, inicio_fct, fim_fct) values('" + labelCod.Text + "', '" + ddl_entidade.SelectedValue + "', '" + ddl_tutor.SelectedValue + "', '" + ddl_professor.SelectedValue + "' ,'" + txt_numHora.Value + "', '" + txt_anoFCT.Value + "', '" + txt_numMaxHoras.Text + "', '" + txt_dataInicio.Text + "', '" + txt_dataFim.Text + "');";
+                String linhasql = "insert into FichasFCT (id_aluno, id_entidade, id_tutor, id_professor, num_horas, ano_fct, HorasDiarias, inicio_fct, fim_fct) values('" + labelCod.Text + "', '" + ddl_entidade.SelectedValue + "', '" + ddl_tutor.SelectedValue + "', '" + ddl_professor.SelectedValue + "' ,'" + txt_numHora.Value + "', '" + txt_anoFCT.Value + "', '" + txt_numMaxHoras.Value + "', '" + txt_dataInicio.Text + "', '" + txt_dataFim.Text + "');";
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
@@ -419,8 +562,7 @@ namespace GestaoFCT
 
             }
 
-            exampleModalForm.Visible = false;
-            exampleModal.Visible = false;
+
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -446,48 +588,45 @@ namespace GestaoFCT
 
         protected void txt_dataInicio_TextChanged(object sender, EventArgs e)
         {
-            DateTime data;
-            DateTime dataInicial = new DateTime();
-            if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+            if(txt_numMaxHoras.Value.Replace(" ", "") == "" || txt_numHora.Value.Replace(" ", "") == "" || txt_numHora.Value.Length == 0 || txt_numMaxHoras.Value.Length == 0)
             {
-                dataInicial = DateTime.Parse(data.ToString("dd/MM/yyyy"));
+                alerMessage.InnerText = "Para inserir a data de início é preciso preencher as horas máximas e as horas diárias!";
+                Alert.Visible = true;
             }
             else
             {
-                // A string fornecida não está no formato esperado
-                // Faça o tratamento adequado, como mostrar uma mensagem de erro
+                DateTime data;
+                DateTime dataInicial = new DateTime();
+                if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    dataInicial = DateTime.Parse(data.ToString("dd/MM/yyyy"));
+                }
+
+
+                //DateTime dataInicio = DateTime.Parse(dataInicial);
+                int horasFormacao = int.Parse(txt_numHora.Value);
+                int maxHorasDia = int.Parse(txt_numMaxHoras.Value);
+
+
+                DateTime dataTermino = CalcularDataTermino(dataInicial, horasFormacao, maxHorasDia);
+
+                // Calcular a diferença em dias entre a data de término e a data atual
+                //int diasRestantes = (dataTermino - DateTime.Today).Days;
+                int diasRestantes = CalcularDiasUteis(DateTime.Today, dataTermino);
+
+
+                txt_dataFim.Text = dataTermino.ToShortDateString();
+
+                if (DateTime.TryParseExact(txt_dataFim.Text, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                {
+                    txt_dataFim.Text = data.ToString("yyyy-MM-dd");
+
+                }
             }
-
-            //DateTime dataInicio = DateTime.Parse(dataInicial);
-            int horasFormacao = int.Parse(txt_numHora.Value);
-            int maxHorasDia = int.Parse(txt_numMaxHoras.Text);
-
-
-            DateTime dataTermino = CalcularDataTermino(dataInicial, horasFormacao, maxHorasDia);
-
-            // Calcular a diferença em dias entre a data de término e a data atual
-            //int diasRestantes = (dataTermino - DateTime.Today).Days;
-            int diasRestantes = CalcularDiasUteis(DateTime.Today, dataTermino);
-
-
-            txt_dataFim.Text = dataTermino.ToShortDateString();
-
-            if (DateTime.TryParseExact(txt_dataFim.Text, "dd/MM/yyyy" , CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
-            {
-                txt_dataFim.Text = data.ToString("yyyy-MM-dd");
-
-            }
-            else
-            {
-                // A string fornecida não está no formato esperado
-                // Faça o tratamento adequado, como mostrar uma mensagem de erro
-            }
-
-
 
         }
 
-        
+
 
         protected int CalcularDiasUteis(DateTime dataInicio, DateTime dataFim)
         {

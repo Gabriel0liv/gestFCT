@@ -12,7 +12,7 @@ namespace GestaoFCT
 
         private static string GetConnString(string type)
         {
-            string connString = @"Data Source=DESKTOP-5OQ8K2C\SQLEXPRESS;Initial Catalog=FCTGest;User ID=sa;Password=gbro2004";
+            string connString = @"Data Source=DESKTOP-5OQ8K2C\SQLEXPRESS;Initial Catalog=GestFCT;User ID=sa;Password=gbro2004";
             return connString;
         }
 

@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -83,7 +84,7 @@ namespace GestaoFCT
                 txt_morada.Value = r["morada_prof"].ToString();
                 txt_local.Value = r["loc_prof"].ToString();
                 txt_CodPost.Value = r["cpostal_prof"].ToString();
-                txt_pass.Value = r["pass_prof"].ToString();
+                txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_prof"].ToString()));
 
             }
             r.Close();
@@ -172,14 +173,21 @@ namespace GestaoFCT
         protected void Comandos(object sender, EventArgs e)
         {
 
+            Boolean erro = false;
 
+            if (txt_nome.Value.Replace(" ", "") == "")
+            {
+                erro = true;
+                
+            }
+                
             if (operacao.Text == "1")
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_pass.Value + "', 2);";
+                String linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 2);";
 
-                Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
@@ -191,7 +199,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update professores set nome_prof = '" + txt_nome.Value + "', nif_prof = '" + txt_nif.Value + "', email_prof = '" + txt_email.Value + "', loc_prof = '" + txt_local.Value + "', morada_prof = '" + txt_morada.Value +  "', telefone_prof = '" + txt_telefone.Value +  "', cpostal_prof = '" + txt_CodPost.Value + "', telemovel_prof = '" + txt_telemovel.Value + "', pass_prof = '" + txt_pass.Value + "' where id_prof = " + labelCod.Text + ";";
+                String linhasql = "update professores set nome_prof = '" + txt_nome.Value + "', nif_prof = '" + txt_nif.Value + "', email_prof = '" + txt_email.Value + "', loc_prof = '" + txt_local.Value + "', morada_prof = '" + txt_morada.Value +  "', telefone_prof = '" + txt_telefone.Value +  "', cpostal_prof = '" + txt_CodPost.Value + "', telemovel_prof = '" + txt_telemovel.Value + "', pass_prof = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "' where id_prof = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");

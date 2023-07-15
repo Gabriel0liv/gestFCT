@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -96,7 +97,7 @@ namespace GestaoFCT
                 txt_CodPost.Value = r["cpostal_tutor"].ToString();
                 txt_dataNasc.Value = r["dataNasc_tutor"].ToString();
                 ddl_entidade.SelectedValue = r["id_entidade"].ToString();
-                txt_pass.Value = r["pass_tutor"].ToString();
+                txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_tutor"].ToString()));
 
             }
             r.Close();
@@ -202,9 +203,9 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into tutores (nome_tutor, nif_tutor, morada_tutor, loc_tutor, email_tutor, cpostal_tutor, telefone_tutor, dataNasc_tutor, id_entidade, pass_tutor, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_dataNasc.Value + "', " + ddl_entidade.SelectedValue + ", '"  + txt_pass.Value + "', 3);";
+                String linhasql = "insert into tutores (nome_tutor, nif_tutor, morada_tutor, loc_tutor, email_tutor, cpostal_tutor, telefone_tutor, dataNasc_tutor, id_entidade, pass_tutor, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_dataNasc.Value + "', " + ddl_entidade.SelectedValue + ", '"  + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 3);";
 
-                Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
+                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
@@ -216,7 +217,7 @@ namespace GestaoFCT
             {
                 //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update tutores set nome_tutor = '" + txt_nome.Value + "', nif_tutor = '" + txt_nif.Value + "', email_tutor = '" + txt_email.Value + "', loc_tutor = '" + txt_local.Value + "', morada_tutor = '" + txt_morada.Value +  "', telefone_tutor = '" + txt_telefone.Value +  "', cpostal_tutor = '" + txt_CodPost.Value + "', dataNasc_tutor = '" + txt_dataNasc.Value + "', id_entidade = '" + ddl_entidade.SelectedValue + "', pass_tutor = '" + txt_pass.Value + "' where id_tutor = " + labelCod.Text + ";";
+                String linhasql = "update tutores set nome_tutor = '" + txt_nome.Value + "', nif_tutor = '" + txt_nif.Value + "', email_tutor = '" + txt_email.Value + "', loc_tutor = '" + txt_local.Value + "', morada_tutor = '" + txt_morada.Value +  "', telefone_tutor = '" + txt_telefone.Value +  "', cpostal_tutor = '" + txt_CodPost.Value + "', dataNasc_tutor = '" + txt_dataNasc.Value + "', id_entidade = '" + ddl_entidade.SelectedValue + "', pass_tutor = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "' where id_tutor = " + labelCod.Text + ";";
 
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 //Response.Write("<script>alert('aaaaa')</script>");

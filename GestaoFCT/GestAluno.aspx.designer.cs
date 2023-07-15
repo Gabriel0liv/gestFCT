@@ -204,15 +204,6 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li1;
 
         /// <summary>
-        /// Controle Li2.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li2;
-
-        /// <summary>
         /// Controle LinkButton2.
         /// </summary>
         /// <remarks>
@@ -292,6 +283,24 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton spanFechar;
+
+        /// <summary>
+        /// Controle Alert.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Alert;
+
+        /// <summary>
+        /// Controle alerMessage.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alerMessage;
 
         /// <summary>
         /// Controle formAluno.
@@ -408,7 +417,7 @@ namespace GestaoFCT
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_pass;
+        protected global::System.Web.UI.HtmlControls.HtmlInputPassword txt_pass;
 
         /// <summary>
         /// Controle formFCT.
@@ -462,7 +471,7 @@ namespace GestaoFCT
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_numHora;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_numHora;
 
         /// <summary>
         /// Controle txt_numMaxHoras.
@@ -471,7 +480,7 @@ namespace GestaoFCT
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_numMaxHoras;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_numMaxHoras;
 
         /// <summary>
         /// Controle txt_anoFCT.

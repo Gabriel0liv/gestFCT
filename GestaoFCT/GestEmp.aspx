@@ -177,26 +177,20 @@
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
-
-                            <li id="Li2" runat="server">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
-                                    <i class="mdi mdi-logout"></i> 
-                                    Log Out 
-                                </asp:LinkButton>
-                            </li>
 
                         </ul>
                     </div>
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <li>
-                                    <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i class="mdi mdi-settings"></i></a></li>
-                                <li>
-                                    <a href="#" data-toggle="tooltip" title="No chat messages"><i class="mdi mdi-chat-processing"></i></a>
+                            <ul >
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <i class="mdi mdi-logout"></i> 
+                                    Log Out 
+                                    </asp:LinkButton>
                                 </li>
+
                             </ul>
                         </div>
                     </div>
@@ -291,7 +285,9 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Nome</label>
                                                                 <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome da entidade" autocomplete="on" runat="server" required="required" />
@@ -299,7 +295,7 @@
 
                                                             <div class="form-group">
                                                                 <label for="txt_nif">NIF</label>
-                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF da entidade" runat="server" required="required" />
+                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF da entidade" pattern="^\d{9}$" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_email">Email address</label>
@@ -308,7 +304,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Telefone</label>
-                                                                <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" runat="server" required="required" />
+                                                                <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" pattern="[1-9][0-9]{8}" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Morada</label>
@@ -332,7 +328,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_resp">Contacto do responsável</label>
-                                                                <input type="text" class="form-control" id="txt_tlmResp" placeholder="Insira o telefone de contacto do responsável pela entidade" runat="server" required="required" />
+                                                                <input type="text" class="form-control" id="txt_tlmResp" placeholder="Insira o telefone de contacto do responsável pela entidade" pattern="[9][1-9][0-9]{7}" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_resp">Cargo do responsável na entidade</label>

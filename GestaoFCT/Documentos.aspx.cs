@@ -313,8 +313,6 @@ namespace GestaoFCT
                         doc.Fields.Update();
                         doc.Save();
 
-
-
                         if (checkFileFormat.Checked)
                         {
                             string directoryPath = Server.MapPath("~/temp/");
@@ -327,7 +325,6 @@ namespace GestaoFCT
                             }
 
                             doc.SaveAs2(pdfPath, WdSaveFormat.wdFormatPDF);
-
                             doc.Close();
                             wordApp.Quit();
 
@@ -338,7 +335,6 @@ namespace GestaoFCT
                             response.AppendHeader("Content-Disposition", "attachment; filename=ProtocoloCooperação.pdf");
                             response.TransmitFile(pdfPath);
                             response.End();
-
                         }
                         else
                         {
@@ -350,12 +346,9 @@ namespace GestaoFCT
                             {
                                 Directory.CreateDirectory(directoryPath);
                             }
-
                             doc.SaveAs2(docPath, WdSaveFormat.wdFormatDocument);
-
                             doc.Close();
                             wordApp.Quit();
-
                             // Transferir o arquivo para o usuário
                             HttpResponse response = HttpContext.Current.Response;
                             response.Clear();
@@ -364,9 +357,7 @@ namespace GestaoFCT
                             response.TransmitFile(docPath);
                             response.End();
                         }
-
                     }
-
                 }
                 else
                 {
@@ -458,9 +449,9 @@ namespace GestaoFCT
                             //Variáveis  TUTOR
                             doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString();
                             doc.Variables["tlf_tutor"].Value = r["tlf_tutor"].ToString();
-                            //doc.Variables["tlm_tutor"].Value = r["tlm_tutor"].ToString();
+                            doc.Variables["tlm_tutor"].Value = r["tlm_tutor"].ToString();
                             doc.Variables["email_tutor"].Value = r["email_tutor"].ToString();
-                            //doc.Variables["cargo_tutor"].Value = r["cargo_tutor"].ToString();
+                            doc.Variables["cargo_tutor"].Value = r["cargo_tutor"].ToString();
 
                             //Variáveis PROFESSOR
                             doc.Variables["nome_prof"].Value = r["nome_prof"].ToString();
@@ -523,14 +514,12 @@ namespace GestaoFCT
                                 string mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
                                 doc.Variables["datasumario" + (i + 1).ToString()].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
 
-
                                 doc.Variables["descSumario" + (i + 1).ToString()].Value = dt.Rows[i]["descricao_sumario"].ToString().Replace("\\n", Environment.NewLine);
                                 doc.Variables["horasSumario" + (i + 1).ToString()].Value = dt.Rows[i]["horas_sumario"].ToString();
 
                                 doc.Variables["txtData" + (i + 1).ToString()].Value = "Data do sumário: ";
                                 // Somar o número de horas aos 5 registros anteriores
                                 totalHoras += Convert.ToInt32(dt.Rows[i]["horas_sumario"]);
-
                                 // Atribuir o total de horas a uma variável a cada 5 registros
                                 if ((i + 1) % 5 == 0)
                                 {
@@ -543,7 +532,6 @@ namespace GestaoFCT
                             }
                             else //se não tiver mais registos, não exibir mensagem de erro nas seguintes variaveis
                             {
-
                                 try
                                 {
                                     doc.Variables["datasumario" + (i + 1).ToString()].Value = " ";
@@ -562,10 +550,8 @@ namespace GestaoFCT
                                         // Zerar o total de horas
                                         totalHoras = 0;
                                     }
-
                                 }
                                 else { doc.Variables["HorasSemanais" + j.ToString()].Value = " "; j++; }
-
                             }
 
 

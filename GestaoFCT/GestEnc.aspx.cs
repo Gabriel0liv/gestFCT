@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -175,35 +176,187 @@ namespace GestaoFCT
         
         protected void Comandos(object sender, EventArgs e)
         {
+            Boolean erro = false;
+
+            if(operacao.Text != "3")
+            {
+                if (txt_nome.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O nome não pode conter caracteres vazios!";
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_nome.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_nome.Value))
+                    {
+                        alerMessage.InnerHtml = "Nome inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else //se não foi uma palavra reservada, então foi por algum caractere especial
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no nome. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_nif.Value.Length < 9 || txt_nif.Value.Length > 9)
+                {
+                    erro = true;
+                    if (txt_nif.Value.Length < 9)
+                    {
+                        alerMessage.InnerText = "O nif não pode conter menos de 9 algoritmos!";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerText = "O nif não pode conter mais de 9 algoritmos!";
+                        Alert.Visible = true;
+                    }
+
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_nif.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_nif.Value))
+                    {
+                        alerMessage.InnerHtml = "NIF inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no NIF. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_bi.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O B.I. não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (txt_bi.Value.Length < 8 || txt_bi.Value.Length > 9)
+                {
+                    erro = true;
+                    if (txt_bi.Value.Length < 8)
+                    {
+                        alerMessage.InnerText = "O B.I. não pode conter menos de 8 caracteres!";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerText = "O B.I. não pode conter mais de 9 caracteres!";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_email.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_email.Value))
+                    {
+                        alerMessage.InnerHtml = "Email inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else //se não foi uma palavra reservada, então foi por algum caractere especial
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no email. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_telemovel.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O telemóvel não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (txt_telemovel.Value.Length < 9 || txt_telemovel.Value.Length > 9)
+                {
+                    erro = true;
+                    if (txt_telemovel.Value.Length < 9)
+                    {
+                        alerMessage.InnerText = "O telemóvel não pode conter menos de 9 algoritmos!";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerText = "O telemóvel não pode conter mais de 9 algoritmos!";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_morada.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "A morada não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_morada.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_morada.Value))
+                    {
+                        alerMessage.InnerHtml = "Morada inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na morada. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_local.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "A localidade não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_local.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_local.Value))
+                    {
+                        alerMessage.InnerHtml = "Localidade inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na localidade. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+
+            }
+
 
 
             if (operacao.Text == "1")
             {
-                //Response.Write("<script>alert('11111')</script>");
 
                 String linhasql = "insert into EncarregadosEducacao (nome_ee, nif_ee, morada_ee, loc_ee, email_ee, cpostal_ee, telefone_ee, telemovel_ee, bi_ee, valBi_ee) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_bi.Value + "', '" + txt_val.Value + "');";
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                exampleModalForm.Visible = false;
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                }
+                else { exampleModalForm.Visible = true; }
             }
 
             if (operacao.Text == "2")
             {
-                //Response.Write("<script>alert('22222')</script>");
 
                 String linhasql = "update EncarregadosEducacao set nome_ee = '" + txt_nome.Value + "', nif_ee = '" + txt_nif.Value + "', email_ee = '" + txt_email.Value + "', loc_ee = '" + txt_local.Value + "', morada_ee = '" + txt_morada.Value +  "', telefone_ee = '" + txt_telefone.Value + "', telemovel_ee = '" + txt_telemovel.Value + "', cpostal_ee = '" + txt_CodPost.Value + "', bi_ee = '" + txt_bi.Value + "', valBi_ee = '" + txt_val.Value + "' where id_ee = " + labelCod.Text + ";";
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                //Response.Write("<script>alert('aaaaa')</script>");
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                
+                }
+                //else { exampleModalForm.Visible = true; }
+
             }
 
             if (operacao.Text == "3")
@@ -213,13 +366,17 @@ namespace GestaoFCT
                 String linhasql = "delete from EncarregadosEducacao where id_ee = " + labelCod.Text + ";";
                 //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModal.Visible = false;
+                }
+                //else { exampleModalForm.Visible = true; }
             }
 
-            exampleModalForm.Visible = false;
-            exampleModal.Visible = false;
+
         }
         
         protected void btnCancelar_Click(object sender, EventArgs e)
