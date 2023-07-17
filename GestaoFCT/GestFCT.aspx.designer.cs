@@ -258,6 +258,24 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlButton spanFechar;
 
         /// <summary>
+        /// Controle Alert.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Alert;
+
+        /// <summary>
+        /// Controle alerMessage.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alerMessage;
+
+        /// <summary>
         /// Controle txt_aluno.
         /// </summary>
         /// <remarks>
@@ -294,22 +312,22 @@ namespace GestaoFCT
         protected global::System.Web.UI.WebControls.DropDownList ddl_tutor;
 
         /// <summary>
-        /// Controle txt_numHora.
+        /// Controle txt_numHoras.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_numHora;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_numHoras;
 
         /// <summary>
-        /// Controle txt_numMaxHoras.
+        /// Controle txt_numMaxHora.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_numMaxHoras;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_numMaxHora;
 
         /// <summary>
         /// Controle txt_anoFCT.
@@ -391,6 +409,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDeletar;
+
+        /// <summary>
+        /// Controle LinkButton2.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
 
         /// <summary>
         /// Controle rptItems.

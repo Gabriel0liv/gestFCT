@@ -71,15 +71,31 @@ namespace GestaoFCT
                         SecGest.Visible = false;
                         NavTut.Visible = false;
                         NavObj.Visible = false;
+                    }
+
+                    if (Session["cargo"].ToString() != "1")
                         NavAdm.Visible = false;
-                    }
-                    if (Session["cargo"].ToString() == "2")
+
+                    if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                        NavObj.Visible = false; NavProf.Visible = false;
+
+
+                }
+
+                if (Session["cargo"].ToString() == "4")
+                {
+                    String linhasql = "select SUM(CAST(horas_sumario as INT)) as horasFeitas, (select num_horas from FichasFCT where id_aluno = " + Session["codigo"].ToString() + ") as horasTotais from Sumarios_table where id_aluno = " + Session["codigo"].ToString() + ";";
+                    var sqlConn = new SqlConnection(SumSQLData.ConnectionString);
+                    var com = new SqlCommand(linhasql, sqlConn);
+                    sqlConn.Open();
+                    SqlDataReader r = com.ExecuteReader();
+                    while (r.Read())
                     {
-
-
-
+                        Label1.Text = "Horas feitas: " + r["horasFeitas"].ToString() + "/" + r["horasTotais"];
                     }
-
+                    r.Close();
+                    sqlConn.Close();
+                    Label1.Visible = true;
                 }
 
 
@@ -126,7 +142,7 @@ namespace GestaoFCT
 
                     using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
                     {
-                        SqlCommand cmd = new SqlCommand("select id_aluno, nome_aluno from Sumarios_table where id_entidade = " + ddl_entidade.Items[0].Value + ";", sqlConn);
+                        SqlCommand cmd = new SqlCommand("select distinct id_aluno, nome_aluno from Sumarios_table where id_entidade = " + ddl_entidade.Items[0].Value + ";", sqlConn);
                         sqlConn.Open();
                         ddl_aluno.DataTextField = "nome_aluno";
                         ddl_aluno.DataValueField = "id_aluno";
@@ -150,10 +166,23 @@ namespace GestaoFCT
                     }
                 }
 
+                if (Session["cargo"].ToString() == "3")
+                {
+                    using (SqlConnection sqlConn = new SqlConnection(SumSQLData.ConnectionString))
+                    {
+                        SqlCommand cmd = new SqlCommand("select distinct id_aluno, nome_aluno from Sumarios_table where id_entidade = " + Session["entidade"].ToString() + "and id_tutor = " + Session["codigo"].ToString() + ";", sqlConn);
+                        sqlConn.Open();
+                        ddl_aluno.DataTextField = "nome_aluno";
+                        ddl_aluno.DataValueField = "id_aluno";
+                        ddl_aluno.DataSource = cmd.ExecuteReader();
+                        ddl_aluno.DataBind();
+                        sqlConn.Close();
+                    }
+                    ddl_aluno.Visible = true;
+                }
 
 
-
-            }
+                }
 
 
         }
@@ -378,7 +407,7 @@ namespace GestaoFCT
                 btn_enviar.Text = "Editar Sumário";
                 btn_enviar.Enabled = false;
                 formSum.Visible = true;
-
+                btn_enviar.Enabled= true;
             }
             else
             {
@@ -634,16 +663,44 @@ namespace GestaoFCT
 
         protected void ddl_aluno_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            String linhasql2 = "select * from sumarios where id_entidade =" + ddl_entidade.SelectedValue + " and id_aluno = " + ddl_aluno.SelectedValue + ";";
-            DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+            if (Session["cargo"].ToString() == "2" || Session["cargo"].ToString() == "1")
+            {
+                String linhasql2 = "select * from sumarios_table where id_entidade =" + ddl_entidade.SelectedValue + " and id_aluno = " + ddl_aluno.SelectedValue + ";";
+                DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
-            rptItems2.DataSource = dt2;
-            rptItems2.DataBind();
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+
+                String linhasql = "select SUM(CAST(horas_sumario as INT)) as horasFeitas, (select num_horas from FichasFCT where id_aluno = " + ddl_aluno.SelectedValue + ") as horasTotais from Sumarios_table where id_aluno = " + ddl_aluno.SelectedValue + ";";
+                var sqlConn = new SqlConnection(SumSQLData.ConnectionString);
+                var com = new SqlCommand(linhasql, sqlConn);
+                sqlConn.Open();
+                SqlDataReader r = com.ExecuteReader();
+                while (r.Read())
+                {
+                    Label1.Text = "Horas feitas: " + r["horasFeitas"].ToString() + "/" + r["horasTotais"];
+                }
+                r.Close();
+                sqlConn.Close();
+                Label1.Visible = true;
+            }
+
+            if (Session["cargo"].ToString() == "3")
+            {
+                String linhasql2 = "select * from sumarios_table where id_entidade =" + Session["entidade"].ToString() + " and id_aluno = " + ddl_aluno.SelectedValue + ";";
+                DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
+            }
+
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
             refresh();
+            if (Session["cargo"].ToString() != "4")
+                Label1.Visible = false;
         }
 
 

@@ -321,6 +321,15 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_telefone;
 
         /// <summary>
+        /// Controle txt_telemovel.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_telemovel;
+
+        /// <summary>
         /// Controle txt_morada.
         /// </summary>
         /// <remarks>
@@ -445,6 +454,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDeletar;
+
+        /// <summary>
+        /// Controle LinkButton1.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton1;
 
         /// <summary>
         /// Controle rptItems.

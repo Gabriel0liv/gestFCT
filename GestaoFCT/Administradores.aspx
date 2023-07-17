@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="GestAluno.aspx.cs" Inherits="GestaoFCT.GestAluno" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Administradores.aspx.cs" Inherits="GestaoFCT.Administradores" %>
 
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>GestFCT - Alunos</title>
+    <title>GestFCT - Cursos</title>
 
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Karla:400,700|Roboto" rel="stylesheet">
@@ -38,9 +38,8 @@
     <link href="images/logo GestFCT.png" rel="shortcut icon" />
 
     <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 
     <!--
     HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
@@ -75,8 +74,8 @@
             <asp:Label ID="operacao" runat="server" Text="" Visible="false"></asp:Label>
             <asp:HiddenField ID="HiddenField1" runat="server" />
             <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-            <asp:SqlDataSource ID="AlnSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
-
+            <asp:SqlDataSource ID="ObjSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
 
 
             <!-- ====================================
@@ -129,7 +128,7 @@
                                 </a>
                             </li>
 
-                            <li id="NavAln" runat="server" class="active">
+                            <li id="NavAln" runat="server">
                                 <a class="sidenav-item-link" href="GestAluno.aspx">
                                     <i class="fa-solid fa-users" style="font-size: 18px"></i>
                                     <span class="nav-text">Alunos</span>
@@ -155,6 +154,7 @@
                                     <span class="nav-text">Objetivos</span>
                                 </a>
                             </li>
+
                             <li id="NavEnt" runat="server">
                                 <a class="sidenav-item-link" href="GestEmp.aspx">
                                     <i class="fa-solid fa-building" style="font-size: 18px"></i>
@@ -175,21 +175,22 @@
                                     <span class="nav-text">Tutores</span>
                                 </a>
                             </li>
-                            <li id="NavAdm" runat="server">
+
+                            <li id="NavAdm" runat="server" class="active">
                                 <a class="sidenav-item-link" href="Administradores.aspx">
                                     <i class="fa-solid fa-people-group" style="font-size: 18px"></i>
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
 
                         </ul>
                     </div>
+
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
                             <ul>
                                 <li style="width: 100% !important">
-                                    <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                                    <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
                                     Log Out 
                                     </asp:LinkButton>
@@ -216,9 +217,10 @@
                             <span class="sr-only">Toggle navigation</span>
                         </button>
 
-                        <span class="page-title">Gestão de Alunos</span>
+                        <span class="page-title">Gestão de Administradores</span>
 
                         <div class="navbar-right ">
+
 
                             <ul class="nav navbar-nav">
                                 <!-- Offcanvas -->
@@ -248,7 +250,7 @@
                         <div class="email-wrapper rounded border bg-white">
                             <div class="row no-gutters justify-content-center">
                                 <div class="col-lg-4 col-xl-3 col-xxl-2">
-                                    <div class="email-left-column email-options p-4 p-xl-5">
+                                    <div class="email-left-column email-options p-4 ">
                                         <p class="text-dark font-weight-medium">Opções</p>
                                         <ul>
                                             <li class="mt-4">
@@ -270,153 +272,59 @@
                                                     Eliminar
                                                 </button>
                                             </li>
-                                            <li class="mt-4">
-                                                <button type="button" id="btnFCT" onserverclick="FCT" runat="server">
-                                                    <i class="mdi mdi-checkbox-blank-circle-outline text-primary mr-3"></i>
-                                                    Gerar FCT
-                                                </button>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header" style="margin-bottom: 0">
+                                        <div class="email-right-header">
+
 
                                             <!-- FORM MODAL -->
+
                                             <div class="modal" id="exampleModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
                                                 aria-hidden="true" runat="server" visible="false">
                                                 <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
+                                                    <iv class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalFormTitle" runat="server" style="font-weight: bold;"></h5>
                                                             <button type="button" id="spanFechar" class="close" runat="server" onserverclick="spanFechar_Click">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
-                                                        <div class="modal-body" style="height: 400px; overflow-y: auto;">
+                                                        <div class="modal-body">
                                                             <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
                                                                 <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
                                                             </div>
-                                                            <div id="formAluno" runat="server">
-                                                                <div class="form-group">
-                                                                    <label for="txt_nome">Nome</label>
-                                                                    <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do Aluno" enableviewstate="true" runat="server" required="required" />
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="txt_nif">NIF</label>
-                                                                    <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do Aluno" pattern="^\d{9}$" title="Por favor, insira um NIF válido de 9 dígitos" runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" pattern="^\d{8}-[0-9A](?:[A-Z0-9]{9})$" title="Identificação inválida inserida " runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_val">Validade</label>
-                                                                    <input type="text" class="form-control" id="txt_val" placeholder="Insira o mês/ano de validade do nº de identificação" pattern="[0-9]{2}/[0-9]{2}" title="insira mês/ano. ex: 09/25" runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_email">Email address</label>
-                                                                    <input type="email" class="form-control" id="txt_email" placeholder="Insira o email do aluno" runat="server" required="required" />
-                                                                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_telefone">Telemóvel</label>
-                                                                    <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telemóvel do aluno" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_morada">Morada</label>
-                                                                    <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do aluno" runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_local">Localidade</label>
-                                                                    <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do aluno" runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_CodPost">Código Postal</label>
-                                                                    <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do aluno" pattern="[0-9]{4}-[0-9]{3}" title="Exemplo do formato: 0000-000" runat="server" required="required" />
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_curso">Curso</label>
-                                                                    <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_Encarregado">Encarregado de Educação</label>
-                                                                    <asp:DropDownList ID="ddl_Encarregado" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_pass">Palavra passe</label>
-                                                                    <div class="input-group mb-3">
-                                                                        <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
-                                                                        <div class="input-group-append">
-                                                                            <div class="input-group-text">
-                                                                                <label class="control control-checkbox d-inline-block mb-0">
-                                                                                    <input type="checkbox" onclick="myFunction()" />
-                                                                                    <div class="control-indicator"></div>
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="form-group">
+                                                                <label for="txt_nome">Nome</label>
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do administrador" enableviewstate="true" runat="server" required="required" />
                                                             </div>
-                                                            <%--Forumulário da FCT--%>
-                                                            <div id="formFCT" runat="server" visible="false">
-
-                                                                <div class="form-group">
-                                                                    <label for="txt_aluno">Aluno</label>
-                                                                    <asp:TextBox ID="txt_aluno" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_professor">Professor Orientador</label>
-                                                                    <asp:DropDownList ID="ddl_professor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_entidade">Entidade</label>
-                                                                    <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" AutoPostBack="true" ClientIDMode="Static" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="ddl_tutor">Tutor</label>
-                                                                    <asp:DropDownList ID="ddl_tutor" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">número de horas</label>
-                                                                        <input type="text" class="form-control" id="txt_numHora" placeholder="Número total de horas" title="Insira o total de horas da formação. ex: 280" pattern="^[0-9]{3}$" enableviewstate="true" runat="server" required="required" />
-                                                                    </div>
-
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">número de horas diárias</label>
-                                                                        <input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" pattern="^[1-8]$" title="Coloque um número de 1 a 7" enableviewstate="true" runat="server" required="required" />
-                                                                    </div>
-
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">Ano</label>
-                                                                        <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" readonly="readonly" />
-
-                                                                    </div>
-
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">Data de inicio da formação</label>
-                                                                        <asp:TextBox ID="txt_dataInicio" class="form-control" runat="server" AutoPostBack="true" TextMode="Date" OnTextChanged="txt_dataInicio_TextChanged" required="required"></asp:TextBox>
-                                                                    </div>
-                                                                    <div style="display: inline-block">
-                                                                        <label for="txt_nome">Estimativa de término</label>
-                                                                        <asp:TextBox ID="txt_dataFim" class="form-control" placeholder="Ex: 18/07/2023" AutoPostBack="true" TextMode="Date" runat="server" required="required"></asp:TextBox>
+                                                            <div class="form-group">
+                                                                <label for="txt_nome">Descrição do objetivo</label>
+                                                                <input type="email" class="form-control" id="txt_email" placeholder="Insira o email do administrador" enableviewstate="true" runat="server" required="required" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="txt_pass">Palavra passe</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o administrador" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
+                                                                    <input type="hidden" runat="server" id="hiddenPassword" value="" />
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <label class="control control-checkbox d-inline-block mb-0">
+                                                                                <input type="checkbox" onclick="myFunction()" />
+                                                                                <div class="control-indicator"></div>
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-
-                                                            <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
-                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar Aluno" OnClick="Comandos" />
+                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar professor" OnClick="Comandos" />
                                                         </div>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -426,7 +334,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel" runat="server">Eliminar registo do aluno</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel" runat="server">Eliminar registo do Objetivo</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -441,16 +349,13 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="head-left-options">
-                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Atualizar</asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
                                             </div>
-
-                                            <div class="head-right-options">
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                    <asp:DropDownList ID="ddl_turma" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_turma_SelectedIndexChanged"></asp:DropDownList>
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
@@ -458,12 +363,12 @@
                                             <div id="example-table"></div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <!-- Footer -->
@@ -487,21 +392,9 @@
                 layout: "fitDataStretch",
                 columns: [
                     { title: "Cód.", field: "codigo", width: 50, resizable: false, headerFilter: "number" },
-                    { title: "Nome", field: "nome", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "Curso", field: "curso", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "Encarregado", field: "encarregado", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "NIF", field: "nif", width: 80, resizable: false, headerFilter: "number" },
-                    { title: "E-mail", field: "email", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "Morada", field: "morada", width: 230, resizable: false, headerFilter: "input" },
-                    { title: "localidade", field: "localidade", width: 156, resizable: false, headerFilter: "input" },
-                    { title: "C.Postal", field: "codPost", width: 80, resizable: false, headerFilter: "input" },
-                    { title: "Telefone", field: "telefone", width: 156, resizable: false, headerFilter: "number" },
-                    { title: "Bi", field: "bi", width: 156, resizable: false, headerFilter: "input" },
-                    { title: "Validade", field: "valbi", width: 70, resizable: false, headerFilter: "input" },
-                    { title: "Password", field: "pass_aluno", width: 125, resizable: false, headerFilter: "input" },
-
-
-
+                    { title: "Nome", field: "nome_adm", width: 200, resizable: false, headerFilter: "input" },
+                    { title: "Endereço de Email", field: "email_adm", width: 500, resizable: false, headerFilter: "input" },
+                    { title: "Password", field: "pass_adm", width: 200, resizable: false, headerFilter: "input" },
                 ],
 
             });
@@ -531,20 +424,10 @@
             var cat_tabledata = [
                 <asp:Repeater ID="rptItems" runat="server">
                     <ItemTemplate>
-                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_aluno") %>',
-                        nome: '<%#DataBinder.Eval(Container.DataItem, "nome_aluno") %>',
-                        curso: '<%#DataBinder.Eval(Container.DataItem, "nome_curso") %>',
-                        encarregado: '<%#DataBinder.Eval(Container.DataItem, "nome_ee") %>',
-                        nif: '<%#DataBinder.Eval(Container.DataItem, "nif_aluno") %>', 
-                        email: '<%#DataBinder.Eval(Container.DataItem, "email_aluno") %>', 
-                        morada: '<%#DataBinder.Eval(Container.DataItem, "morada_aluno") %>',
-                        localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_aluno") %>', 
-                        codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_aluno") %>',
-                        telefone: '<%#DataBinder.Eval(Container.DataItem, "telefone_aluno") %>',
-                        bi: '<%#DataBinder.Eval(Container.DataItem, "bi_aluno") %>',
-                        valbi: '<%#DataBinder.Eval(Container.DataItem, "valBi_aluno") %>',
-                        pass_aluno: '<%#DataBinder.Eval(Container.DataItem, "pass_aluno") %>'},
-
+                        {codigo: '<%#DataBinder.Eval(Container.DataItem, "id_adm") %>',
+                    nome_adm: '<%#DataBinder.Eval(Container.DataItem, "nome_adm") %>',
+                    email_adm: '<%#DataBinder.Eval(Container.DataItem, "email_adm") %>',
+                    pass_adm: '<%#DataBinder.Eval(Container.DataItem, "pass_adm") %>'},
                     </ItemTemplate>
                 </asp:Repeater >];
 
@@ -552,15 +435,6 @@
                 table.setData(cat_tabledata);
             });
 
-
-            $(document).ready(function () {
-                $('#ddl_entidade').select2();
-                $('#ddl_curso').select2();
-                $('#ddl_professor').select2();
-                $('#ddl_tutor').select2();
-                $('#ddl_Encarregado').select2();
-                $('#ddl_turma').select2();
-            });
 
             function myFunction() {
                 var x = document.getElementById("txt_pass");
@@ -571,12 +445,19 @@
                 }
             }
 
+            window.addEventListener('DOMContentLoaded', function () {
+                var passwordInput = document.getElementById('txt_pass');
+                var hiddenPassword = document.getElementById('hiddenPassword').value;
+                passwordInput.value = hiddenPassword;
+            });
+
         </script>
 
 
-        <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
+        <script src="plugins/jquery/jquery.min.js"></script>
         <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="plugins/simplebar/simplebar.min.js"></script>
+        <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
 
 
         <script src="js/mono.js"></script>
@@ -594,43 +475,12 @@
                 }
             /* .tabulator .tabulator-tableholder{overflow-x: hidden;} */
             /* .tabulator .tabulator-row-even {} */
-            .select2-container {
-                z-index: 99999;
-            }
-
-                .select2-container .select2-selection--single .select2-selection__rendered {
-                    display: block;
-                    width: 100%;
-                    height: calc(1.5em + 1.12rem + 2px);
-                    padding: 0.56rem 1rem;
-                    font-size: 0.9375rem;
-                    font-weight: 400;
-                    line-height: 1.5;
-                    color: #495057;
-                    background-color: #ffffff;
-                    background-clip: padding-box;
-                    border: 1px solid #e5e9f2;
-                    border-radius: 0.25rem;
-                }
-
-            .select2-container--default .select2-selection--single {
-                border: none
-            }
-
-            .select2-dropdown {
-                border: 1px solid #e5e9f2
-            }
-
-            .select2-search--dropdown {
-                padding: 8px 4px 4px 4px;
-            }
-
-            .select2-container--default .select2-search--dropdown .select2-search__field {
-                border: 1px solid #e5e9f2;
-            }
-
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

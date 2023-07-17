@@ -186,7 +186,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -293,21 +293,21 @@
                                                             <div class="form-group">
                                                                 <label for="txt_numhora">Data do sumário</label>
                                                                 <%--<input type="text" class="form-control" id="" placeholder="Data de sumario" enableviewstate="true" runat="server" />--%>
-                                                                <asp:TextBox ID="txt_dataSum" class="form-control" runat="server" TextMode="Date" > </asp:TextBox>
+                                                                <asp:TextBox ID="txt_dataSum" class="form-control" runat="server" TextMode="Date"> </asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_sumario">Descrição do sumário</label>
                                                                 <asp:TextBox ID="txt_sumario" CssClass="form-control" runat="server" TextMode="MultiLine"></asp:TextBox>
                                                             </div>
                                                             <div class="form-group">
-                                                                <div style="display: flex; justify-content: space-between">
-                                                                    <label for="ddl_Tarefas">Tarefas Associadas</label>
-                                                                    <%--<button class="btn btn-secondary" onclick="ShowValue()" style="height: 20px;font-size: 12px;padding: 4px;line-height: 5px;">Guardar tarefas</button>--%>
+                                                                <label for="ddl_Tarefas">Tarefas Associadas</label>
+                                                                <asp:TextBox ID="TextBox1" runat="server" Style="display: none"></asp:TextBox>
+                                                                <asp:TextBox ID="TextBox2" runat="server" Style="display: none" AutoPostBack="true" OnTextChanged="TextBox2_TextChanged"></asp:TextBox>
+                                                                <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
+                                                                <div style="display: flex; justify-content: space-between; margin-top: 5px" >
+                                                                    <label for="ddl_Tarefas" style="visibility: hidden">Tarefas Associadas</label>
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
-                                                                <asp:TextBox ID="TextBox1" runat="server" style="display:none" ></asp:TextBox>
-                                                                <asp:TextBox ID="TextBox2" runat="server" style="display:none" AutoPostBack="true" OnTextChanged="TextBox2_TextChanged" ></asp:TextBox>
-                                                                <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div style="display: inline-block">
@@ -327,7 +327,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" OnClick="Comandos" Text="Criar Sumário" ToolTip="ALOOO" />
+                                                            <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" OnClick="Comandos" Text="Criar Sumário" ToolTip="Guarde as tarefas antes de submeter" />
                                                         </div>
                                                 </div>
                                             </div>
@@ -355,7 +355,11 @@
                                             </div>
 
                                             <div class="head-left-options">
-                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Atualizar</asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                                <asp:Label ID="Label1" class="btn btn-outline" runat="server" Text="" Visible="false"></asp:Label>
                                             </div>
 
                                             <div class="head-right-options">

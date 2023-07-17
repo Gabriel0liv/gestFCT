@@ -87,6 +87,7 @@
     <Content Include="css\style-login.css" />
     <Content Include="css\style.css" />
     <Content Include="Documentos.aspx" />
+    <Content Include="Administradores.aspx" />
     <Content Include="GestObj.aspx" />
     <Content Include="images\CadernetaFoto.png" />
     <Content Include="images\ContratoFoto.png" />
@@ -1308,6 +1309,13 @@
     </Compile>
     <Compile Include="Documentos.aspx.designer.cs">
       <DependentUpon>Documentos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Administradores.aspx.cs">
+      <DependentUpon>Administradores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Administradores.aspx.designer.cs">
+      <DependentUpon>Administradores.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestObj.aspx.cs">
       <DependentUpon>GestObj.aspx</DependentUpon>

@@ -15475,10 +15475,8 @@ table.dataTable thead .sorting {
   margin-right: 0.5rem;
 }
 .email-right-column .head-left-options .btn {
-  color: #31343d;
   border: 1px solid #e5e9f2;
   margin-right: 0.5rem;
-  font-weight: 700;
   text-transform: capitalize;
 }
 .email-right-column .head-left-options .btn.dropdown-toggle {

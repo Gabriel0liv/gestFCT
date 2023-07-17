@@ -46,6 +46,12 @@ namespace GestaoFCT
                     NavAdm.Visible = false;
 
                 }
+
+                if (Session["cargo"].ToString() != "1")
+                    NavAdm.Visible = false;
+
+                if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                    NavObj.Visible = false; NavProf.Visible = false;
             }
 
 

@@ -87,7 +87,7 @@
                     <!-- Aplication Brand -->
                     <div class="app-brand">
                         <a href="/index.html">
-                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono"/>
+                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono" />
                             <span class="brand-name">GestFCT</span>
                         </a>
                     </div>
@@ -186,7 +186,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -272,7 +272,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
 
 
@@ -316,11 +316,11 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telefone</label>
-                                                                <input type="tel" class="form-control" id="txt_telefone" placeholder="Insira o telefone fixo, se houver." pattern="[2-8][0-9]{8}" runat="server" />
+                                                                <input type="tel" class="form-control" id="txt_telefone" placeholder="Insira o telefone fixo, se houver." pattern="[2-8][0-9]{8}" title="Insira um número de telefone de 9 digitos" runat="server" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telemovel">Telemovel</label>
-                                                                <input type="tel" class="form-control" id="txt_telemovel" placeholder="Insira o telemóvel do Encarregado" pattern="[9][1-9][0-9]{7}" runat="server" required="required" />
+                                                                <input type="tel" class="form-control" id="txt_telemovel" placeholder="Insira o telemóvel do Encarregado" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_morada">Morada</label>
@@ -332,7 +332,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Código Postal</label>
-                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal. ex: 3750-326" runat="server" pattern="[0-9]{4}-[0-9]{3}" required="required" />
+                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal. ex: 3750-326" runat="server" pattern="[0-9]{4}-[0-9]{3}" title="Exemplo do formato: 0000-000" required="required" />
                                                             </div>
 
                                                         </div>
@@ -365,7 +365,12 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
@@ -491,6 +496,10 @@
             /* .tabulator .tabulator-row-even {} */
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

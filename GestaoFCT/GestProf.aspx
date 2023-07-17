@@ -186,11 +186,14 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul class="d-flex">
-                                <asp:LinkButton ID="LinkButton2" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
+                            <ul>
+                                <li style="width: 100% !important">
+                                    <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
                                     Log Out 
-                                </asp:LinkButton>
+                                    </asp:LinkButton>
+                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -270,7 +273,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
 
                                             <!-- FORM MODAL -->
@@ -286,45 +289,69 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Nome</label>
-                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do professor" enableviewstate="true" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do professor" enableviewstate="true" runat="server" required="required" />
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="txt_nif">NIF</label>
-                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do professor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do professor" pattern="^\d{9}$" title="Por favor, insira um NIF válido de 9 dígitos" runat="server" required="required" />
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="txt_email">Email address</label>
-                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do professor" runat="server" />
+                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do professor" runat="server" required="required" />
                                                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telefone</label>
-                                                                <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do professor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone do professor" pattern="[2-8][0-9]{8}" title="Insira um número de telefone de 9 digitos" runat="server" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telemovel</label>
-                                                                <input type="number" class="form-control" id="txt_telemovel" placeholder="Insira o telemovel do professor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_telemovel" placeholder="Insira o telemovel do professor" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Morada</label>
-                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do professor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do professor" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Localidade</label>
-                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do professor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do professor" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Código Postal</label>
-                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do professor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do professor" runat="server" pattern="[0-9]{4}-[0-9]{3}" title="Exemplo do formato: 0000-000" required="required" />
+                                                            </div>
+                                                            <div class="form-group" id="divCurso" runat="server" visible="false">
+                                                                <label for="ddl_entidade">Curso</label>
+                                                                <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                                            </div>
+                                                            <div class="form-group" id="divDirecao" runat="server" visible="false">
+                                                                <label for="txt_CodPost">Diretor de turma?</label>
+                                                                <label class="switch switch-icon switch-primary form-control-label">
+                                                                    <input id="DC" type="checkbox" class="switch-input form-check-input" value="on" runat="server">
+                                                                    <span class="switch-label"></span>
+                                                                    <span class="switch-handle"></span>
+                                                                </label>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_pass">Palavra passe</label>
-                                                                <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o professor" runat="server" />
+                                                                <div class="input-group mb-3">
+                                                                    <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o professor" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <label class="control control-checkbox d-inline-block mb-0">
+                                                                                <input type="checkbox" onclick="myFunction()" />
+                                                                                <div class="control-indicator"></div>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
 
                                                         </div>
@@ -359,7 +386,12 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
@@ -457,7 +489,14 @@
             });
 
 
-
+            function myFunction() {
+                var x = document.getElementById("txt_pass");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
 
         </script>
 
@@ -485,6 +524,10 @@
             /* .tabulator .tabulator-row-even {} */
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

@@ -32,6 +32,12 @@ namespace GestaoFCT
                 refresh();
             }
 
+            if (Session["cargo"].ToString() != "1")
+                NavAdm.Visible = false;
+
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                NavObj.Visible = false; NavProf.Visible = false;
+
         }
 
         protected void refresh()
@@ -382,6 +388,11 @@ namespace GestaoFCT
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
         }
     }
 }

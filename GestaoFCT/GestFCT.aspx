@@ -81,7 +81,7 @@
                     <!-- Aplication Brand -->
                     <div class="app-brand">
                         <a href="/index.html">
-                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono"/>
+                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono" />
                             <span class="brand-name">GestFCT</span>
                         </a>
                     </div>
@@ -142,7 +142,7 @@
                                     <span class="nav-text">Cursos</span>
                                 </a>
                             </li>
-                            <li id="NavObj" runat="server" >
+                            <li id="NavObj" runat="server">
                                 <a class="sidenav-item-link" href="GestObj.aspx">
                                     <i class="fa-solid fa-graduation-cap" style="font-size: 18px"></i>
                                     <span class="nav-text">Objetivos</span>
@@ -179,7 +179,7 @@
                     </div>
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton1" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -222,7 +222,7 @@
                                         <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
-                                
+
                                 </li>
                             </ul>
                         </div>
@@ -263,7 +263,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
                                             <!-- FORM MODAL -->
 
@@ -277,7 +277,9 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="ddl_entidade">Aluno</label>
                                                                 <asp:TextBox ID="txt_aluno" class="form-control" runat="server" ReadOnly="true"></asp:TextBox>
@@ -297,18 +299,17 @@
                                                             <div class="form-group">
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">número de horas</label>
-                                                                    <input type="number" class="form-control" id="txt_numHora" placeholder="Número total de horas" enableviewstate="true" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_numHoras" placeholder="Número total de horas" pattern="^[0-9]{3}$" title="Insira 3 digitos" enableviewstate="true" runat="server" required="required" />
                                                                 </div>
 
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">número de horas diárias</label>
-                                                                    <%--<input type="text" class="form-control" id="txt_numMaxHoras" placeholder="Número máximo de horas diárias" enableviewstate="true" runat="server" />--%>
-                                                                    <asp:TextBox ID="txt_numMaxHoras" class="form-control" placeholder="Número máximo de horas diárias" TextMode="Number" runat="server"></asp:TextBox>
+                                                                    <input type="text" class="form-control" id="txt_numMaxHora" placeholder="Número máximo de horas diárias" pattern="^[1-8]$" title="Coloque um número de 1 a 7" enableviewstate="true" runat="server" required="required" />
                                                                 </div>
 
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">Ano</label>
-                                                                    <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_anoFCT" placeholder="Ano da FCT" enableviewstate="true" runat="server" readonly="readonly" />
 
                                                                 </div>
 
@@ -317,11 +318,9 @@
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">Data de inicio da formação</label>
                                                                     <asp:TextBox ID="txt_dataInicio" class="form-control" TextMode="Date" runat="server" AutoPostBack="true" OnTextChanged="txt_dataInicio_TextChanged"></asp:TextBox>
-                                                                    <%--<input type="text" class="form-control" id="txt_dataInicio" placeholder="Ex: 16/05/2023" enableviewstate="true" runat="server" />--%>
                                                                 </div>
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_nome">Estimativa de término</label>
-                                                                    <%--<input type="text" class="form-control" id="" placeholder="Ex: 16/08/2023" enableviewstate="true" runat="server" />--%>
                                                                     <asp:TextBox ID="txt_dataFim" class="form-control" TextMode="Date" AutoPostBack="true" runat="server"></asp:TextBox>
                                                                 </div>
                                                             </div>
@@ -335,7 +334,7 @@
 
 
 
-                                                <%--TABULATOR--%>
+                                                
                                             </div>
 
                                             <!-- DELETE MODAL -->
@@ -360,7 +359,14 @@
                                                 </div>
                                             </div>
 
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton2" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
+                                        <!-- TABULATOR -->
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
                                             <!-- <table class="table mb-0 table-email"> </table> -->
                                             <div id="example-table"></div>
@@ -529,6 +535,10 @@
 
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
     </form>

@@ -183,7 +183,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -269,7 +269,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
 
                                             <!-- FORM MODAL -->
@@ -304,7 +304,11 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Telefone</label>
-                                                                <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" pattern="[1-9][0-9]{8}" runat="server" required="required" />
+                                                                <input type="text" class="form-control" id="txt_telefone" placeholder="Insira o telefone da entidade" pattern="[1-9][0-9]{8}" title="Insira um número de telefone de 9 digitos" runat="server" required="required" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="txt_local">Telemóvel</label>
+                                                                <input type="text" class="form-control" id="txt_telemovel" placeholder="Insira o telemóvel da entidade, se houver" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Morada</label>
@@ -336,7 +340,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_atvPrinc">Atividade principal da empresa</label>
-                                                                <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da entidade" runat="server" required="required"/>
+                                                                <input type="text" class="form-control" id="txt_atvPrinc" placeholder="Insira a atividade principal da entidade" runat="server" required="required" />
                                                             </div>
 
                                                         </div>
@@ -371,7 +375,12 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
@@ -416,11 +425,11 @@
                     { title: "Morada", field: "morada", width: 230, resizable: false, headerFilter: "input" },
                     { title: "localidade", field: "localidade", width: 156, resizable: false, headerFilter: "input" },
                     { title: "C.Postal", field: "codPost", width: 80, resizable: false, headerFilter: "input" },
+                    { title: "Telefone", field: "telefone", width: 100, resizable: false, headerFilter: "input" },
                     { title: "Nat. Jurídica", field: "natJuri", width: 125, resizable: false, headerFilter: "input" },
                     { title: "Responsável", field: "responsavel", width: 125, resizable: false, headerFilter: "input" },
                     { title: "Contacto", field: "contacto", width: 125, resizable: false, headerFilter: "input" },
                     { title: "Cargo", field: "cargo", width: 125, resizable: false, headerFilter: "input" },
-                    { title: "Ativ_Principal", field: "atvPrincipal", width: 125, resizable: false, headerFilter: "input" },
 
 
                 ],
@@ -459,11 +468,11 @@
                     morada: '<%#DataBinder.Eval(Container.DataItem, "morada_entidade") %>',
                     localidade: '<%#DataBinder.Eval(Container.DataItem, "loc_entidade") %>', 
                     codPost: '<%#DataBinder.Eval(Container.DataItem, "cpostal_entidade") %>',
+                    telefone: '<%#DataBinder.Eval(Container.DataItem, "telefone_entidade") %>',
                     natJuri: '<%#DataBinder.Eval(Container.DataItem, "natjuridica") %>',
                     responsavel: '<%#DataBinder.Eval(Container.DataItem, "resp_entidade") %>',
                     contacto: '<%#DataBinder.Eval(Container.DataItem, "tlmResp_entidade") %>',
-                    cargo: '<%#DataBinder.Eval(Container.DataItem, "cargo_resp") %>',
-                    atvPrincipal: '<%#DataBinder.Eval(Container.DataItem, "atv_principal") %>'},
+                        cargo: '<%#DataBinder.Eval(Container.DataItem, "cargo_resp") %>'},
 
                     </ItemTemplate>
                 </asp:Repeater >];
@@ -499,6 +508,10 @@
             /* .tabulator .tabulator-row-even {} */
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

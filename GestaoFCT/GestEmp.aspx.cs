@@ -31,6 +31,12 @@ namespace GestaoFCT
                 refresh();
             }
 
+            if (Session["cargo"].ToString() != "1")
+                NavAdm.Visible = false;
+
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                NavObj.Visible = false; NavProf.Visible = false;
+
         }
 
         protected void refresh()
@@ -63,6 +69,7 @@ namespace GestaoFCT
             txt_tlmResp.Value = "";
             txt_cargo.Value = "";
             txt_atvPrinc.Value = "";
+            txt_telemovel.Value = "";
 
         }
 
@@ -76,18 +83,19 @@ namespace GestaoFCT
             SqlDataReader r = com.ExecuteReader();
             while (r.Read())
             {
-                txt_nome.Value = "" + r["nome_entidade"];
-                txt_nif.Value = "" + r["nif_entidade"];
-                txt_email.Value = "" + r["email_entidade"];
-                txt_telefone.Value = "" + r["telefone_entidade"];
-                txt_morada.Value = "" + r["morada_entidade"];
-                txt_local.Value = "" + r["loc_entidade"];
-                txt_CodPost.Value = "" + r["cpostal_entidade"];
-                txt_NatJuri.Value = "" + r["natjuridica"];
-                txt_resp.Value = "" + r["resp_entidade"];
-                txt_tlmResp.Value = "" + r["tlmResp_entidade"];
-                txt_cargo.Value = "" + r["cargo_resp"];
-                txt_atvPrinc.Value = "" + r["atv_principal"];
+                txt_nome.Value = r["nome_entidade"].ToString();
+                txt_nif.Value = r["nif_entidade"].ToString();
+                txt_email.Value = r["email_entidade"].ToString();
+                txt_telefone.Value = r["telefone_entidade"].ToString();
+                txt_morada.Value = r["morada_entidade"].ToString();
+                txt_local.Value = r["loc_entidade"].ToString();
+                txt_CodPost.Value = r["cpostal_entidade"].ToString();
+                txt_NatJuri.Value = r["natjuridica"].ToString();
+                txt_resp.Value = r["resp_entidade"].ToString();
+                txt_tlmResp.Value = r["tlmResp_entidade"].ToString();
+                txt_cargo.Value = r["cargo_resp"].ToString();
+                txt_atvPrinc.Value = r["atv_principal"].ToString();
+                txt_telemovel.Value = r["teleovel_entidade"].ToString();
 
             }
             r.Close();
@@ -112,6 +120,7 @@ namespace GestaoFCT
 
             exampleModalFormTitle.InnerText = "Criar Entidade";
             btn_enviar.Text = "Criar Entidade";
+            Alert.Visible = false;
             exampleModalForm.Visible = true;
 
 
@@ -124,6 +133,7 @@ namespace GestaoFCT
             Atualizar();
             exampleModalFormTitle.InnerText = "Editar Entidade";
             btn_enviar.Text = "Editar Entidade";
+            Alert.Visible = false;
             exampleModalForm.Visible = true;
 
         }
@@ -365,11 +375,9 @@ namespace GestaoFCT
 
             if (operacao.Text == "1")
             {
-                //Response.Write("<script>alert('11111')</script>");
 
-                String linhasql = "insert into Entidades (nome_entidade, nif_entidade, morada_entidade, loc_entidade, email_entidade, cpostal_entidade, telefone_entidade, natJuridica, resp_entidade, tlmResp_entidade, cargo_resp, atv_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_tlmResp.Value + "', '" + txt_cargo.Value + "', '" + txt_atvPrinc.Value + "');";
+                String linhasql = "insert into Entidades (nome_entidade, nif_entidade, morada_entidade, loc_entidade, email_entidade, cpostal_entidade, telefone_entidade, telemovel_entidade, natJuridica, resp_entidade, tlmResp_entidade, cargo_resp, atv_principal) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + txt_NatJuri.Value + "', '" + txt_resp.Value + "', '" + txt_tlmResp.Value + "', '" + txt_cargo.Value + "', '" + txt_atvPrinc.Value + "');";
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
                 if (!erro)
                 {
                     Database.NonQuerySqlSrv(linhasql);
@@ -382,12 +390,8 @@ namespace GestaoFCT
 
             if (operacao.Text == "2")
             {
-                //Response.Write("<script>alert('22222')</script>");
 
-                String linhasql = "update Entidades  set nome_entidade = '" + txt_nome.Value + "', nif_entidade = '" + txt_nif.Value + "', email_entidade = '" + txt_email.Value + "', loc_entidade = '" + txt_local.Value + "', morada_entidade = '" + txt_morada.Value +  "', telefone_entidade = '" + txt_telefone.Value +  "', cpostal_entidade = '" + txt_CodPost.Value + "', natjuridica = '" + txt_NatJuri.Value + "', resp_entidade = '" + txt_resp.Value + "', tlmResp_entidade = '" + txt_tlmResp.Value + "', cargo_resp = '" + txt_cargo.Value + "', atv_principal = '" + txt_atvPrinc.Value + "' where id_entidade = " + labelCod.Text + ";";
-
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                //Response.Write("<script>alert('aaaaa')</script>");
+                String linhasql = "update Entidades  set nome_entidade = '" + txt_nome.Value + "', nif_entidade = '" + txt_nif.Value + "', email_entidade = '" + txt_email.Value + "', loc_entidade = '" + txt_local.Value + "', morada_entidade = '" + txt_morada.Value +  "', telefone_entidade = '" + txt_telefone.Value +  "', telemovel_entidade = '" + txt_telemovel.Value + "', cpostal_entidade = '" + txt_CodPost.Value + "', natjuridica = '" + txt_NatJuri.Value + "', resp_entidade = '" + txt_resp.Value + "', tlmResp_entidade = '" + txt_tlmResp.Value + "', cargo_resp = '" + txt_cargo.Value + "', atv_principal = '" + txt_atvPrinc.Value + "' where id_entidade = " + labelCod.Text + ";";
 
                 if (!erro)
                 {
@@ -401,10 +405,8 @@ namespace GestaoFCT
 
             if (operacao.Text == "3")
             {
-                //Response.Write("<script>alert('33333')</script>");
 
                 String linhasql = "delete from Entidades where id_entidade = " + labelCod.Text + ";";
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
@@ -417,6 +419,11 @@ namespace GestaoFCT
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
         }
     }
 }

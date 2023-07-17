@@ -32,6 +32,24 @@ namespace GestaoFCT
                 refresh();
             }
 
+            if ((Session["cargo"].ToString() == "1"))
+            {
+                divCurso.Visible = true;
+                divDirecao.Visible = true;
+
+                string workConn = ConfigurationManager.ConnectionStrings["FCTConnectionString"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(workConn))
+                {
+                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso from cursos where ano_curso = 12;", con);
+                    con.Open();
+                    ddl_curso.DataTextField = "nome_curso";
+                    ddl_curso.DataValueField = "id_curso";
+                    ddl_curso.DataSource = cmd.ExecuteReader();
+                    ddl_curso.DataBind();
+                    con.Close();
+                }
+            }
+
         }
 
         protected void refresh()
@@ -109,6 +127,7 @@ namespace GestaoFCT
             reset();
             exampleModalFormTitle.InnerText = "Criar Professor";
             btn_enviar.Text = "Criar Professor";
+            Alert.Visible = false;
             exampleModalForm.Visible = true;
 
         }
@@ -118,12 +137,13 @@ namespace GestaoFCT
             operacao.Text = "2";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
 
                 Atualizar();
                 exampleModalFormTitle.InnerText = "Editar Professor";
                 btn_enviar.Text = "Editar Professor";
+                Alert.Visible = false;
                 exampleModalForm.Visible = true;
             }
             else
@@ -143,7 +163,7 @@ namespace GestaoFCT
             operacao.Text = "3";
             labelCod.Text = HiddenField1.Value;
 
-            if(labelCod.Text != "0")
+            if (labelCod.Text != "0")
             {
                 btnDeletar.Visible = true;
                 string linhadesql = "select nome_prof from professores where id_prof = " + labelCod.Text + ";";
@@ -169,66 +189,208 @@ namespace GestaoFCT
 
         }
 
-        
+
         protected void Comandos(object sender, EventArgs e)
         {
 
             Boolean erro = false;
 
+            if (operacao.Text != "3")
+            {
+
+                if (txt_nome.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O nome não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_nome.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_nome.Value))
+                    {
+                        alerMessage.InnerHtml = "Nome inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no nome. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+
+                }
+                else if (txt_nif.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "O nif não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_email.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_email.Value))
+                    {
+                        alerMessage.InnerHtml = "Email inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else //se não foi uma palavra reservada, então foi por algum caractere especial
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no email. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_morada.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "A morada não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_morada.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_morada.Value))
+                    {
+                        alerMessage.InnerHtml = "Morada inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na morada. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (txt_local.Value.Replace(" ", "") == "")
+                {
+                    erro = true;
+                    alerMessage.InnerText = "A localidade não pode conter caracteres vazios!";
+                    Alert.Visible = true;
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_local.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_local.Value))
+                    {
+                        alerMessage.InnerHtml = "Localidade inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na localidade. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_CodPost.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_CodPost.Value))
+                    {
+                        alerMessage.InnerHtml = "Código postal inserido inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no código postal. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+                else if (GlobalFunctions.HasSqlInjection(txt_pass.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_pass.Value))
+                    {
+                        alerMessage.InnerHtml = "Password inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na password. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+
+
+
+
+            }
+
             if (txt_nome.Value.Replace(" ", "") == "")
             {
                 erro = true;
-                
+
             }
-                
+
             if (operacao.Text == "1")
             {
-                //Response.Write("<script>alert('11111')</script>");
+                String linhasql = "";
+                if (Session["cargo"].ToString() == "2")
+                    linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof, id_cargo, id_curso, direcao) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value + "', '" + txt_telemovel.Value + "', '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 2, " + Session["curso"].ToString() + ", 0);";
+                else
+                {
+                    int d;
+                    if (DC.Checked)
+                        d = 1;
+                    else
+                        d = 0;
 
-                String linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value +  "', '" + txt_telemovel.Value + "', '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 2);";
+                    linhasql = "insert into professores (nome_prof, nif_prof, morada_prof, loc_prof, email_prof, cpostal_prof, telefone_prof, telemovel_prof, pass_prof, id_cargo, id_curso, direcao) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_telefone.Value + "', '" + txt_telemovel.Value + "', '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 2, " + ddl_curso.SelectedValue + ", " + d + ");";
+                }
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                exampleModalForm.Visible = false;
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                }
             }
 
             if (operacao.Text == "2")
             {
-                //Response.Write("<script>alert('22222')</script>");
+                String linhasql = "";
+                if (Session["cargo"].ToString() == "2")
+                    linhasql = "update professores set nome_prof = '" + txt_nome.Value + "', nif_prof = '" + txt_nif.Value + "', email_prof = '" + txt_email.Value + "', loc_prof = '" + txt_local.Value + "', morada_prof = '" + txt_morada.Value + "', telefone_prof = '" + txt_telefone.Value + "', cpostal_prof = '" + txt_CodPost.Value + "', telemovel_prof = '" + txt_telemovel.Value + "', pass_prof = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "' where id_prof = " + labelCod.Text + ";";
+                else
+                {
+                    int d;
+                    if (DC.Checked)
+                        d = 1;
+                    else
+                        d = 0;
 
-                String linhasql = "update professores set nome_prof = '" + txt_nome.Value + "', nif_prof = '" + txt_nif.Value + "', email_prof = '" + txt_email.Value + "', loc_prof = '" + txt_local.Value + "', morada_prof = '" + txt_morada.Value +  "', telefone_prof = '" + txt_telefone.Value +  "', cpostal_prof = '" + txt_CodPost.Value + "', telemovel_prof = '" + txt_telemovel.Value + "', pass_prof = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "' where id_prof = " + labelCod.Text + ";";
+                    linhasql = "update professores set nome_prof = '" + txt_nome.Value + "', nif_prof = '" + txt_nif.Value + "', email_prof = '" + txt_email.Value + "', loc_prof = '" + txt_local.Value + "', morada_prof = '" + txt_morada.Value + "', telefone_prof = '" + txt_telefone.Value + "', cpostal_prof = '" + txt_CodPost.Value + "', telemovel_prof = '" + txt_telemovel.Value + "', pass_prof = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', direcao = " + d + ", id_curso = " + ddl_curso.SelectedValue + " where id_prof = " + labelCod.Text + ";";
+                }
 
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                //Response.Write("<script>alert('aaaaa')</script>");
+                if (!erro)
+                {
+                    Database.NonQuerySqlSrv(linhasql);
+                    reset();
+                    refresh();
+                    exampleModalForm.Visible = false;
+                }
 
-                Database.NonQuerySqlSrv(linhasql);
-                reset();
-                refresh();
-                
             }
 
             if (operacao.Text == "3")
             {
-                //Response.Write("<script>alert('33333')</script>");
 
                 String linhasql = "delete from professores where id_prof = " + labelCod.Text + ";";
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
+                exampleModal.Visible = false;
             }
 
-            exampleModalForm.Visible = false;
-            exampleModal.Visible = false;
         }
-        
+
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
         }
     }
 }

@@ -33,22 +33,11 @@ namespace GestaoFCT
                 refresh();
             }
 
-            if (Session["cargo"].ToString() == "4")
-            {
-                tableDocs.Visible = false;
-                DivProtocolo.Visible = false;
+            if (Session["cargo"].ToString() != "1")
+                NavAdm.Visible = false;
 
-                //oculta opções de navegação
-                NavAln.Visible = false;
-                NavCurso.Visible = false;
-                NavEE.Visible = false;
-                NavEnt.Visible = false;
-                NavFCT.Visible = false;
-                NavProf.Visible = false;
-                SecGest.Visible = false;
-                NavTar.Visible = false;
-                NavTut.Visible = false;
-            }
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                NavObj.Visible = false;
 
 
 
@@ -66,16 +55,36 @@ namespace GestaoFCT
                 rptItems.DataBind();
 
                 String linhasql2 = "";
-                if (Convert.ToBoolean(Session["direcao"]))
-                    linhasql2 = "select distinct * from protocolo where id_curso = " + Session["curso"].ToString() + ";";
-                else
-                    linhasql2 = "select distinct * from Protocolo where id_professor =" + Session["codigo"].ToString() + ";";
+                if (Session["cargo"].ToString() == "2")
+                {
+                    if (Convert.ToBoolean(Session["direcao"]))
+                        linhasql2 = "select distinct * from protocolo where id_curso = " + Session["curso"].ToString() + ";";
+                    else
+                        linhasql2 = "select distinct * from Protocolo where id_professor =" + Session["codigo"].ToString() + ";";
+                }
 
-                System.Data.DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+                if (Session["cargo"].ToString() == "1")
+                {
+                    linhasql2 = "select distinct * from protocolo";
+                }
+
+                    System.Data.DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
 
                 rptItems2.DataSource = dt2;
                 rptItems2.DataBind();
 
+            }
+            else
+            {
+                String linhasql = "select distinct * from tabelas_FCT;";
+                System.Data.DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+                rptItems.DataSource = dt;
+                rptItems.DataBind();
+
+                String linhasql2 = "select distinct * from protocolo;";
+                System.Data.DataTable dt2 = Database.GetFromDBSqlSrv(linhasql2);
+                rptItems2.DataSource = dt2;
+                rptItems2.DataBind();
             }
 
         }
@@ -134,8 +143,8 @@ namespace GestaoFCT
                             // Converte o mês para formato por extenso
                             string mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
                             string data1 = dia.ToString() + "/" + mesPorExtenso + "/" + ano.ToString();
-                            doc.Variables["dataInicio"].Value = data1;
 
+                            try { doc.Variables["dataInicio"].Value = data1; } catch (Exception ex) { doc.Variables["dataInicio"].Value = " "; }
 
                             dataInicio = r["fim_fct"].ToString().Split('/');
                             dia = int.Parse(dataInicio[0]);
@@ -143,22 +152,24 @@ namespace GestaoFCT
                             ano = int.Parse(dataInicio[2]);
                             mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
                             data1 = dia.ToString() + "/" + mesPorExtenso + "/" + ano.ToString();
-                            doc.Variables["dataFim"].Value = data1;
+                            
+                            try { doc.Variables["dataFim"].Value = data1; } catch(Exception ex) { doc.Variables["dataFim"].Value = " "; }
 
-                            doc.Variables["ano_fct"].Value = r["ano_fct"].ToString();
-                            doc.Variables["nome_curso"].Value = r["nome_curso"].ToString();
-                            doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString();
-                            doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString();
-                            doc.Variables["turma"].Value = r["turma"].ToString();
-                            doc.Variables["nome_professor"].Value = r["nome_prof"].ToString();
-                            doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString();
-                            doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
-                            doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString();
-                            doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString();
-                            doc.Variables["num_horas"].Value = r["num_horas"].ToString();
-                            doc.Variables["nome_ee"].Value = r["nome_ee"].ToString();
+                            try { doc.Variables["ano_fct"].Value = r["ano_fct"].ToString(); } catch (Exception ex) { doc.Variables["ano_fct"].Value = " "; }
+                            try { doc.Variables["nome_curso"].Value = r["nome_curso"].ToString(); } catch (Exception ex) { doc.Variables["nome_curso"].Value = " "; }
+                            try { doc.Variables["ano_fct"].Value = r["ano_fct"].ToString(); } catch (Exception ex) { doc.Variables["ano_fct"].Value = " "; }
+                            try { doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString(); } catch (Exception ex) { doc.Variables["nome_aluno"].Value = " "; }
+                            try { doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString(); } catch (Exception ex) { doc.Variables["bi_aluno"].Value = " "; }
+                            try { doc.Variables["turma"].Value = r["turma"].ToString(); } catch (Exception ex) { doc.Variables["turma"].Value = " "; }
+                            try { doc.Variables["nome_professor"].Value = r["nome_prof"].ToString(); } catch (Exception ex) { doc.Variables["nome_professor"].Value = " "; }
+                            try { doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString(); } catch (Exception ex) { doc.Variables["nome_tutor"].Value = " "; }
+                            try { doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString(); } catch (Exception ex) { doc.Variables["nome_entidade"].Value = " "; }
+                            try { doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString(); } catch (Exception ex) { doc.Variables["loc_entidade"].Value = " "; }
+                            try { doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString(); } catch (Exception ex) { doc.Variables["nome_resp"].Value = " "; }
+                            try { doc.Variables["num_horas"].Value = r["num_horas"].ToString(); } catch (Exception ex) { doc.Variables["num_horas"].Value = " "; }
+                            try { doc.Variables["nome_ee"].Value = r["nome_ee"].ToString(); } catch (Exception ex) { doc.Variables["nome_ee"].Value = " "; }
+                            try { doc.Variables["dataExFim"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString(); } catch (Exception ex) { doc.Variables["dataExFim"].Value = " "; }
 
-                            doc.Variables["dataExFim"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
 
                             dataInicio = r["inicio_fct"].ToString().Split('/');
                             dia = int.Parse(dataInicio[0]);
@@ -166,7 +177,8 @@ namespace GestaoFCT
                             ano = int.Parse(dataInicio[2]);
                             mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
                             data1 = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
-                            doc.Variables["dataExInicio"].Value = data1;
+
+                            try { doc.Variables["dataExInicio"].Value = data1; } catch (Exception ex) { doc.Variables["dataExInicio"].Value = " "; }
 
                         }
                         r.Close();
@@ -296,15 +308,15 @@ namespace GestaoFCT
                         SqlDataReader r = com.ExecuteReader();
                         while (r.Read())
                         {
-
-                            doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
-                            doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString();
-                            doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString();
-                            doc.Variables["cargo_resp"].Value = r["cargo_resp"].ToString();
-                            doc.Variables["nome_curso"].Value = r["nome_curso"].ToString();
-                            doc.Variables["dia"].Value = DateTime.Now.Day.ToString();
-                            doc.Variables["mes"].Value = DateTime.Now.ToString("MMMM", new CultureInfo("pt-BR"));
-                            doc.Variables["ano"].Value = DateTime.Now.Year.ToString();
+                            try { doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString(); } catch(Exception ex) { doc.Variables["nome_entidade"].Value = " "; }
+                            try { doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString(); } catch (Exception ex) { doc.Variables["loc_entidade"].Value = " "; }
+                            try { doc.Variables["nome_resp"].Value = r["resp_entidade"].ToString(); } catch (Exception ex) { doc.Variables["nome_resp"].Value = " "; }
+                            try { doc.Variables["cargo_resp"].Value = r["cargo_resp"].ToString(); } catch (Exception ex) { doc.Variables["cargo_resp"].Value = " "; }
+                            try { doc.Variables["nome_curso"].Value = r["nome_curso"].ToString(); } catch (Exception ex) { doc.Variables["nome_curso"].Value = " "; }
+                            try { doc.Variables["dia"].Value = DateTime.Now.Day.ToString(); } catch (Exception ex) { doc.Variables["dia"].Value = " "; }
+                            try { doc.Variables["mes"].Value = DateTime.Now.ToString("MMMM", new CultureInfo("pt-BR")); } catch (Exception ex) { doc.Variables["mes"].Value = " "; }
+                            try { doc.Variables["ano"].Value = DateTime.Now.Year.ToString(); } catch (Exception ex) { doc.Variables["ano"].Value = " "; }
+                                                        
 
                         }
                         r.Close();
@@ -409,6 +421,7 @@ namespace GestaoFCT
 
                         // Dados gerais ***************************************************************************
                         linhadesql = "select * from Cadernetas where id_fct = " + labelCod.Text + ";";
+                        string curso = "";
 
                         var sqlConn = new SqlConnection(DocSQLData.ConnectionString);
                         var com = new SqlCommand(linhadesql, sqlConn);
@@ -418,45 +431,47 @@ namespace GestaoFCT
                         {
 
                             //variaveis ALUNO
-                            doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString();
-                            doc.Variables["morada_aluno"].Value = r["morada_aluno"].ToString();
-                            doc.Variables["cpostal_aluno"].Value = r["cpostal_aluno"].ToString();
-                            doc.Variables["loc_aluno"].Value = r["loc_aluno"].ToString();
-                            doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString();
-                            //doc.Variables["tlf_aluno"].Value = r["tlf_aluno"].ToString();
-                            doc.Variables["email_aluno"].Value = r["email_aluno"].ToString();
-
+                            try { doc.Variables["nome_aluno"].Value = r["nome_aluno"].ToString(); } catch (Exception ex) { doc.Variables["nome_aluno"].Value = " "; }
+                            try { doc.Variables["morada_aluno"].Value = r["morada_aluno"].ToString(); } catch (Exception ex) { doc.Variables["morada_aluno"].Value = " "; }
+                            try { doc.Variables["cpostal_aluno"].Value = r["cpostal_aluno"].ToString(); } catch (Exception ex) { doc.Variables["cpostal_aluno"].Value = " "; }
+                            try { doc.Variables["loc_aluno"].Value = r["loc_aluno"].ToString(); } catch (Exception ex) { doc.Variables["loc_aluno"].Value = " "; }
+                            try { doc.Variables["bi_aluno"].Value = r["bi_aluno"].ToString(); } catch (Exception ex) { doc.Variables["bi_aluno"].Value = " "; }
+                            try { doc.Variables["tlm_aluno"].Value = r["tlf_aluno"].ToString(); } catch (Exception ex) { doc.Variables["tlf_aluno"].Value =" "; }
+                            try { doc.Variables["email_aluno"].Value = r["email_aluno"].ToString(); } catch (Exception ex) { doc.Variables["email_aluno"].Value = " "; }
 
                             //Variáveis ENCARREGADO
-                            doc.Variables["nome_ee"].Value = r["nome_ee"].ToString();
-                            doc.Variables["tlm_ee"].Value = r["tlm_ee"].ToString();
-                            doc.Variables["email_ee"].Value = r["email_ee"].ToString();
+                            try { doc.Variables["nome_ee"].Value = r["nome_ee"].ToString(); } catch (Exception ex) { doc.Variables["nome_ee"].Value = " "; }
+                            try { doc.Variables["nome_ee"].Value = r["nome_ee"].ToString(); } catch (Exception ex) { doc.Variables["nome_ee"].Value = " "; }
+                            try { doc.Variables["tlm_ee"].Value = r["tlm_ee"].ToString(); } catch (Exception ex) { doc.Variables["tlm_ee"].Value = " "; }
+                            try { doc.Variables["email_ee"].Value = r["email_ee"].ToString(); } catch (Exception ex) { doc.Variables["email_ee"].Value = " "; }
 
                             //Variáveis ENTIDADE
-                            doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString();
-                            doc.Variables["nif_entidade"].Value = r["nif_entidade"].ToString();
-                            doc.Variables["morada_entidade"].Value = r["morada_entidade"].ToString();
-                            doc.Variables["cpostal_entidade"].Value = r["cpostal_entidade"].ToString();
-                            doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString();
-                            doc.Variables["tlf_entidade"].Value = r["tlf_entidade"].ToString();
-                            //doc.Variables["tlm_entidade"].Value = r["tlm_entidade"].ToString();
-                            doc.Variables["email_entidade"].Value = r["email_entidade"].ToString();
-                            doc.Variables["natjuridica"].Value = r["natjuridica"].ToString();
-                            doc.Variables["resp_entidade"].Value = r["resp_entidade"].ToString();
-                            doc.Variables["cargo_resp"].Value = r["cargo_resp"].ToString();
-                            doc.Variables["atv_principal"].Value = r["atv_principal"].ToString();
+                            try { doc.Variables["nome_entidade"].Value = r["nome_entidade"].ToString(); } catch (Exception ex) { doc.Variables["nome_entidade"].Value = " "; }
+                            try { doc.Variables["nif_entidade"].Value = r["nif_entidade"].ToString(); } catch (Exception ex) { doc.Variables["nif_entidade"].Value = " "; }
+                            try { doc.Variables["morada_entidade"].Value = r["morada_entidade"].ToString(); } catch (Exception ex) { doc.Variables["morada_entidade"].Value = " "; }
+                            try { doc.Variables["cpostal_entidade"].Value = r["cpostal_entidade"].ToString(); } catch (Exception ex) { doc.Variables["cpostal_entidade"].Value = " "; }
+                            try { doc.Variables["loc_entidade"].Value = r["loc_entidade"].ToString(); } catch (Exception ex) { doc.Variables["loc_entidade"].Value = " "; }
+                            try { doc.Variables["tlf_entidade"].Value = r["tlf_entidade"].ToString(); } catch (Exception ex) { doc.Variables["tlf_entidade"].Value = " "; }
+                            try { doc.Variables["tlm_entidade"].Value = r["tlm_entidade"].ToString(); } catch (Exception ex) { doc.Variables["tlm_entidade"].Value = " "; }
+                            try { doc.Variables["email_entidade"].Value = r["email_entidade"].ToString(); } catch (Exception ex) { doc.Variables["email_entidade"].Value = " "; }
+                            try { doc.Variables["natjuridica"].Value = r["natjuridica"].ToString(); } catch (Exception ex) { doc.Variables["natjuridica"].Value = " "; }
+                            try { doc.Variables["resp_entidade"].Value = r["resp_entidade"].ToString(); } catch (Exception ex) { doc.Variables["resp_entidade"].Value = " ";  }
+                            try { doc.Variables["cargo_resp"].Value = r["cargo_resp"].ToString(); } catch (Exception ex) { doc.Variables["cargo_resp"].Value = " "; }
+                            try { doc.Variables["atv_principal"].Value = r["atv_principal"].ToString(); } catch (Exception ex) { doc.Variables["atv_principal"].Value = " "; }
 
                             //Variáveis  TUTOR
-                            doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString();
-                            doc.Variables["tlf_tutor"].Value = r["tlf_tutor"].ToString();
-                            doc.Variables["tlm_tutor"].Value = r["tlm_tutor"].ToString();
-                            doc.Variables["email_tutor"].Value = r["email_tutor"].ToString();
-                            doc.Variables["cargo_tutor"].Value = r["cargo_tutor"].ToString();
+                            try { doc.Variables["nome_tutor"].Value = r["nome_tutor"].ToString(); } catch (Exception ex) { doc.Variables["nome_tutor"].Value = " "; }
+                            try { doc.Variables["tlf_tutor"].Value = r["tlf_tutor"].ToString(); } catch (Exception ex) { doc.Variables["tlf_tutor"].Value = " "; }
+                            try { doc.Variables["tlm_tutor"].Value = r["tlm_tutor"].ToString(); } catch (Exception ex) { doc.Variables["tlm_tutor"].Value = " "; }
+                            try { doc.Variables["email_tutor"].Value = r["email_tutor"].ToString(); } catch (Exception ex) { doc.Variables["email_tutor"].Value = " "; }
+                            try { doc.Variables["cargo_tutor"].Value = r["cargo_tutor"].ToString(); } catch (Exception ex) { doc.Variables["cargo_tutor"].Value = " "; }
 
                             //Variáveis PROFESSOR
-                            doc.Variables["nome_prof"].Value = r["nome_prof"].ToString();
-                            doc.Variables["tlm_prof"].Value = r["tlm_prof"].ToString();
-                            doc.Variables["email_prof"].Value = r["email_prof"].ToString();
+                            try { doc.Variables["nome_prof"].Value = r["nome_prof"].ToString(); } catch (Exception ex) { doc.Variables["nome_prof"].Value = " "; }
+                            try { doc.Variables["tlm_prof"].Value = r["tlm_prof"].ToString(); } catch (Exception ex) { doc.Variables["tlm_prof"].Value = " "; }
+                            try { doc.Variables["email_prof"].Value = r["email_prof"].ToString(); } catch (Exception ex) { doc.Variables["email_prof"].Value = " "; }
+
+
 
                             //Calendário da FCT
                             string[] data1 = r["inicio_fct"].ToString().Split('/');
@@ -464,40 +479,42 @@ namespace GestaoFCT
                             int mes = int.Parse(data1[1]);
                             int ano = int.Parse(data1[2]);
                             string mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
-                            doc.Variables["inicio_fct"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+                            
+                            try { doc.Variables["inicio_fct"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString(); } catch (Exception ex) { doc.Variables["inicio_fct"].Value = " "; }
 
                             data1 = r["fim_fct"].ToString().Split('/');
                             dia = int.Parse(data1[0]);
                             mes = int.Parse(data1[1]);
                             ano = int.Parse(data1[2]);
                             mesPorExtenso = new DateTime(ano, mes, dia).ToString("MMMM");
-                            doc.Variables["fim_fct"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString();
+                            
 
+                            try { doc.Variables["fim_fct"].Value = dia.ToString() + " de " + mesPorExtenso + " " + ano.ToString(); } catch (Exception ex) { doc.Variables["fim_fct"].Value = " "; }
+                            try { doc.Variables["num_horas"].Value = r["num_horas"].ToString(); } catch (Exception ex) { doc.Variables["num_horas"].Value = " "; }
+                            
 
-                            doc.Variables["num_horas"].Value = r["num_horas"].ToString();
-
-
+                            curso = r["nome_curso"].ToString();
                         }
                         r.Close();
                         sqlConn.Close();
 
 
                         // Objetivos ***************************************************************************
-                        linhadesql = "select * from Objetivos where id_curso = " + Convert.ToInt32(Session["curso"].ToString()) + ";";
+                        linhadesql = "select * from Objetivos_table where nome_curso = '" + curso + "';";
 
                         System.Data.DataTable dt = Database.GetFromDBSqlSrv(linhadesql);
 
                         for (int i = 0; i < 14; i++)
                         {
                             if (i < dt.Rows.Count) //se tiver registos os introduz nas variáveis
-                                doc.Variables["objetivo" + (i + 1).ToString()].Value = dt.Rows[i]["descricao_objetivo"].ToString();
+                                doc.Variables["objetivo" + (i + 1).ToString()].Value = dt.Rows[i]["descricao_objetivo"].ToString(); 
                             else
                                 doc.Variables["objetivo" + (i + 1).ToString()].Value = " ";
                         }
 
 
                         // Sumários ***************************************************************************
-                        linhadesql = "select * from Sumarios_table where id_fct = " + labelCod.Text + " ORDER BY CONVERT(date, data_sumario, 103) asc;";
+                        linhadesql = "select * from Sumarios_table where id_fct = " + labelCod.Text + " and status_sumario = 'Validado' ORDER BY CONVERT(date, data_sumario, 103) asc;";
 
                         dt = Database.GetFromDBSqlSrv(linhadesql);
 

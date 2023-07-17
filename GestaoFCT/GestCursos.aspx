@@ -186,7 +186,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -276,7 +276,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
 
                                             <!-- FORM MODAL -->
@@ -309,7 +309,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Turma</label>
-                                                                <input type="text" class="form-control" id="txt_turma" pattern="^[A-Z]{1}$" placeholder="Insira a letra da turma. Ex: S" runat="server" required="required"/>
+                                                                <input type="text" class="form-control" id="txt_turma" pattern="^[A-Z]{1}$" placeholder="Insira a letra da turma. Ex: S" runat="server" required="required" />
                                                             </div>
 
                                                         </div>
@@ -344,7 +344,12 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
@@ -453,6 +458,10 @@
             /* .tabulator .tabulator-row-even {} */
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

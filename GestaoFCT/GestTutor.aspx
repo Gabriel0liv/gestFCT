@@ -89,7 +89,7 @@
                     <!-- Aplication Brand -->
                     <div class="app-brand">
                         <a href="/index.html">
-                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono"/>
+                            <img src="images/logo GestFCT.png" style="max-width: 50px" alt="Mono" />
                             <span class="brand-name">GestFCT</span>
                         </a>
                     </div>
@@ -105,7 +105,7 @@
                                 </a>
                             </li>
 
-                            <li id="NavTar" runat="server" class="active">
+                            <li id="NavTar" runat="server">
                                 <a class="sidenav-item-link" href="Tarefas.aspx">
                                     <i class="mdi mdi-calendar-check"></i>
                                     <span class="nav-text">Tarefas</span>
@@ -188,7 +188,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -275,7 +275,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
 
 
@@ -291,53 +291,66 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Nome</label>
-                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do tutor" enableviewstate="true" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do tutor" enableviewstate="true" runat="server" required="required" />
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="txt_nif">NIF</label>
-                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do tutor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do tutor" pattern="^\d{9}$" title="Por favor, insira um NIF válido de 9 dígitos" runat="server" required="required"/>
                                                             </div>
 
                                                             <div class="form-group">
                                                                 <label for="txt_email">Email address</label>
-                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do tutor" runat="server" />
+                                                                <input type="email" class="form-control" id="txt_email" aria-describedby="emailHelp" placeholder="Insira o email do tutor" runat="server" required="required" />
                                                                 <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telefone</label>
-                                                                <input type="number" class="form-control" id="txt_telefone" placeholder="Insira o telefone do tutor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_tlf" placeholder="Insira o telefone fixo do tutor" pattern="[2-8][0-9]{8}"  title="Insira um número de telefone de 9 digitos" runat="server" />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="txt_telefone">Telemóvel</label>
+                                                                <input type="text" class="form-control" id="txt_tlm" placeholder="Insira o telemóvel do tutor" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required"/>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Morada</label>
-                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do tutor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do tutor" runat="server" required="required"/>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Localidade</label>
-                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do tutor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_local" placeholder="Insira a localidade do tutor" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_CodPost">Código Postal</label>
-                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do tutor" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_CodPost" placeholder="Insira o código postal do tutor" runat="server" pattern="[0-9]{4}-[0-9]{3}" title="Exemplo do formato: 0000-000" required="required" />
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="txt_dataNasc">Data de nascimento</label>
-                                                                <input type="text" class="form-control" id="txt_dataNasc" placeholder="Insira a data de nascimento do tutor" runat="server" />
-                                                            </div>
-                                                            <div class="form-group">
-
                                                                 <label for="ddl_entidade">Entidade</label>
-                                                                <%--<input type="text" class="form-control" id="txt_resp" placeholder="Insira o nome do responsável pela entidade" runat="server"/>--%>
                                                                 <asp:DropDownList ID="ddl_entidade" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
-
                                                             </div>
                                                             <div class="form-group">
-                                                                <label for="txt_pass">Palavra passe</label>
-                                                                <input type="text" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o tutor" runat="server" />
+                                                                <label for="txt_cargo">Cargo</label>
+                                                                <input type="text" class="form-control" id="txt_cargo" placeholder="Insira o cargo do tutor" runat="server" required="required" />
                                                             </div>
+                                                                <div class="form-group">
+                                                                    <label for="txt_pass">Palavra passe</label>
+                                                                    <div class="input-group mb-3">
+                                                                        <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o tutor" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
+                                                                        <div class="input-group-append">
+                                                                            <div class="input-group-text">
+                                                                                <label class="control control-checkbox d-inline-block mb-0">
+                                                                                    <input type="checkbox" onclick="myFunction()" />
+                                                                                    <div class="control-indicator"></div>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
 
                                                         </div>
@@ -368,17 +381,24 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                             <%--TABULATOR--%>
                                         </div>
-                                    </div>
-                                    <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
-                                        <!-- <table class="table mb-0 table-email"> </table> -->
+                                        <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
+                                            <!-- <table class="table mb-0 table-email"> </table> -->
 
-                                        <div id="example-table"></div>
+                                            <div id="example-table"></div>
 
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -414,7 +434,6 @@
                     { title: "Morada", field: "morada", width: 230, resizable: false, headerFilter: "input" },
                     { title: "localidade", field: "localidade", width: 156, resizable: false, headerFilter: "input" },
                     { title: "C.Postal", field: "codPost", width: 80, resizable: false, headerFilter: "input" },
-                    { title: "Nascimento", field: "dataNasc", width: 125, resizable: false, headerFilter: "input" },
                     { title: "Password", field: "passTutor", width: 125, resizable: false, headerFilter: "input" },
                     { title: "Entidade", field: "codEnt", width: 50, resizable: false, headerFilter: "input" },
 
@@ -469,7 +488,14 @@
                 $('#ddl_entidade').select2();
             });
 
-
+            function myFunction() {
+                var x = document.getElementById("txt_pass");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
         </script>
 
         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>
@@ -491,7 +517,40 @@
                 }
             /* .tabulator .tabulator-tableholder{overflow-x: hidden;} */
             /* .tabulator .tabulator-row-even {} */
+            .select2-container {
+                z-index: 99999;
+            }
 
+                .select2-container .select2-selection--single .select2-selection__rendered {
+                    display: block;
+                    width: 100%;
+                    height: calc(1.5em + 1.12rem + 2px);
+                    padding: 0.56rem 1rem;
+                    font-size: 0.9375rem;
+                    font-weight: 400;
+                    line-height: 1.5;
+                    color: #495057;
+                    background-color: #ffffff;
+                    background-clip: padding-box;
+                    border: 1px solid #e5e9f2;
+                    border-radius: 0.25rem;
+                }
+
+            .select2-container--default .select2-selection--single {
+                border: none
+            }
+
+            .select2-dropdown {
+                border: 1px solid #e5e9f2
+            }
+
+            .select2-search--dropdown {
+                padding: 8px 4px 4px 4px;
+            }
+
+            .select2-container--default .select2-search--dropdown .select2-search__field {
+                border: 1px solid #e5e9f2;
+            }
 
             .select2-container {
                 z-index: 99999;
@@ -499,6 +558,10 @@
 
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

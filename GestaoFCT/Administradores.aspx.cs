@@ -4,27 +4,25 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GestaoFCT
 {
-    public partial class GestObj : System.Web.UI.Page
+    public partial class Administradores : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2")
+            if (Session["cargo"].ToString() != "1")
             {
                 //Redirect to login page.
                 Response.Redirect("~/Login.aspx");
             }
             else
             {
-                if (Session["cargo"].ToString() == "1")
-                    divCurso.Visible = true;
-
                 //Redirect to home page
                 NomeUser.InnerText = Session["Utilizador"].ToString();
             }
@@ -34,29 +32,16 @@ namespace GestaoFCT
                 refresh();
             }
 
-            if (Session["cargo"].ToString() != "1")
-                NavAdm.Visible = false;
-
         }
 
         protected void refresh()
         {
-            if (Session["cargo"].ToString() == "1")
-            {
-                String linhasql = "SELECT * from Objetivos_table;";
-                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
-                rptItems.DataSource = dt;
-                rptItems.DataBind();
-            }
-            else
-            {
-                String linhasql = "SELECT * from Objetivos_table where id_curso = " + Session["curso"].ToString() + ";";
-                DataTable dt = Database.GetFromDBSqlSrv(linhasql);
+            String linhasql = "SELECT * from Administradores;";
+            DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
-                rptItems.DataSource = dt;
-                rptItems.DataBind();
-            }
+            rptItems.DataSource = dt;
+            rptItems.DataBind();
 
         }
 
@@ -70,31 +55,24 @@ namespace GestaoFCT
         protected void reset()
         {
             txt_nome.Value = "";
-
-            using (SqlConnection sqlConn = new SqlConnection(ObjSQLData.ConnectionString))
-            {
-                SqlCommand cmd = new SqlCommand("select id_curso, nome_curso from Cursos where ano_curso = 12;", sqlConn);
-                sqlConn.Open();
-                slc_curso.DataTextField = "nome_curso";
-                slc_curso.DataValueField = "id_curso";
-                slc_curso.DataSource = cmd.ExecuteReader();
-                slc_curso.DataBind();
-                sqlConn.Close();
-            }
+            txt_pass.Value = "";
+            txt_email.Value = "";
 
         }
 
         protected void Atualizar()
         {
 
-            string linhadesql = "select * from Objetivos where id_objetivo = " + labelCod.Text + ";";
+            string linhadesql = "select * from administradores where id_adm = " + labelCod.Text + ";";
             var sqlConn = new SqlConnection(ObjSQLData.ConnectionString);
             var com = new SqlCommand(linhadesql, sqlConn);
             sqlConn.Open();
             SqlDataReader r = com.ExecuteReader();
             while (r.Read())
             {
-                txt_nome.Value = r["descricao_objetivo"].ToString();
+                txt_nome.Value = r["nome_adm"].ToString();
+                txt_email.Value = r["email_adm"].ToString();
+                hiddenPassword.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_adm"].ToString()));
 
             }
             r.Close();
@@ -114,11 +92,11 @@ namespace GestaoFCT
 
         protected void Criar(object sender, EventArgs e)
         {
-            
+
             operacao.Text = "1";
             reset();
-            exampleModalFormTitle.InnerText = "Criar Objetivo do curso";
-            btn_enviar.Text = "Criar Objetivo";
+            exampleModalFormTitle.InnerText = "Criar Administrador";
+            btn_enviar.Text = "Criar Administrador";
             Alert.Visible = false;
             exampleModalForm.Visible = true;
 
@@ -133,8 +111,8 @@ namespace GestaoFCT
             {
 
                 Atualizar();
-                exampleModalFormTitle.InnerText = "Editar Objetivo";
-                btn_enviar.Text = "Editar Objetivo";
+                exampleModalFormTitle.InnerText = "Editar Administrador";
+                btn_enviar.Text = "Editar Administrador";
                 Alert.Visible = false;
                 exampleModalForm.Visible = true;
             }
@@ -204,26 +182,35 @@ namespace GestaoFCT
                     }
 
                 }
-                else
+                else if (GlobalFunctions.HasSqlInjection(txt_email.Value))
                 {
-                    String linhasql = "";
-                    if (Session["cargo"].ToString() != "1")
-                        linhasql = "select * from Objetivos where id_curso = " + Session["curso"].ToString() + ";";
-                    else
-                        linhasql = "select * from Objetivos where id_curso = " + slc_curso.SelectedValue + ";";
-
-                    DataTable dt = Database.GetFromDBSqlSrv(linhasql);
-
-                    if (dt.Rows.Count < 14)
-                        erro = false;
-                    else
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_email.Value))
                     {
-                        erro = true;
-                        alerMessage.InnerText = "Não pode haver mais do que 14 objetivos por curso!";
+                        alerMessage.InnerHtml = "Email inserido inválido. <br/> (Palavra reservada SQL encontrada).";
                         Alert.Visible = true;
                     }
-
+                    else //se não foi uma palavra reservada, então foi por algum caractere especial
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos no email. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
                 }
+                else if (GlobalFunctions.HasSqlInjection(txt_pass.Value))
+                {
+                    erro = true;
+                    if (GlobalFunctions.SqlInjectionChecker(txt_pass.Value))
+                    {
+                        alerMessage.InnerHtml = "Password inserida inválido. <br/> (Palavra reservada SQL encontrada).";
+                        Alert.Visible = true;
+                    }
+                    else
+                    {
+                        alerMessage.InnerHtml = "Caracteres inválidos na password. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
+                        Alert.Visible = true;
+                    }
+                }
+
             }
 
 
@@ -232,11 +219,8 @@ namespace GestaoFCT
 
                 if (!erro)
                 {
-                    String linhasql = "";
-                    if (Session["cargo"].ToString() == "1")
-                        linhasql = "insert into Objetivos (descricao_objetivo, id_curso) values('" + txt_nome.Value + "', " + slc_curso.SelectedValue + ");";
-                    else
-                        linhasql = "insert into Objetivos (descricao_objetivo, id_curso) values('" + txt_nome.Value + "', " + Session["curso"].ToString() + ");";
+
+                    String linhasql = "insert into Administradores (nome_adm, email_adm, pass_adm, id_cargo) values('" + txt_nome.Value + "', '" + txt_email.Value + "', '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 1 );";
 
                     Database.NonQuerySqlSrv(linhasql);
                     reset();
@@ -253,11 +237,8 @@ namespace GestaoFCT
 
                 if (!erro)
                 {
-                    String linhasql = "";
-                    if (Session["cargo"].ToString() == "1")
-                        linhasql = "update Objetivos set descricao_objetivo = '" + txt_nome.Value + "', turma_curso = '" + slc_curso.SelectedValue + "' where id_objetivo = " + labelCod.Text + ";";
-                    else
-                        linhasql = "update Objetivos set descricao_objetivo = '" + txt_nome.Value + "', turma_curso = '" + Session["curso"].ToString() + "' where id_objetivo = " + labelCod.Text + ";";
+
+                    String linhasql = "update Administradores set nome_adm = '" + txt_nome.Value + "', email_adm = '" + txt_email.Value + "', pass_adm = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "' where id_adm = " + labelCod.Text + ";";
 
                     Database.NonQuerySqlSrv(linhasql);
                     reset();
@@ -273,7 +254,7 @@ namespace GestaoFCT
             if (operacao.Text == "3")
             {
 
-                String linhasql = "delete from Objetivos where id_objetivo = " + labelCod.Text + ";";
+                String linhasql = "delete from Administradores where id_adm = " + labelCod.Text + ";";
 
                 Database.NonQuerySqlSrv(linhasql);
                 reset();

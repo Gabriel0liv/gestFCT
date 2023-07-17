@@ -11,7 +11,7 @@ namespace GestaoFCT
 {
 
 
-    public partial class GestTutor
+    public partial class Administradores
     {
 
         /// <summary>
@@ -69,13 +69,22 @@ namespace GestaoFCT
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// Controle TutSQLData.
+        /// Controle ObjSQLData.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource TutSQLData;
+        protected global::System.Web.UI.WebControls.SqlDataSource ObjSQLData;
+
+        /// <summary>
+        /// Controle Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
         /// Controle NavSum.
@@ -294,15 +303,6 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_nome;
 
         /// <summary>
-        /// Controle txt_nif.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_nif;
-
-        /// <summary>
         /// Controle txt_email.
         /// </summary>
         /// <remarks>
@@ -312,69 +312,6 @@ namespace GestaoFCT
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl txt_email;
 
         /// <summary>
-        /// Controle txt_tlf.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_tlf;
-
-        /// <summary>
-        /// Controle txt_tlm.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_tlm;
-
-        /// <summary>
-        /// Controle txt_morada.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_morada;
-
-        /// <summary>
-        /// Controle txt_local.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_local;
-
-        /// <summary>
-        /// Controle txt_CodPost.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_CodPost;
-
-        /// <summary>
-        /// Controle ddl_entidade.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddl_entidade;
-
-        /// <summary>
-        /// Controle txt_cargo.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_cargo;
-
-        /// <summary>
         /// Controle txt_pass.
         /// </summary>
         /// <remarks>
@@ -382,6 +319,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword txt_pass;
+
+        /// <summary>
+        /// Controle hiddenPassword.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden hiddenPassword;
 
         /// <summary>
         /// Controle btn_fechar.
@@ -409,6 +355,15 @@ namespace GestaoFCT
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl exampleModal;
+
+        /// <summary>
+        /// Controle exampleModalLabel.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl exampleModalLabel;
 
         /// <summary>
         /// Controle textoCancelar.

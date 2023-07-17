@@ -188,7 +188,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -217,7 +217,7 @@
                             <span class="sr-only">Toggle navigation</span>
                         </button>
 
-                        <span class="page-title">Gestão de Cursos</span>
+                        <span class="page-title">Gestão de Objetivos</span>
 
                         <div class="navbar-right ">
 
@@ -278,7 +278,7 @@
                                 <div class="col-lg-8 col-xl-9 col-xxl-10">
                                     <div class="email-right-column p-4 p-xl-5">
                                         <!-- Email Right Header -->
-                                        <div class="email-right-header mb-5">
+                                        <div class="email-right-header">
 
 
                                             <!-- FORM MODAL -->
@@ -295,11 +295,11 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
-                                                                <i class="mdi mdi-alert"></i> <span id="alerMessage" runat="server"></span> 
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_nome">Descrição do objetivo</label>
-                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira o nome do curso" enableviewstate="true" runat="server" required="required" />
+                                                                <input type="text" class="form-control" id="txt_nome" placeholder="Insira a descrição do objetivo específico" enableviewstate="true" runat="server" required="required" />
                                                             </div>
                                                             <div id="divCurso" class="form-group" runat="server" visible="false">
                                                                 <label for="slc_curso">Curso</label>
@@ -336,7 +336,12 @@
                                                 </div>
                                             </div>
 
-
+                                            <div class="head-left-options">
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
+                                            </div>
                                         </div>
                                         <%--TABULATOR--%>
                                         <div class="border border-top-0 rounded table-responsive email-list" style="height: 400px">
@@ -445,6 +450,10 @@
             /* .tabulator .tabulator-row-even {} */
             .tabulator-header-filter input {
                 height: 20px
+            }
+
+            .email-right-column .email-right-header {
+                margin-bottom: auto !important
             }
         </style>
 

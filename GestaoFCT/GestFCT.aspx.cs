@@ -33,6 +33,11 @@ namespace GestaoFCT
                 refresh();
             }
 
+            if (Session["cargo"].ToString() != "1")
+                NavAdm.Visible = false;
+
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                NavObj.Visible = false; NavProf.Visible = false;
 
         }
 
@@ -69,8 +74,8 @@ namespace GestaoFCT
                 ddl_entidade.SelectedValue = r["id_entidade"].ToString();
                 ddl_tutor.SelectedValue = r["id_tutor"].ToString();
                 txt_anoFCT.Value = r["ano_fct"].ToString();
-                txt_numHora.Value = r["num_horas"].ToString();
-                txt_numMaxHoras.Text = r["horasDiarias"].ToString();
+                txt_numHoras.Value = r["num_horas"].ToString();
+                txt_numMaxHora.Value = r["horasDiarias"].ToString();
                 // Converter o Texto da data do sumário 
                 DateTime data;
                 if (DateTime.TryParseExact(r["inicio_fct"].ToString(), "dd/MM/yyyy" , CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(r["fim_fct"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
@@ -202,8 +207,6 @@ namespace GestaoFCT
 
             if (operacao.Text == "2")
             {
-                //Response.Write("<script>alert('22222')</script>");
-
 
                 DateTime data;
                 if (DateTime.TryParseExact(txt_dataInicio.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(txt_dataFim.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
@@ -211,17 +214,8 @@ namespace GestaoFCT
                     txt_dataInicio.Text = data.ToString("dd/MM/yyyy");
                     txt_dataFim.Text = data.ToString("dd/MM/yyyy");
                 }
-                else
-                {
-                    // A string fornecida não está no formato esperado
-                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
-                }
 
-
-                String linhasql = "update tabelas_FCT set id_tutor = '" + ddl_tutor.SelectedValue + "', id_professor = '" + ddl_professor.SelectedValue + "', id_entidade = '" + ddl_entidade.SelectedValue + "', ano_fct = '" + txt_anoFCT.Value + "', num_horas = '" + txt_numHora.Value + "', fim_fct = '" + txt_dataFim.Text + "', horasDiarias = '" + txt_numMaxHoras.Text + "', inicio_fct = '" + txt_dataInicio.Text + "' where id_fct = " + labelCod.Text + ";";
-
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
-                //Response.Write("<script>alert('aaaaa')</script>");
+                String linhasql = "update tabelas_FCT set id_tutor = '" + ddl_tutor.SelectedValue + "', id_professor = '" + ddl_professor.SelectedValue + "', id_entidade = '" + ddl_entidade.SelectedValue + "', ano_fct = '" + txt_anoFCT.Value + "', num_horas = '" + txt_numHoras.Value + "', fim_fct = '" + txt_dataFim.Text + "', horasDiarias = '" + txt_numMaxHora.Value + "', inicio_fct = '" + txt_dataInicio.Text + "' where id_fct = " + labelCod.Text + ";";
 
                 Database.NonQuerySqlSrv(linhasql);
                 refresh();
@@ -230,9 +224,7 @@ namespace GestaoFCT
 
             if (operacao.Text == "3")
             {
-                //Response.Write("<script>alert('33333')</script>");
                 String linhasql = "delete from fichasFCT where id_fct = " + labelCod.Text + ";";
-                //Response.Write("<script>alert('" + HttpUtility.JavaScriptStringEncode(linhasql) + "')</script>");
 
                 Database.NonQuerySqlSrv(linhasql);
                 refresh();
@@ -266,21 +258,29 @@ namespace GestaoFCT
         protected void txt_dataInicio_TextChanged(object sender, EventArgs e)
         {
 
-            DateTime dataInicio = DateTime.Parse(txt_dataInicio.Text);
-            int horasFormacao = int.Parse(txt_numHora.Value);
-            int maxHorasDia = int.Parse(txt_numMaxHoras.Text);
+            if (txt_numMaxHora.Value.Replace(" ", "") == "" || txt_numHoras.Value.Replace(" ", "") == "" || txt_numHoras.Value.Length == 0 || txt_numMaxHora.Value.Length == 0)
+            {
+                alerMessage.InnerText = "Para inserir a data de início é preciso preencher as horas máximas e as horas diárias!";
+                Alert.Visible = true;
+            }
+            else
+            {
+
+                DateTime dataInicio = DateTime.Parse(txt_dataInicio.Text);
+                int horasFormacao = int.Parse(txt_numHoras.Value);
+                int maxHorasDia = int.Parse(txt_numMaxHora.Value);
 
 
-            DateTime dataTermino = CalcularDataTermino(dataInicio, horasFormacao, maxHorasDia);
+                DateTime dataTermino = CalcularDataTermino(dataInicio, horasFormacao, maxHorasDia);
 
-            // Calcular a diferença em dias entre a data de término e a data atual
-            //int diasRestantes = (dataTermino - DateTime.Today).Days;
-            int diasRestantes = CalcularDiasUteis(DateTime.Today, dataTermino);
+                // Calcular a diferença em dias entre a data de término e a data atual
+                //int diasRestantes = (dataTermino - DateTime.Today).Days;
+                int diasRestantes = CalcularDiasUteis(DateTime.Today, dataTermino);
 
-            txt_dataFim.Text = dataTermino.ToShortDateString();
-            // Exibir os dias restantes na TextBox
-            //txtDiasRestantes.Text = diasRestantes.ToString();
-
+                txt_dataFim.Text = dataTermino.ToShortDateString();
+                // Exibir os dias restantes na TextBox
+                //txtDiasRestantes.Text = diasRestantes.ToString();
+            }
         }
 
         protected int CalcularDiasUteis(DateTime dataInicio, DateTime dataFim)
@@ -390,6 +390,9 @@ namespace GestaoFCT
             return new DateTime(ano, mes, dia);
         }
 
-
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            refresh();
+        }
     }
 }

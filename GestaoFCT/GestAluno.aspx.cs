@@ -67,7 +67,8 @@ namespace GestaoFCT
                 refresh();
             }
 
-
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+                NavObj.Visible = false;
 
         }
 
@@ -76,7 +77,7 @@ namespace GestaoFCT
 
             if (Session["cargo"].ToString() == "2")
             {
-                String linhasql = "select * from Alunos_info where id_curso = " + Session["curso"].ToString() + ";";
+                String linhasql = "select * from Alunos_info where curso_name = (select nome_curso from cursos where id_curso = " + Session["curso"].ToString() + "); ";
                 DataTable dt = Database.GetFromDBSqlSrv(linhasql);
 
                 rptItems.DataSource = dt;
@@ -211,6 +212,7 @@ namespace GestaoFCT
             reset();
             exampleModalFormTitle.InnerText = "Criar Aluno";
             btn_enviar.Text = "Criar Aluno";
+            Alert.Visible = false;
             formAluno.Visible = true;
             formFCT.Visible = false;
             exampleModalForm.Visible = true;
@@ -224,7 +226,7 @@ namespace GestaoFCT
             reset();
             if (labelCod.Text != "0")
             {
-
+                Alert.Visible = false;
                 Atualizar();
                 exampleModalFormTitle.InnerText = "Editar Aluno";
                 btn_enviar.Text = "Editar Aluno";
@@ -385,20 +387,6 @@ namespace GestaoFCT
                     alerMessage.InnerText = "O nif não pode conter caracteres vazios!";
                     Alert.Visible = true;
                 }
-                else if (GlobalFunctions.HasSqlInjection(txt_nif.Value))
-                {
-                    erro = true;
-                    if (GlobalFunctions.SqlInjectionChecker(txt_nif.Value))
-                    {
-                        alerMessage.InnerHtml = "NIF inserido inválido. <br/> (Palavra reservada SQL encontrada).";
-                        Alert.Visible = true;
-                    }
-                    else
-                    {
-                        alerMessage.InnerHtml = "Caracteres inválidos no NIF. <br/> (Caracteres proibidos: ;'()[]{}<>%)";
-                        Alert.Visible = true;
-                    }
-                }
                 else if (txt_bi.Value.Replace(" ", "") == "")
                 {
                     erro = true;
@@ -490,7 +478,7 @@ namespace GestaoFCT
 
             }
 
-            if (operacao.Text == "3")
+            if (operacao.Text == "4")
             {
 
             }
@@ -588,7 +576,7 @@ namespace GestaoFCT
 
         protected void txt_dataInicio_TextChanged(object sender, EventArgs e)
         {
-            if(txt_numMaxHoras.Value.Replace(" ", "") == "" || txt_numHora.Value.Replace(" ", "") == "" || txt_numHora.Value.Length == 0 || txt_numMaxHoras.Value.Length == 0)
+            if (txt_numMaxHoras.Value.Replace(" ", "") == "" || txt_numHora.Value.Replace(" ", "") == "" || txt_numHora.Value.Length == 0 || txt_numMaxHoras.Value.Length == 0)
             {
                 alerMessage.InnerText = "Para inserir a data de início é preciso preencher as horas máximas e as horas diárias!";
                 Alert.Visible = true;
