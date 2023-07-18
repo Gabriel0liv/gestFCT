@@ -169,7 +169,7 @@
 
                     <div class="sidebar-footer">
                         <div class="sidebar-footer-content">
-                            <ul >
+                            <ul>
                                 <li style="width: 100% !important">
                                     <asp:LinkButton ID="LinkButton3" class="dropdown-link-item" runat="server" OnClick="btn_logout_Click">
                                     <i class="mdi mdi-logout"></i> 
@@ -193,9 +193,9 @@
                 <header class="main-header" id="header">
                     <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
                         <!-- Sidebar toggle button -->
-                        <button id="sidebar-toggler" class="sidebar-toggle">
+                        <div id="sidebar-toggler" style="display: flex; justify-content: center; align-items: center" class="sidebar-toggle">
                             <span class="sr-only">Toggle navigation</span>
-                        </button>
+                        </div>
 
                         <span class="page-title">Documentos</span>
 
@@ -210,6 +210,39 @@
                                         <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li id="Div_infCargo" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargo" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infDirecao" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span class="nav-text">Diretor de Curso</span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infTurma" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_turma" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCurso" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_curso" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infEnt" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_entidade" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCT" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargoT" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <br />
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -304,12 +337,15 @@
                             </div>
                             <div class="card-header align-items-center px-3 px-md-5" style="padding-top: 0px">
                                 <div class="btnAtualizar">
-                                    <asp:LinkButton ID="LinkButton2" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Atualizar</asp:LinkButton>
+                                    <asp:LinkButton ID="LinkButton2" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                    </asp:LinkButton>
                                 </div>
 
-                                <div style="display:flex">
+                                <div style="display: flex">
                                     <img src="images/word.png" style="max-height: 30px; max-width: 30px" />
-                                    <label class="switch switch-primary switch-pill form-control-label ml-2 mr-2" >
+                                    <label class="switch switch-primary switch-pill form-control-label ml-2 mr-2">
                                         <input id="checkFileFormat" type="checkbox" class="switch-input form-check-input" runat="server" value="on" checked="checked" />
                                         <%--<asp:CheckBox ID="CheckBox1" class="switch-input form-check-input" runat="server" />--%>
                                         <span class="switch-label"></span>

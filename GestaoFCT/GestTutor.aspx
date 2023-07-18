@@ -211,9 +211,9 @@
                 <header class="main-header" id="header">
                     <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
                         <!-- Sidebar toggle button -->
-                        <button id="sidebar-toggler" class="sidebar-toggle">
+                        <div id="sidebar-toggler" style="display: flex; justify-content: center; align-items: center" class="sidebar-toggle">
                             <span class="sr-only">Toggle navigation</span>
-                        </button>
+                        </div>
 
                         <span class="page-title">Gestão de Tutores</span>
 
@@ -228,6 +228,39 @@
                                         <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li id="Div_infCargo" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargo" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infDirecao" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span class="nav-text">Diretor de Curso</span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infTurma" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_turma" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCurso" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_curso" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infEnt" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_entidade" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCT" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargoT" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <br />
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -301,7 +334,7 @@
 
                                                             <div class="form-group">
                                                                 <label for="txt_nif">NIF</label>
-                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do tutor" pattern="^\d{9}$" title="Por favor, insira um NIF válido de 9 dígitos" runat="server" required="required"/>
+                                                                <input type="text" class="form-control" id="txt_nif" placeholder="Insira o NIF do tutor" pattern="^\d{9}$" title="Por favor, insira um NIF válido de 9 dígitos" runat="server" required="required" />
                                                             </div>
 
                                                             <div class="form-group">
@@ -311,15 +344,15 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telefone</label>
-                                                                <input type="text" class="form-control" id="txt_tlf" placeholder="Insira o telefone fixo do tutor" pattern="[2-8][0-9]{8}"  title="Insira um número de telefone de 9 digitos" runat="server" />
+                                                                <input type="text" class="form-control" id="txt_tlf" placeholder="Insira o telefone fixo do tutor" pattern="[2-8][0-9]{8}" title="Insira um número de telefone de 9 digitos" runat="server" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_telefone">Telemóvel</label>
-                                                                <input type="text" class="form-control" id="txt_tlm" placeholder="Insira o telemóvel do tutor" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required"/>
+                                                                <input type="text" class="form-control" id="txt_tlm" placeholder="Insira o telemóvel do tutor" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Morada</label>
-                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do tutor" runat="server" required="required"/>
+                                                                <input type="text" class="form-control" id="txt_morada" placeholder="Insira a morada do tutor" runat="server" required="required" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Localidade</label>
@@ -337,20 +370,22 @@
                                                                 <label for="txt_cargo">Cargo</label>
                                                                 <input type="text" class="form-control" id="txt_cargo" placeholder="Insira o cargo do tutor" runat="server" required="required" />
                                                             </div>
-                                                                <div class="form-group">
-                                                                    <label for="txt_pass">Palavra passe</label>
-                                                                    <div class="input-group mb-3">
-                                                                        <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o tutor" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
-                                                                        <div class="input-group-append">
-                                                                            <div class="input-group-text">
-                                                                                <label class="control control-checkbox d-inline-block mb-0">
-                                                                                    <input type="checkbox" onclick="myFunction()" />
-                                                                                    <div class="control-indicator"></div>
-                                                                                </label>
-                                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="txt_pass">Palavra passe</label>
+                                                                <div class="input-group mb-3">
+                                                                    <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o tutor" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
+                                                                    <input type="hidden" runat="server" id="hiddenPassword" value="" />
+
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <label class="control control-checkbox d-inline-block mb-0">
+                                                                                <input type="checkbox" onclick="myFunction()" />
+                                                                                <div class="control-indicator"></div>
+                                                                            </label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
 
 
                                                         </div>
@@ -496,6 +531,12 @@
                     x.type = "password";
                 }
             }
+
+            window.addEventListener('DOMContentLoaded', function () {
+                var passwordInput = document.getElementById('txt_pass');
+                var hiddenPassword = document.getElementById('hiddenPassword').value;
+                passwordInput.value = hiddenPassword;
+            });
         </script>
 
         <script src="https://unpkg.com/hotkeys-js/dist/hotkeys.min.js"></script>

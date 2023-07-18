@@ -213,9 +213,9 @@
                 <header class="main-header" id="header">
                     <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
                         <!-- Sidebar toggle button -->
-                        <button id="sidebar-toggler" class="sidebar-toggle">
+                        <div id="sidebar-toggler" style="display: flex; justify-content: center; align-items: center" class="sidebar-toggle">
                             <span class="sr-only">Toggle navigation</span>
-                        </button>
+                        </div>
 
                         <span class="page-title">Gestão de Administradores</span>
 
@@ -231,6 +231,39 @@
                                         <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li id="Div_infCargo" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargo" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infDirecao" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span class="nav-text">Diretor de Curso</span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infTurma" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_turma" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCurso" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_curso" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infEnt" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_entidade" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCT" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargoT" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <br />
+                                    </ul>
                                 </li>
                             </ul>
                         </div>

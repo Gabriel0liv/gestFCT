@@ -15,6 +15,8 @@ namespace GestaoFCT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["codigo"] == null) // Verifica se a sessão expirou
+                Response.Redirect("~/Login.aspx"); // Redireciona para a página de login
 
             if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2")
             {
@@ -30,6 +32,12 @@ namespace GestaoFCT
             if (rptItems.Items.Count == 0)
             {
                 refresh();
+            }
+
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+            {
+                NavObj.Visible = false;
+                NavProf.Visible = false;
             }
 
             if ((Session["cargo"].ToString() == "1"))
@@ -50,7 +58,37 @@ namespace GestaoFCT
                 }
             }
 
-        }
+            if (Session["cargo"].ToString() == "2")
+            {
+                inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                inf_curso.InnerText = "Curso: " + Session["nome_curso"].ToString();
+
+                if (Convert.ToBoolean(Session["direcao"]))
+                    Div_infDirecao.Visible = true;
+                else
+                    Div_infDirecao.Visible = false;
+
+                Div_infTurma.Visible = false;
+                Div_infEnt.Visible = false;
+                Div_infCT.Visible = false;
+            }
+            else
+            {
+                inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                Div_infCT.Visible = false;
+                Div_infCurso.Visible = false;
+                Div_infDirecao.Visible = false;
+                Div_infEnt.Visible = false;
+                Div_infTurma.Visible = false;
+            }
+
+            if ((Session["cargo"].ToString() != "1"))
+                NavAdm.Visible = false;
+            else
+                NavAdm.Visible = true;
+
+
+            }
 
         protected void refresh()
         {
@@ -102,7 +140,9 @@ namespace GestaoFCT
                 txt_morada.Value = r["morada_prof"].ToString();
                 txt_local.Value = r["loc_prof"].ToString();
                 txt_CodPost.Value = r["cpostal_prof"].ToString();
-                txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_prof"].ToString()));
+                hiddenPassword.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_prof"].ToString()));
+
+                //txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_prof"].ToString()));
 
             }
             r.Close();

@@ -16,6 +16,8 @@ namespace GestaoFCT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["codigo"] == null) // Verifica se a sessão expirou
+                Response.Redirect("~/Login.aspx"); // Redireciona para a página de login
 
             if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2")
             {
@@ -28,6 +30,14 @@ namespace GestaoFCT
                 NomeUser.InnerText = Session["Utilizador"].ToString();
             }
 
+            if (Session["cargo"].ToString() != "1")
+                NavAdm.Visible = false;
+
+            if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
+            {
+                NavObj.Visible = false;
+                NavProf.Visible = false;
+            }
 
             if (!IsPostBack)
             {
@@ -70,6 +80,30 @@ namespace GestaoFCT
             if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
                 NavObj.Visible = false;
 
+
+            if (Session["cargo"].ToString() == "2")
+            {
+                inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                inf_curso.InnerText = "Curso: " + Session["nome_curso"].ToString();
+
+                if (Convert.ToBoolean(Session["direcao"]))
+                    Div_infDirecao.Visible = true;
+                else
+                    Div_infDirecao.Visible = false;
+
+                Div_infTurma.Visible = false;
+                Div_infEnt.Visible = false;
+                Div_infCT.Visible = false;
+            }
+            else
+            {
+                inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                Div_infCT.Visible = false;
+                Div_infCurso.Visible = false;
+                Div_infDirecao.Visible = false;
+                Div_infEnt.Visible = false;
+                Div_infTurma.Visible = false;
+            }
         }
 
         protected void refresh()
@@ -186,7 +220,9 @@ namespace GestaoFCT
                 txt_morada.Value = r["morada_aluno"].ToString();
                 txt_local.Value = r["loc_aluno"].ToString();
                 txt_CodPost.Value = r["cpostal_aluno"].ToString();
-                txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_aluno"].ToString()));
+                hiddenPassword.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_aluno"].ToString()));
+
+                //txt_pass.Value = Encoding.UTF8.GetString(Convert.FromBase64String(r["pass_aluno"].ToString()));
                 ddl_Encarregado.SelectedValue = r["id_ee"].ToString(); //ERRO AQUI
                 ddl_curso.SelectedValue = r["id_curso"].ToString();
             }
@@ -196,12 +232,14 @@ namespace GestaoFCT
 
         protected void spanFechar_Click(object sender, EventArgs e)
         {
+            ddl_turma.Visible = true;
             exampleModalForm.Visible = false;
         }
 
         protected void Fechar(object sender, EventArgs e)
         {
             exampleModalForm.Visible = false;
+            ddl_turma.Visible = true;
             reset();
         }
 
@@ -215,6 +253,7 @@ namespace GestaoFCT
             Alert.Visible = false;
             formAluno.Visible = true;
             formFCT.Visible = false;
+            ddl_turma.Visible = false;
             exampleModalForm.Visible = true;
 
         }
@@ -242,7 +281,7 @@ namespace GestaoFCT
                 exampleModal.Visible = true;
 
             }
-
+            ddl_turma.Visible = false;
 
         }
 
@@ -272,7 +311,7 @@ namespace GestaoFCT
                 btnDeletar.Visible = false;
             }
 
-
+            ddl_turma.Visible = false;
             exampleModal.Visible = true;
 
 
@@ -350,6 +389,7 @@ namespace GestaoFCT
                 btnDeletar.Visible = false;
                 exampleModal.Visible = true;
             }
+            ddl_turma.Visible = false;
 
         }
 
@@ -478,10 +518,6 @@ namespace GestaoFCT
 
             }
 
-            if (operacao.Text == "4")
-            {
-
-            }
 
 
             if (operacao.Text == "1")
@@ -549,12 +585,14 @@ namespace GestaoFCT
                 exampleModalForm.Visible = false;
 
             }
+            ddl_turma.Visible = true;
 
 
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
+            ddl_turma.Visible = true;
             exampleModal.Visible = false;
         }
 

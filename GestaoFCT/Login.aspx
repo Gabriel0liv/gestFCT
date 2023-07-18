@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>GestFCT - Login</title>
     <meta charset="UTF-8" />
-      <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
+    <link href="plugins/material/css/materialdesignicons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/style-login.css" />
     <link rel="stylesheet" href="css/style.css" />
 
@@ -25,6 +25,7 @@
             <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh; flex-grow: 1;">
 
                 <canvas class="background" style="width: 100%; height: 100%"></canvas>
+                <asp:SqlDataSource ID="LogSQLData" runat="server" ConnectionString="<%$ ConnectionStrings:FCTConnectionString %>"></asp:SqlDataSource>
 
                 <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
 
@@ -34,8 +35,8 @@
                     <div class="formbg-outer">
                         <div class="formbg">
                             <div class="formbg-inner padding-horizontal--48">
-                                <div id="AlertaErro" class="alert alert-secondary alert-icon" style="max-height:auto; padding: 0 0 2px 70px " runat="server" visible="false" role="alert" >
-                                    <i class="mdi mdi-alert" style="color:white; line-height: normal; display: flex; align-items: center; justify-content: center " ></i> 
+                                <div id="AlertaErro" class="alert alert-secondary alert-icon" style="max-height: auto; padding: 0 0 2px 70px" runat="server" visible="false" role="alert">
+                                    <i class="mdi mdi-alert" style="color: white; line-height: normal; display: flex; align-items: center; justify-content: center"></i>
                                     <span id="AlertaTexto" style="color: #ffdce9; font-size: 14px" runat="server"></span>
                                 </div>
                                 <span class="padding-bottom--15">Faça login em sua conta</span>
@@ -55,7 +56,6 @@
                                     <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
                                     </div>
                                     <div class="field ">
-                                        <%--<input type="submit" name="submit" value="Continue"/>--%>
                                         <asp:Button ID="btn_login" runat="server" Text="Continue" OnClick="btn_login_Click" />
                                     </div>
 

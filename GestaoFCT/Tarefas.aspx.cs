@@ -14,6 +14,8 @@ namespace GestaoFCT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["codigo"] == null) // Verifica se a sessão expirou
+                Response.Redirect("~/Login.aspx"); // Redireciona para a página de login
 
             if (Session["cargo"].ToString() != "1" && Session["cargo"].ToString() != "2" && Session["cargo"].ToString() != "3")
             {
@@ -51,7 +53,47 @@ namespace GestaoFCT
                     NavAdm.Visible = false;
 
                 if (!Convert.ToBoolean(Session["direcao"]) && Session["cargo"].ToString() != "1")
-                    NavObj.Visible = false; NavProf.Visible = false;
+                {
+                    NavObj.Visible = false;
+                    NavProf.Visible = false;
+                }
+
+                if (Session["cargo"].ToString() == "3")
+                {
+                    inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                    Div_infEnt.InnerText = Session["nome_entidade"].ToString();
+                    Div_infCT.InnerText = Session["cargo_tutor"].ToString();
+                    Div_infCurso.Visible = false;
+                    Div_infTurma.Visible = false;
+                    inf_turma.Visible = false;
+                    Div_infDirecao.Visible = false;
+
+
+
+                }
+                else if (Session["cargo"].ToString() == "2")
+                {
+                    inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                    inf_curso.InnerText = "Curso: " + Session["nome_curso"].ToString();
+
+                    if (Convert.ToBoolean(Session["direcao"]))
+                        Div_infDirecao.Visible = true;
+                    else
+                        Div_infDirecao.Visible = false;
+
+                    Div_infTurma.Visible = false;
+                    Div_infEnt.Visible = false;
+                    Div_infCT.Visible = false;
+                }
+                else
+                {
+                    inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+                    Div_infCT.Visible = false;
+                    Div_infCurso.Visible = false;
+                    Div_infDirecao.Visible = false;
+                    Div_infEnt.Visible = false;
+                    Div_infTurma.Visible = false;
+                }
             }
 
 
@@ -219,6 +261,7 @@ namespace GestaoFCT
         protected void Fechar(object sender, EventArgs e)
         {
             formTar.Visible = false;
+            ddl_entidade.Visible = true;
             reset();
         }
 
@@ -260,7 +303,7 @@ namespace GestaoFCT
 
 
             formTar.Visible = true;
-
+            ddl_entidade.Visible = false;
         }
 
 
@@ -313,7 +356,7 @@ namespace GestaoFCT
                 exampleModal.Visible = true;
 
             }
-
+            ddl_entidade.Visible = false;
 
         }
 
@@ -335,7 +378,7 @@ namespace GestaoFCT
                 btnDeletar.Visible = false;
             }
 
-
+            ddl_entidade.Visible = false;
             exampleModal.Visible = true;
 
 
@@ -409,11 +452,13 @@ namespace GestaoFCT
             }
 
             exampleModal.Visible = false;
+            ddl_entidade.Visible = true;
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             exampleModal.Visible = false;
+            ddl_entidade.Visible = true;
         }
 
         protected void ddl_TarEntidade_SelectedIndexChanged1(object sender, EventArgs e)

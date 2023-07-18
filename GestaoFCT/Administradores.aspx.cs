@@ -15,6 +15,8 @@ namespace GestaoFCT
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["codigo"] == null) // Verifica se a sessão expirou
+                Response.Redirect("~/Login.aspx"); // Redireciona para a página de login
 
             if (Session["cargo"].ToString() != "1")
             {
@@ -31,6 +33,14 @@ namespace GestaoFCT
             {
                 refresh();
             }
+
+
+            inf_cargo.InnerText = "Cargo: " + Session["nome_cargo"].ToString();
+            Div_infCT.Visible = false;
+            Div_infCurso.Visible = false;
+            Div_infDirecao.Visible = false;
+            Div_infEnt.Visible = false;
+            Div_infTurma.Visible = false;
 
         }
 

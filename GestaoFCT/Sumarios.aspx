@@ -211,9 +211,9 @@
                 <header class="main-header" id="header">
                     <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
                         <!-- Sidebar toggle button -->
-                        <button id="sidebar-toggler" class="sidebar-toggle">
+                        <div id="sidebar-toggler" style="display: flex; justify-content: center; align-items: center" class="sidebar-toggle">
                             <span class="sr-only">Toggle navigation</span>
-                        </button>
+                        </div>
 
                         <span class="page-title">Sumários</span>
 
@@ -226,6 +226,39 @@
                                         <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li id="Div_infCargo" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargo" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infDirecao" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span class="nav-text">Diretor de Curso</span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infTurma" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_turma" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCurso" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_curso" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infEnt" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_entidade" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCT" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargoT" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <br />
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -279,8 +312,7 @@
                                         <div class="email-right-header">
 
                                             <!-- FORM MODAL -->
-                                            <div class="modal" id="formSum" tabindex="-1" role="dialog" aria-labelledby="exampleModalFormTitle"
-                                                aria-hidden="true" runat="server" visible="false">
+                                            <div class="modal" id="formSum" runat="server" visible="false">
                                                 <div class="modal-dialog" role="document">
                                                     <iv class="modal-content">
                                                         <div class="modal-header">
@@ -290,6 +322,10 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
+                                                            <div class="form-group">
+                                                                <label for="slc_aluno">Aluno</label>
+                                                                <asp:DropDownList ID="slc_aluno" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
+                                                            </div>
                                                             <div class="form-group">
                                                                 <label for="txt_numhora">Data do sumário</label>
                                                                 <%--<input type="text" class="form-control" id="" placeholder="Data de sumario" enableviewstate="true" runat="server" />--%>
@@ -304,7 +340,7 @@
                                                                 <asp:TextBox ID="TextBox1" runat="server" Style="display: none"></asp:TextBox>
                                                                 <asp:TextBox ID="TextBox2" runat="server" Style="display: none" AutoPostBack="true" OnTextChanged="TextBox2_TextChanged"></asp:TextBox>
                                                                 <asp:DropDownList ID="ddl_Tarefas" CssClass="form-control" runat="server" Style="height: 60px !important" ClientIDMode="Static" Multiple="True"></asp:DropDownList>
-                                                                <div style="display: flex; justify-content: space-between; margin-top: 5px" >
+                                                                <div style="display: flex; justify-content: space-between; margin-top: 5px">
                                                                     <label for="ddl_Tarefas" style="visibility: hidden">Tarefas Associadas</label>
                                                                     <asp:Button ID="Button1" runat="server" class="btn btn-secondary" Style="height: 20px; font-size: 12px; padding: 4px; line-height: 5px;" OnClientClick="ShowValue()" Text="Guardar Tarefas" />
                                                                 </div>
@@ -312,7 +348,7 @@
                                                             <div class="form-group">
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_numhora">Horas feitas</label>
-                                                                    <input type="text" class="form-control" id="txt_numHora" placeholder="Número de horas feitas" enableviewstate="true" runat="server" />
+                                                                    <input type="text" class="form-control" id="txt_numHora" placeholder="Número de horas feitas" pattern="^[1-8]$" title="insira de 1 a 8 horas." enableviewstate="true" runat="server" />
                                                                 </div>
                                                                 <div style="display: inline-block">
                                                                     <label for="txt_status">Estado do sumário</label>
@@ -324,6 +360,7 @@
                                                                     </asp:DropDownList>
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
@@ -367,7 +404,7 @@
                                                 <div class="btn-group" role="group" aria-label="Basic example">
                                                     <asp:DropDownList ID="ddl_entidade" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_entidade_SelectedIndexChanged1"></asp:DropDownList>
                                                 </div>
-                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 200px">
                                                     <asp:DropDownList ID="ddl_aluno" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_aluno_SelectedIndexChanged1" Visible="false"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -465,6 +502,7 @@
                 $('#ddl_Tarefas').select2({ maximumSelectionLength: 3 });
                 $('#ddl_entidade').select2();
                 $('#ddl_aluno').select2();
+                $('#slc_aluno').select2();
             });
 
             function ShowValue() {
@@ -520,6 +558,7 @@
             .select2-container {
                 z-index: 99999;
             }
+
 
                 .select2-container .select2-selection--multiple {
                     min-height: 60px !important;

@@ -181,7 +181,6 @@
                                     <span class="nav-text">Administradores</span>
                                 </a>
                             </li>
-                            <li id="Li1" class="section-title" runat="server">Conta</li>
 
                         </ul>
                     </div>
@@ -212,9 +211,9 @@
                 <header class="main-header" id="header">
                     <nav class="navbar navbar-expand-lg navbar-light" id="navbar">
                         <!-- Sidebar toggle button -->
-                        <button id="sidebar-toggler" class="sidebar-toggle">
+                        <div id="sidebar-toggler" style="display: flex; justify-content: center; align-items: center" class="sidebar-toggle">
                             <span class="sr-only">Toggle navigation</span>
-                        </button>
+                        </div>
 
                         <span class="page-title">Gestão de Alunos</span>
 
@@ -229,6 +228,39 @@
                                         <img src="images/user/icon-user 40x40.png" class="user-image rounded-circle" alt="User Image" />
                                         <span id="NomeUser" class="d-none d-lg-inline-block" runat="server"></span>
                                     </button>
+                                    <ul class="dropdown-menu dropdown-menu-right" style="z-index: 9999999">
+                                        <li id="Div_infCargo" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargo" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infDirecao" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span class="nav-text">Diretor de Curso</span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infTurma" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_turma" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCurso" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_curso" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infEnt" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_entidade" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <li id="Div_infCT" runat="server">
+                                            <a class="dropdown-link-item">
+                                                <span id="inf_cargoT" runat="server" class="nav-text"></span>
+                                            </a>
+                                        </li>
+                                        <br />
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -311,7 +343,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" pattern="^\d{8}-[0-9A](?:[A-Z0-9]{9})$" title="Identificação inválida inserida " runat="server" required="required" />
+                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" pattern="^[0-9A-Z]{9}$|^[0-9A-Z]{12}$" title="Identificação inválida inserida de 9 a 12 caracteres" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_val">Validade</label>
@@ -350,6 +382,8 @@
                                                                     <label for="txt_pass">Palavra passe</label>
                                                                     <div class="input-group mb-3">
                                                                         <input type="password" class="form-control" id="txt_pass" placeholder="Insira uma palavra passe para o aluno" pattern=".{8,}" title="A palavra passe deve conter pelo menos 8 caracteres" runat="server" required="required" />
+                                                                        <input type="hidden" runat="server" id="hiddenPassword" value="" />
+
                                                                         <div class="input-group-append">
                                                                             <div class="input-group-text">
                                                                                 <label class="control control-checkbox d-inline-block mb-0">
@@ -412,8 +446,6 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" id="btn_fechar" class="btn btn-danger btn-pill" runat="server" onserverclick="Fechar">Cancelar</button>
-
-                                                            <%--<button type="button" class="btn btn-primary btn-pill" onclick="<% Enviar(1); %>">Criar entidade</button>--%>
                                                             <asp:Button ID="btn_enviar" class="btn btn-primary btn-pill" runat="server" Text="Criar Aluno" OnClick="Comandos" />
                                                         </div>
                                                     </div>
@@ -442,11 +474,14 @@
                                                 </div>
                                             </div>
                                             <div class="head-left-options">
-                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline" runat="server" OnClick="LinkButton1_Click">Atualizar</asp:LinkButton>
+                                                <asp:LinkButton ID="LinkButton1" class="btn btn-outline-primary" runat="server" OnClick="LinkButton1_Click">
+                                                    <i class="mdi mdi-refresh"></i>
+                                                    Atualizar
+                                                </asp:LinkButton>
                                             </div>
 
                                             <div class="head-right-options">
-                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                <div class="btn-group" role="group" aria-label="Basic example" style="margin-right: 200px">
                                                     <asp:DropDownList ID="ddl_turma" CssClass="form-control" AutoPostBack="true" runat="server" OnSelectedIndexChanged="ddl_turma_SelectedIndexChanged"></asp:DropDownList>
                                                 </div>
                                             </div>
@@ -570,6 +605,12 @@
                     x.type = "password";
                 }
             }
+
+            window.addEventListener('DOMContentLoaded', function () {
+                var passwordInput = document.getElementById('txt_pass');
+                var hiddenPassword = document.getElementById('hiddenPassword').value;
+                passwordInput.value = hiddenPassword;
+            });
 
         </script>
 
