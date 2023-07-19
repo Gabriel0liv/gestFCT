@@ -343,7 +343,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_bi">Bilhete de Identidade/Cartão Único</label>
-                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" pattern="^[0-9A-Z]{9}$|^[0-9A-Z]{12}$" title="Identificação inválida inserida de 9 a 12 caracteres" runat="server" required="required" />
+                                                                    <input type="text" class="form-control" id="txt_bi" placeholder="Insira o número de identificação do aluno" pattern="^[0-9A-Z]{9}$|^[0-9A-Z]{12}$" title="Identificação inválida inserida de 9 ou 12 caracteres" runat="server" required="required" />
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="txt_val">Validade</label>

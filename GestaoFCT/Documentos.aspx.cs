@@ -328,10 +328,7 @@ namespace GestaoFCT
 
                     if (doc != null)
                     {
-                        if (Convert.ToBoolean(Session["direcao"]))
-                            linhadesql = "select distinct * from Protocolo where id_curso = " + labelCod.Text + ";";
-                        else
-                            linhadesql = "select distinct * from Protocolo where id_professor = " + labelCod.Text + ";";
+                        linhadesql = "select distinct * from Protocolo where id_entidade = " + labelCod.Text + ";";
 
                         var sqlConn = new SqlConnection(DocSQLData.ConnectionString);
                         var com = new SqlCommand(linhadesql, sqlConn);

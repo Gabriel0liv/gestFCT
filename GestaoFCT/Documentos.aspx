@@ -412,7 +412,8 @@
                     { title: "Responsável", field: "resp_entidade", width: 150, resizable: false, headerFilter: "input" },
                     { title: "Cargo", field: "cargo_resp", width: 100, resizable: false, headerFilter: "input" },
                     { title: "Professor", field: "nome_professor", width: 200, resizable: false, headerFilter: "input" },
-                    { title: "idP", field: "codigo", width: 50, resizable: false, visible: false },
+                    { title: "idP", field: "id_professor", width: 50, resizable: false, visible: false },
+                    { title: "idE", field: "codigo", width: 50, resizable: false, visible: false },
                 ],
 
             });
@@ -483,8 +484,7 @@
                             ano_fct: '<%# DataBinder.Eval(Container.DataItem, "ano_fct") %>',
                             hrdiaria: '<%# DataBinder.Eval(Container.DataItem, "horasDiarias") %>',
                             inicio_fct: '<%# DataBinder.Eval(Container.DataItem, "inicio_fct") %>',
-                        fim_fct: '<%# DataBinder.Eval(Container.DataItem, "fim_fct") %>'
-                        },
+                        fim_fct: '<%# DataBinder.Eval(Container.DataItem, "fim_fct") %>'},
                     </ItemTemplate>
                 </asp:Repeater >];
 
@@ -492,12 +492,13 @@
                 <asp:Repeater ID="rptItems2" runat="server">
                     <ItemTemplate>
                         {
-                            codigo: '<%# DataBinder.Eval(Container.DataItem, "id_professor") %>',
+                            codigo: '<%# DataBinder.Eval(Container.DataItem, "id_entidade") %>',
 			                nome_entidade: '<%# DataBinder.Eval(Container.DataItem, "nome_entidade") %>',
 			                resp_entidade: '<%# DataBinder.Eval(Container.DataItem, "resp_entidade") %>',
 			                cargo_resp: '<%# DataBinder.Eval(Container.DataItem, "cargo_resp") %>',
                             nome_professor: '<%# DataBinder.Eval(Container.DataItem, "nome_prof") %>',
                             loc_entidade: '<%# DataBinder.Eval(Container.DataItem, "loc_entidade") %>',
+                            id_professor: '<%# DataBinder.Eval(Container.DataItem, "id_professor") %>',
                         },
                     </ItemTemplate>
                 </asp:Repeater >];

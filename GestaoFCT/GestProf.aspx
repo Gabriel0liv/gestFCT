@@ -365,7 +365,7 @@
                                                                 <asp:DropDownList ID="ddl_curso" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
                                                             </div>
                                                             <div class="form-group" id="divDirecao" runat="server" visible="false">
-                                                                <label for="txt_CodPost">Diretor de turma?</label>
+                                                                <label for="txt_CodPost">Diretor de curso?</label>
                                                                 <label class="switch switch-icon switch-primary form-control-label">
                                                                     <input id="DC" type="checkbox" class="switch-input form-check-input" value="on" runat="server">
                                                                     <span class="switch-label"></span>

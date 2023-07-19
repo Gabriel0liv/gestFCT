@@ -873,8 +873,7 @@ namespace GestaoFCT
                 ddl_aluno.DataTextField = "nome_aluno";
                 ddl_aluno.DataValueField = "id_aluno";
                 ddl_aluno.DataSource = cmd.ExecuteReader();
-                ddl_aluno.DataBind();
-                sqlConn.Close();
+                ddl_aluno.DataBind();                sqlConn.Close();
             }
             ddl_aluno.Visible = true;
 
