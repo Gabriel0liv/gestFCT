@@ -300,7 +300,10 @@
                                                         Eliminar
                                                     </button>
                                                 </li>
+                                                <li class="mt-4" >
+                                                    <asp:Label ID="Label1" class="btn btn-outline" style="cursor: default !important" runat="server" Text="" Visible="false"></asp:Label>
 
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -322,7 +325,10 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body" style="height: 400px; overflow-y: auto;">
-                                                            <div class="form-group">
+                                                            <div id="Alert" class="alert alert-secondary alert-icon" role="alert" visible="false" runat="server">
+                                                                <i class="mdi mdi-alert"></i><span id="alerMessage" runat="server"></span>
+                                                            </div>
+                                                            <div class="form-group" id="DivAluno" runat="server">
                                                                 <label for="slc_aluno">Aluno</label>
                                                                 <asp:DropDownList ID="slc_aluno" CssClass="form-control" runat="server" ClientIDMode="Static"></asp:DropDownList>
                                                             </div>
@@ -396,7 +402,6 @@
                                                     <i class="mdi mdi-refresh"></i>
                                                     Atualizar
                                                 </asp:LinkButton>
-                                                <asp:Label ID="Label1" class="btn btn-outline" runat="server" Text="" Visible="false"></asp:Label>
                                             </div>
 
                                             <div class="head-right-options">

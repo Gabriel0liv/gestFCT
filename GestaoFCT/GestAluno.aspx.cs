@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -45,7 +46,7 @@ namespace GestaoFCT
                 {
                     using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
                     {
-                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos where id_curso =  " + Session["curso"].ToString() + ";", sqlConn);
+                        SqlCommand cmd = new SqlCommand("select id_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from Cursos where nome_curso = (select nome_curso from cursos where id_curso = " + Session["curso"].ToString() + ");", sqlConn);
                         sqlConn.Open();
                         ddl_turma.DataTextField = "curso_info";
                         ddl_turma.DataValueField = "id_curso";
@@ -175,7 +176,7 @@ namespace GestaoFCT
                 }
                 if (Session["cargo"].ToString() == "2")
                 {
-                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso, ano_curso, turma_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from cursos where id_curso = " + Session["curso"].ToString() + ";", sqlConn);
+                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso, ano_curso, turma_curso, nome_curso + ' ' + ano_curso + turma_curso as curso_info from cursos where nome_curso = (select nome_curso from Cursos where id_curso = " + Session["curso"].ToString() + ");", sqlConn);
                     sqlConn.Open();
                     ddl_curso.DataTextField = "curso_info";
                     ddl_curso.DataValueField = "id_curso";
@@ -330,24 +331,20 @@ namespace GestaoFCT
 
                 using (SqlConnection sqlConn = new SqlConnection(AlnSQLData.ConnectionString))
                 {
-                    string query = "SELECT nome_aluno FROM Alunos WHERE id_aluno = " + labelCod.Text;
+                    int alo = 0;
+                    int alo2 = 0;
+                    string query = "SELECT id_aluno, nome_aluno, id_curso FROM Alunos_info WHERE id_aluno = " + labelCod.Text + ";";
                     SqlDataAdapter adapter = new SqlDataAdapter(query, sqlConn);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     if (dt.Rows.Count > 0)
                     {
                         txt_aluno.Text = dt.Rows[0]["nome_aluno"].ToString();
+                        alo = Convert.ToInt32(dt.Rows[0]["id_aluno"]);
+                        alo2 = Convert.ToInt32(dt.Rows[0]["id_curso"]);
                     }
 
-                    SqlCommand cmd = new SqlCommand("select id_curso, nome_curso from cursos;", sqlConn);
-                    sqlConn.Open();
-                    ddl_curso.DataTextField = "nome_curso";
-                    ddl_curso.DataValueField = "id_curso";
-                    ddl_curso.DataSource = cmd.ExecuteReader();
-                    ddl_curso.DataBind();
-                    sqlConn.Close();
-
-                    SqlCommand cmd2 = new SqlCommand("select id_prof, nome_prof from professores;", sqlConn);
+                    SqlCommand cmd2 = new SqlCommand("select id_prof, nome_prof from professores where id_curso = (select id_curso from cursos where nome_curso = (select nome_curso from cursos where id_curso = " + alo2 + " ) and ano_curso = 12) ;", sqlConn);
                     sqlConn.Open();
                     ddl_professor.DataTextField = "nome_prof";
                     ddl_professor.DataValueField = "id_prof";
@@ -363,7 +360,7 @@ namespace GestaoFCT
                     ddl_entidade.DataBind();
                     sqlConn.Close();
 
-                    SqlCommand cmd4 = new SqlCommand("select id_tutor, nome_tutor from tutores;", sqlConn);
+                    SqlCommand cmd4 = new SqlCommand("select id_tutor, nome_tutor from tutores where id_entidade = " + ddl_entidade.SelectedValue + ";", sqlConn);
                     sqlConn.Open();
                     ddl_tutor.DataTextField = "nome_tutor";
                     ddl_tutor.DataValueField = "id_tutor";
@@ -565,6 +562,7 @@ namespace GestaoFCT
                 Database.NonQuerySqlSrv(linhasql);
                 reset();
                 refresh();
+                exampleModal.Visible = false;
             }
 
             if (operacao.Text == "4")

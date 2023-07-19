@@ -341,7 +341,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Telemóvel</label>
-                                                                <input type="text" class="form-control" id="txt_telemovel" placeholder="Insira o telemóvel da entidade, se houver" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" required="required" />
+                                                                <input type="text" class="form-control" id="txt_telemovel" placeholder="Insira o telemóvel da entidade, se houver" pattern="[9][1-9][0-9]{7}" title="insira um número de telemóvel de 9 digitos" runat="server" />
                                                             </div>
                                                             <div class="form-group">
                                                                 <label for="txt_local">Morada</label>

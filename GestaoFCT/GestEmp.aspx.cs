@@ -123,7 +123,7 @@ namespace GestaoFCT
                 txt_tlmResp.Value = r["tlmResp_entidade"].ToString();
                 txt_cargo.Value = r["cargo_resp"].ToString();
                 txt_atvPrinc.Value = r["atv_principal"].ToString();
-                txt_telemovel.Value = r["teleovel_entidade"].ToString();
+                txt_telemovel.Value = r["telemovel_entidade"].ToString();
 
             }
             r.Close();

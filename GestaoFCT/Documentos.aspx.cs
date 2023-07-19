@@ -414,6 +414,7 @@ namespace GestaoFCT
             }
             else
             {
+                exampleModalLabel.InnerText = "Nenhuma entidade selecionada!";
                 textoCancelar.InnerText = "Nenhum registo foi selecionado!";
                 exampleModal.Visible = true;
             }

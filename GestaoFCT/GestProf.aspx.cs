@@ -119,6 +119,17 @@ namespace GestaoFCT
             txt_CodPost.Value = "";
             txt_pass.Value = "";
 
+            string workConn = ConfigurationManager.ConnectionStrings["FCTConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(workConn))
+            {
+                SqlCommand cmd = new SqlCommand("select id_curso, nome_curso from cursos where ano_curso = 12;", con);
+                con.Open();
+                ddl_curso.DataTextField = "nome_curso";
+                ddl_curso.DataValueField = "id_curso";
+                ddl_curso.DataSource = cmd.ExecuteReader();
+                ddl_curso.DataBind();
+                con.Close();
+            }
 
         }
 

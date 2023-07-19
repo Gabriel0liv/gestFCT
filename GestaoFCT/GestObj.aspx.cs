@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -235,7 +236,8 @@ namespace GestaoFCT
                     }
 
                 }
-                else
+
+                if(operacao.Text == "1")
                 {
                     String linhasql = "";
                     if (Session["cargo"].ToString() != "1")
@@ -286,9 +288,9 @@ namespace GestaoFCT
                 {
                     String linhasql = "";
                     if (Session["cargo"].ToString() == "1")
-                        linhasql = "update Objetivos set descricao_objetivo = '" + txt_nome.Value + "', turma_curso = '" + slc_curso.SelectedValue + "' where id_objetivo = " + labelCod.Text + ";";
+                        linhasql = "update Objetivos set descricao_objetivo = '" + txt_nome.Value + "', id_curso = '" + slc_curso.SelectedValue + "' where id_objetivo = " + labelCod.Text + ";";
                     else
-                        linhasql = "update Objetivos set descricao_objetivo = '" + txt_nome.Value + "', turma_curso = '" + Session["curso"].ToString() + "' where id_objetivo = " + labelCod.Text + ";";
+                        linhasql = "update Objetivos set descricao_objetivo = '" + txt_nome.Value + "', id_curso = '" + Session["curso"].ToString() + "' where id_objetivo = " + labelCod.Text + ";";
 
                     Database.NonQuerySqlSrv(linhasql);
                     reset();

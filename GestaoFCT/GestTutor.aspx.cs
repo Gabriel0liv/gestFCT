@@ -376,8 +376,8 @@ namespace GestaoFCT
 
             if (operacao.Text == "1")
             {
-                
-                String linhasql = "insert into tutores (nome_tutor, nif_tutor, morada_tutor, loc_tutor, email_tutor, cpostal_tutor, telefone_tutor, telemovel_tutor, id_entidade, pass_tutor, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_tlf.Value + "', '" + txt_tlm.Value + "', " + ddl_entidade.SelectedValue + ", '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', 3);";
+
+                String linhasql  = "insert into tutores (nome_tutor, nif_tutor, morada_tutor, loc_tutor, email_tutor, cpostal_tutor, telefone_tutor, telemovel_tutor, id_entidade, pass_tutor, cargo_tutor, id_cargo) values('" + txt_nome.Value + "', '" + txt_nif.Value + "','" + txt_morada.Value + "', '" + txt_local.Value + "', '" + txt_email.Value + "' ,'" + txt_CodPost.Value + "', '" + txt_tlf.Value + "', '" + txt_tlm.Value + "', " + ddl_entidade.SelectedValue + ", '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', '" + txt_cargo.Value + "', 3);";
 
                 if (!erro)
                 {
@@ -392,7 +392,7 @@ namespace GestaoFCT
             if (operacao.Text == "2")
             {
 
-                String linhasql = "update tutores set nome_tutor = '" + txt_nome.Value + "', nif_tutor = '" + txt_nif.Value + "', email_tutor = '" + txt_email.Value + "', loc_tutor = '" + txt_local.Value + "', morada_tutor = '" + txt_morada.Value + "', telefone_tutor = '" + txt_tlf.Value + "', cpostal_tutor = '" + txt_CodPost.Value + "', telemovel_tutor = '" + txt_tlm.Value + "', id_entidade = '" + ddl_entidade.SelectedValue + "', pass_tutor = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "' where id_tutor = " + labelCod.Text + ";";
+                String linhasql = "update tutores set nome_tutor = '" + txt_nome.Value + "', nif_tutor = '" + txt_nif.Value + "', email_tutor = '" + txt_email.Value + "', loc_tutor = '" + txt_local.Value + "', morada_tutor = '" + txt_morada.Value + "', telefone_tutor = '" + txt_tlf.Value + "', cpostal_tutor = '" + txt_CodPost.Value + "', telemovel_tutor = '" + txt_tlm.Value + "', id_entidade = '" + ddl_entidade.SelectedValue + "', pass_tutor = '" + Convert.ToBase64String(Encoding.ASCII.GetBytes(txt_pass.Value)) + "', cargo_tutor = '" + txt_cargo.Value + "' where id_tutor = " + labelCod.Text + ";";
 
                 if (!erro)
                 {

@@ -9,6 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Script.Serialization;
 using System.Globalization;
+using System.Drawing;
 
 namespace GestaoFCT
 {
@@ -100,23 +101,20 @@ namespace GestaoFCT
                 txt_aluno.Text = r["nome_aluno"].ToString();
                 ddl_professor.SelectedValue = r["id_professor"].ToString();
                 ddl_entidade.SelectedValue = r["id_entidade"].ToString();
-                ddl_entidade.SelectedValue = r["id_entidade"].ToString();
+                obtemTutores();
                 ddl_tutor.SelectedValue = r["id_tutor"].ToString();
                 txt_anoFCT.Value = r["ano_fct"].ToString();
                 txt_numHoras.Value = r["num_horas"].ToString();
                 txt_numMaxHora.Value = r["horasDiarias"].ToString();
                 // Converter o Texto da data do sumário 
                 DateTime data;
-                if (DateTime.TryParseExact(r["inicio_fct"].ToString(), "dd/MM/yyyy" , CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(r["fim_fct"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out data))
+                DateTime data2;
+                if (DateTime.TryParseExact(r["inicio_fct"].ToString(), "dd/MM/yyyy" , CultureInfo.InvariantCulture, DateTimeStyles.None, out data) && DateTime.TryParseExact(r["fim_fct"].ToString(), "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out data2))
                 {
                     txt_dataInicio.Text = data.ToString("yyyy-MM-dd");
-                    txt_dataFim.Text = data.ToString("yyyy-MM-dd");
+                    txt_dataFim.Text = data2.ToString("yyyy-MM-dd");
                 }
-                else
-                {
-                    // A string fornecida não está no formato esperado
-                    // Faça o tratamento adequado, como mostrar uma mensagem de erro
-                }
+
 
             }
             r.Close();
@@ -146,16 +144,20 @@ namespace GestaoFCT
                 string workConn = ConfigurationManager.ConnectionStrings["FCTConnectionString"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(workConn))
                 {
-                    string query = "SELECT nome_aluno FROM tabelas_FCT WHERE id_fct = " + labelCod.Text + ";";
+                    int alo = 0;
+                    int alo2 = 0;
+                    string query = "SELECT id_aluno, nome_aluno, id_curso FROM tabelas_FCT WHERE id_fct = " + labelCod.Text + ";";
                     SqlDataAdapter adapter = new SqlDataAdapter(query, con);
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);
                     if (dt.Rows.Count > 0)
                     {
                         txt_aluno.Text = dt.Rows[0]["nome_aluno"].ToString();
+                        alo = Convert.ToInt32(dt.Rows[0]["id_aluno"]);
+                        alo2 = Convert.ToInt32(dt.Rows[0]["id_curso"]);
                     }
 
-                    SqlCommand cmd2 = new SqlCommand("select id_prof, nome_prof from professores;", con);
+                    SqlCommand cmd2 = new SqlCommand("select id_prof, nome_prof from professores where id_curso = (select id_curso from cursos where nome_curso = ( select nome_curso from cursos where id_curso = " + alo2 + ") and ano_curso = 12);", con);
                     con.Open();
                     ddl_professor.DataTextField = "nome_prof";
                     ddl_professor.DataValueField = "id_prof";
@@ -171,7 +173,7 @@ namespace GestaoFCT
                     ddl_entidade.DataBind();
                     con.Close();
 
-                    SqlCommand cmd4 = new SqlCommand("select id_tutor, nome_tutor from tutores;", con);
+                    SqlCommand cmd4 = new SqlCommand("select id_tutor, nome_tutor from tutores where id_entidade = " + ddl_entidade.SelectedValue + ";", con);
                     con.Open();
                     ddl_tutor.DataTextField = "nome_tutor";
                     ddl_tutor.DataValueField = "id_tutor";
@@ -206,15 +208,8 @@ namespace GestaoFCT
             if(labelCod.Text != "0")
             {
                 btnDeletar.Visible = true;
-                string linhadesql = "select nome_tutor from tutores where id_tutor = " + labelCod.Text + ";";
-                var sqlConn = new SqlConnection(FCTSQLData.ConnectionString);
-                var com = new SqlCommand(linhadesql, sqlConn);
-                sqlConn.Open();
-                SqlDataReader r = com.ExecuteReader();
-                r.Read();
-                textoCancelar.InnerText = "Deseja eliminar o registo \"" + r["nome_tutor"] + "\"?";
-                r.Close();
-                sqlConn.Close();
+                textoCancelar.InnerText = "Deseja eliminar o registo ?";
+
             }
             else
             {
@@ -283,6 +278,22 @@ namespace GestaoFCT
             }
 
         }
+
+        protected void obtemTutores() 
+        {
+            string workConn = ConfigurationManager.ConnectionStrings["FCTConnectionString"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(workConn))
+            {
+                SqlCommand cmd4 = new SqlCommand("select id_tutor, nome_tutor from tutores where id_entidade = " + ddl_entidade.SelectedValue + ";", con);
+                con.Open();
+                ddl_tutor.DataTextField = "nome_tutor";
+                ddl_tutor.DataValueField = "id_tutor";
+                ddl_tutor.DataSource = cmd4.ExecuteReader();
+                ddl_tutor.DataBind();
+                con.Close();
+            }
+        }
+
 
         protected void txt_dataInicio_TextChanged(object sender, EventArgs e)
         {
